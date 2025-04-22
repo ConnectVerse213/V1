@@ -73,18 +73,9 @@ function EventPage() {
   return (
     <div>
     
-    
-   {events.length!=0 && events[0].Questions.map((x)=>{
-
-        return(
-            <div>
-                <input placeholder={x}></input>
-                
-                <br></br>
-
-            </div>
-        )
-   })}
+    <h1> {events.length!=0 && events[0].Name}</h1>
+    <h5>Created by {events.length!=0 && events[0].Creator}</h5>
+  
   
  
     <br></br>
