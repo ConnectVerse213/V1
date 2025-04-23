@@ -23,10 +23,51 @@ function AdminCreate() {
     const [questionsArray,setQuestionsArray]=useState(["Name","Email"])
     const [question,setQuestion]=useState('')
 
+    const [user,setUser]=useState([])
+
     const createUser = async () => {
-        await addDoc(usersCollectionRef, { Name: eventName, Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+
+        console.log(result.id)
+
+        if(user.length!=0)
+        {
+          updateUser(result.id)
+        }
+       
       };
 
+        const updateUser = async (id) => {
+
+            console.log(user[0])
+                    const userDoc = doc(db, "user", user[0].id);
+                    const newFields = { Email: user[0].Email, Coins:user[0].Coins, EventsCreated:[...user[0].EventsCreated,id],EventsRegistered:user[0].EventsRegistered, EventsApproved:user[0].EventsApproved,EventsAttended:user[0].EventsAttended};
+                    await updateDoc(userDoc, newFields);
+                    window.location.reload();
+                  };
+
+      const getEvents = async () => {
+      
+      
+                const data = await getDocs(usersCollectionRef1);
+               
+                let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+             
+                
+               const newArr = users.filter(obj => obj.Email === localStorage.getItem('email'));
+             
+               console.log(newArr[0].id)
+
+               setUser(newArr)
+               
+              
+              };
+      
+              useEffect(()=>{
+      
+                getEvents()
+      
+              },[])
    
   return (
     <div>

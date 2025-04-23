@@ -71,11 +71,38 @@ function Home() {
     
     if( localStorage.getItem('email') )
     {
-        await addDoc(usersCollectionRef, { Email:localStorage.getItem('email'), Coins: 100, EventsCreated: [], EventsRegistered: [], EventsAttended: []});
+
+       
+        const data = await getDocs(usersCollectionRef);
+                      
+        let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                    
+                       
+        const exists = users.some(obj => obj.Email === localStorage.getItem('email'));
+                    
+       if( !exists )
+       {
+        await addDoc(usersCollectionRef, { Email:localStorage.getItem('email'), Coins: 100, EventsCreated: [], EventsRegistered: [], EventsApproved:[],EventsAttended: []});
         setCoins(100)
 
         localStorage.setItem('coins',100)
         window.location.href = '/home2';
+       }
+
+       else
+       {
+
+         const data = await getDocs(usersCollectionRef);
+               
+         let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+               
+         let filteredArray=eventsTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+         console.log(filteredArray)
+         localStorage.setItem('coins',filteredArray[0].Coins)
+         alert('User already exists')
+         window.location.href = '/home2';
+       }
+       
 
        
 

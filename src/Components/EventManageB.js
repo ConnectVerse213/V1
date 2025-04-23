@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 function EventManageB() {
 
     const usersCollectionRef = collection(db, "events");
+    const usersCollectionRef1 = collection(db, "user");
         const { event_id } = useParams();
     
        const [events, setEvents] = useState([]);
@@ -28,6 +29,7 @@ function EventManageB() {
     const [attendeesCount, setAttendeesCount] = useState(0);
     const [unapprovedAttendees,setUnapprovedAttendees]=useState([])
     const [optionApproved,setOptionApproved]=useState(1)
+    const [newAttendee, setNewAttendee] = useState({});
 
 
     function isEqual(obj1, obj2) {
@@ -64,21 +66,26 @@ function EventManageB() {
                 }
     }
        
-      const [newAttendee, setNewAttendee] = useState({});
+   
     
       const handleAddAttendee = (registration) => {
-        if (newAttendee !== '') {
+       
           setAttendees([...attendees, registration]);
           setAttendeesCount(attendeesCount+1)
-          setNewAttendee('');
-        }
+          setNewAttendee(registration)
+          console.log('newAttendee',registration)
+
+      
       };
       const handleDeleteAttendee = (registration) => {
 
         const arr2 = attendees.filter(item => item.Email !== registration.Email);
         setAttendees(arr2)
         setAttendeesCount(attendeesCount-1)
-        setNewAttendee('');
+        registration.delete="delete"
+        setNewAttendee(registration)
+
+       
 
       };
     //   const handleDeleteQuestion = (indexToDelete) => {
@@ -86,11 +93,60 @@ function EventManageB() {
     //   };
 
         const updateUser = async () => {
+
+          if(Object.keys(newAttendee).length === 0)
+          {
+            return
+          }
+
+          if (newAttendee.delete === 'delete') {
+            
+            const userDoc = doc(db, "events", event_id);
+            const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:attendees,Registrations:events[0].Registrations,AttendeesCount:attendeesCount,RegistrationsCount:events[0].RegistrationsCount};
+
+            const data = await getDocs(usersCollectionRef1);
+                           
+            let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          
+                           
+            let filteredArray=eventsTemp.filter(obj => obj.Email === newAttendee.Email)
+
+            let newArr=filteredArray[0].EventsApproved.filter(obj=>obj!==event_id)
+
+            console.log(filteredArray)
+            
+            await updateDoc(userDoc, newFields);
+            const userDoc1 = doc(db, "user", filteredArray[0].id);
+            const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:filteredArray[0].EventsRegistered, EventsApproved:newArr,EventsAttended:filteredArray[0].EventsAttended};
+            await updateDoc(userDoc1, newFields1);
+            window.location.reload();
+
+            setNewAttendee({})
+            return
+          }
+        
+
               const userDoc = doc(db, "events", event_id);
               const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:attendees,Registrations:events[0].Registrations,AttendeesCount:attendeesCount,RegistrationsCount:events[0].RegistrationsCount};
+
+              const data = await getDocs(usersCollectionRef1);
+                             
+              let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+            
+                             
+              let filteredArray=eventsTemp.filter(obj => obj.Email === newAttendee.Email)
+
+              console.log(filteredArray)
+              
               await updateDoc(userDoc, newFields);
+              const userDoc1 = doc(db, "user", filteredArray[0].id);
+              const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:filteredArray[0].EventsRegistered, EventsApproved:[...filteredArray[0].EventsApproved,event_id],EventsAttended:filteredArray[0].EventsAttended};
+              await updateDoc(userDoc1, newFields1);
               window.location.reload();
             };
+
+
+           
 
       useEffect(()=>{
         getEvents()
