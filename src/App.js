@@ -8,6 +8,7 @@ import EventManageB from './Components/EventManageB';
 import ErrorPage from './Components/ErrorPage';
 import OktoLogin from './Components/OktoLogin';
 import Home from './Components/Home';
+import Home2 from './Components/Home2';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 function App() {
@@ -32,6 +33,11 @@ function App() {
         
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
          <Home />
+    </OktoProvider>} />
+    <Route path="/Home2" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+         <Home2 />
     </OktoProvider>} />
      
      

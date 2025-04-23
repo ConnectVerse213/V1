@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "events");
-
+const usersCollectionRef1 = collection(db, "user");
 function AdminCreate() {
 
 
@@ -26,7 +26,8 @@ function AdminCreate() {
     const createUser = async () => {
         await addDoc(usersCollectionRef, { Name: eventName, Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
       };
-    
+
+   
   return (
     <div>
       <h1>Admin Create Form</h1>

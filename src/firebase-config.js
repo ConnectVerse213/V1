@@ -14,23 +14,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// export const auth = getAuth(app);
+export const auth = getAuth(app);
 
-// const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
-// export const signInWithGoogle = () => {
-//   signInWithPopup(auth, provider)
-//     .then((result) => {
-//       const name = result.user.displayName;
-//       const email = result.user.email;
-//       const profilePic = result.user.photoURL;
-//       console.log(profilePic);
-//       localStorage.setItem("name", name);
-//       localStorage.setItem("email", email);
-//       localStorage.setItem("profilePic", profilePic);
-//       window.location.reload();
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//     });
-// };
+export const signInWithGoogle = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const name = result.user.displayName;
+      const email = result.user.email;
+      const profilePic = result.user.photoURL;
+      console.log(profilePic);
+      localStorage.setItem("name", name);
+      localStorage.setItem("email", email);
+      localStorage.setItem("profilePic", profilePic);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
