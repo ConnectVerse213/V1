@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import { db } from "../firebase-config";
+import { useOkto } from "okto-sdk-react";
 import {
   collection,
   getDocs,
@@ -9,10 +10,13 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { signInWithGoogle } from "../firebase-config";
+// import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "events");
 
 function AdminCreate() {
+
+
+  
 
     const [eventName,setEventName]=useState('')
     const [eventDescription,setEventDescription]=useState('')
@@ -27,13 +31,14 @@ function AdminCreate() {
     <div>
       <h1>Admin Create Form</h1>
 
-      {localStorage.getItem('name')?<div>Logged In as {localStorage.getItem('name')}</div>:<button onClick={signInWithGoogle}>
+      {/* {localStorage.getItem('name')?<div>Logged In as {localStorage.getItem('name')}</div>:<button onClick={signInWithGoogle}>
         Sign in with Google
-      </button>}
+      </button>} */}
       
-      <img src={localStorage.getItem('profilePic')} />
+     
       <br></br>
       <hr></hr>
+      
 
         <input placeholder='Event Name' onChange={(e)=>setEventName(e.target.value)}></input>
         {eventName}

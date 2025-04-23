@@ -6,8 +6,12 @@ import EventManage from './Components/EventManage';
 import EditEvent from './Components/EditEvent';
 import EventManageB from './Components/EventManageB';
 import ErrorPage from './Components/ErrorPage';
+import OktoLogin from './Components/OktoLogin';
+import Home from './Components/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { OktoProvider, BuildType } from 'okto-sdk-react';
 function App() {
+  const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
     <div className="App">
   
@@ -15,12 +19,20 @@ function App() {
     <Router>
     <Routes>
     
-      <Route path="/creator" element={<AdminCreate />} />
+      <Route path="/creator" element={ <AdminCreate/>} />
       <Route path="/event/:event_id" element={<EventPage />} />
       <Route path="/manage/" element={<EventManage />} />
       <Route path="/editevent/:event_id" element={<EditEvent />} />
       <Route path="/manageevent/:event_id" element={<EventManageB />} />
       <Route path="/error/:error_message" element={<ErrorPage />} />
+      <Route path="/oktologin" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+         <OktoLogin/>
+    </OktoProvider>} />
+    <Route path="/Home" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+         <Home />
+    </OktoProvider>} />
      
      
       
