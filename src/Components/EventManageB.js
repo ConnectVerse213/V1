@@ -52,6 +52,16 @@ function EventManageB() {
             !filteredArray[0].Attendees.some(item2 => isEqual(item1, item2))
           );
           setUnapprovedAttendees(unapprovedArr)
+
+          if(!localStorage.getItem('email'))
+            {
+                window.location.href = '/error/User Not Logged In';
+            }
+    
+            if(localStorage.getItem('email') && filteredArray.length!=0 && filteredArray[0].Creator!=localStorage.getItem('email'))
+                {
+                    window.location.href = '/error/User Not Authorized';
+                }
     }
        
       const [newAttendee, setNewAttendee] = useState({});

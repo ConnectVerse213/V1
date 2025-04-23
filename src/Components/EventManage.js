@@ -19,6 +19,7 @@ function EventManage() {
   
       const getEvents = async () => {
 
+
           const data = await getDocs(usersCollectionRef);
          
           let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -27,6 +28,8 @@ function EventManage() {
           console.log(filteredArray)
 
           setEvents(filteredArray);
+
+       
          
          
         
@@ -44,6 +47,7 @@ function EventManage() {
         <h1>Manage Events</h1>
         <hr></hr>
 
+     
      
       {events.length!=0 && events.map((x)=>{
         return (

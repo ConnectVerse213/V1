@@ -5,6 +5,7 @@ import EventPage from './Components/EventPage';
 import EventManage from './Components/EventManage';
 import EditEvent from './Components/EditEvent';
 import EventManageB from './Components/EventManageB';
+import ErrorPage from './Components/ErrorPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Route path="/manage/" element={<EventManage />} />
       <Route path="/editevent/:event_id" element={<EditEvent />} />
       <Route path="/manageevent/:event_id" element={<EventManageB />} />
+      <Route path="/error/:error_message" element={<ErrorPage />} />
      
      
       

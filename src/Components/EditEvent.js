@@ -36,6 +36,16 @@ function EditEvent() {
         setQuestions(filteredArray[0].Questions)
         setEventName(filteredArray[0].Name)
         setEventDescription(filteredArray[0].Description)
+
+        if(!localStorage.getItem('email'))
+        {
+            window.location.href = '/error/User Not Logged In';
+        }
+
+        if(localStorage.getItem('email') && filteredArray.length!=0 && filteredArray[0].Creator!=localStorage.getItem('email'))
+            {
+                window.location.href = '/error/User Not Authorized';
+            }
     }
        
       const [newQuestion, setNewQuestion] = useState('');
