@@ -62,7 +62,7 @@ function EventPage() {
 
       const updateUser = async (result) => {
         const userDoc = doc(db, "events", event_id);
-        const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:[],Registrations:[...events[0].Registrations,result],AttendeesCount:0,RegistrationsCount:events[0].RegistrationsCount+1};
+        const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:events[0].Attendees,Registrations:[...events[0].Registrations,result],AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount+1};
         await updateDoc(userDoc, newFields);
         window.location.reload();
       };
