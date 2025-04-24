@@ -20,10 +20,10 @@ function Home2() {
     const [showQR, setShowQR] = useState(false);
     const qrRef = useRef();
   
-    const generateNumber = async() => {
+    const generateNumber = async(id) => {
       const number = Math.floor(1000000000 + Math.random() * 9000000000).toString();
       setRandomNumber(number);
-      const result=await addDoc(usersCollectionRef2, {TicketId:number+'a'});
+      const result=await addDoc(usersCollectionRef2, {TicketId:number+localStorage.getItem('email'),EventId:id});
     
       console.log(result.id)
     
@@ -35,12 +35,30 @@ function Home2() {
 
     
     const downloadQRCode = () => {
-      const canvas = qrRef.current.querySelector('canvas');
-      const url = canvas.toDataURL('image/png');
+      const qrCanvas = qrRef.current.querySelector('canvas');
+      const originalSize = qrCanvas.width; // typically 200
+      const quietZone = 60; // padding around QR
+      const totalSize = originalSize + quietZone * 2;
+  
+      // Create new canvas
+      const newCanvas = document.createElement('canvas');
+      newCanvas.width = totalSize;
+      newCanvas.height = totalSize;
+  
+      const ctx = newCanvas.getContext('2d');
+  
+      // Fill background with white
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, totalSize, totalSize);
+  
+      // Draw original QR canvas onto new one with padding offset
+      ctx.drawImage(qrCanvas, quietZone, quietZone);
+  
+      // Download
+      const url = newCanvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.href = url;
-      const number = Math.floor(10 + Math.random() * 90).toString();
-      link.download = `Ticket_${number}.png`;
+      link.download = `QRCode_${randomNumber}.png`;
       link.click();
     };
   
@@ -173,10 +191,11 @@ function Home2() {
       <br></br>
       {userApprovedArray.includes(x.id) ? <div>{randomNumber && (
               <>
-              
+ 
       
                 <div ref={qrRef}>
-                  <QRCodeCanvas value={randomNumber+"a"} size={200} />
+                  <QRCodeCanvas value={randomNumber+localStorage.getItem('email')} size={200}  
+            quietZone={30}  />
                 </div>
       
                 {!showQR && (
@@ -200,7 +219,11 @@ function Home2() {
             )}
             <br></br>
            {randomNumber=='' &&  <button
-        onClick={generateNumber}
+        onClick={()=>{
+
+         window.location.href=`/qr/${x.id}`
+
+        }}
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
        Get Ticket

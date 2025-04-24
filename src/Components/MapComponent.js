@@ -1,73 +1,148 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { QRCodeCanvas } from 'qrcode.react';
+import React, { useRef, useState, useEffect } from "react";
+import Webcam from "react-webcam";
+import jsQR from "jsqr";
+import { db } from "../firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { useParams } from 'react-router-dom';
 
-const RandomNumberGenerator = () => {
-  const [randomNumber, setRandomNumber] = useState('');
-  const [showQR, setShowQR] = useState(false);
-  const qrRef = useRef();
+const QrScanner = () => {
+  const webcamRef = useRef(null);
+  const [qrCode, setQrCode] = useState(null);
+  const [isReady, setIsReady] = useState(false);
 
-  const generateNumber = () => {
-    const number = Math.floor(1000000000 + Math.random() * 9000000000).toString();
-    setRandomNumber(number);
-    setShowQR(false);
-  };
+  const usersCollectionRef = collection(db, "events");
+  const usersCollectionRef1 = collection(db, "user");
+  const usersCollectionRef2 = collection(db, "ticket");
 
-  const downloadQRCode = () => {
-    const canvas = qrRef.current.querySelector('canvas');
-    const url = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `QRCode_${randomNumber}.png`;
-    link.click();
-  };
+   const { event_id } = useParams();
 
-  // 🧠 Update canvas class after render
+  
+
+  useEffect(()=>{
+
+    getEvents()
+  },[])
+
   useEffect(() => {
-    const canvas = qrRef.current?.querySelector('canvas');
-    if (canvas) {
-      canvas.style.transition = 'filter 0.5s ease';
-      canvas.style.filter = showQR ? 'blur(0px)' : 'blur(8px)';
+    const interval = setInterval(() => {
+      if (isReady) {
+        scanQRCode();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isReady]);
+
+  const handleLoadedMetadata = () => {
+    setIsReady(true);
+  };
+
+
+    const getEvents = async () => {
+          const data = await getDocs(usersCollectionRef);
+         
+          let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+         
+          let filteredArray=eventsTemp.filter(obj => obj.Creator === localStorage.getItem('email') && obj.id===event_id)
+          
+          if(filteredArray.length==0)
+          {
+            window.location.href = '/error/User Not Authorized';
+          }
+         
+         
+        
+        };
+  const scanQRCode = () => {
+    const video = webcamRef.current?.video;
+    if (!video || video.videoWidth === 0 || video.videoHeight === 0) {
+      return;
     }
-  }, [showQR, randomNumber]);
+
+      const updateUser = async (obj,EventId) => {
+    
+              
+                        const userDoc = doc(db, "user", obj.id);
+                        const newFields = { Email: obj.Email, Coins:obj.Coins+1000, EventsCreated:obj.EventsCreated,EventsRegistered:obj.EventsRegistered, EventsApproved:obj.EventsApproved,EventsAttended:[...obj.EventsAttended,EventId]};
+                        await updateDoc(userDoc, newFields);
+                        window.location.reload();
+                      };
+    
+  const getTickets = async (code) => {
+        let data = await getDocs(usersCollectionRef2);
+       
+        let ticketTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+       
+        let filteredArray=ticketTemp.filter(obj => obj.TicketId === code)
+        let EventId=filteredArray[0].EventId
+        if(filteredArray.length!=0)
+        {
+          alert('Welcome User!')
+
+          
+
+          data = await getDocs(usersCollectionRef1);
+       
+          let userTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+       
+          filteredArray=userTemp.filter(obj => obj.Email === code.slice(10))
+          console.log(code.slice(11))
+          if(filteredArray.length!=0)
+          {
+            updateUser(filteredArray[0],EventId)
+          }
+        }
+        else
+          {
+            alert('User Not Authorized')
+          }
+         
+       
+      
+      };
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+    if (code && code.data !== qrCode) {
+      setQrCode(code.data);
+      getTickets(code.data)
+    }
+  };
 
   return (
-    <div className="p-6 flex flex-col items-center space-y-4">
-      <button
-        onClick={generateNumber}
-        className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
-      >
-        Generate 10-Digit Number
-      </button>
-
-      {randomNumber && (
-        <>
-          <p className="text-lg font-bold">Generated Number: {randomNumber}</p>
-
-          <div ref={qrRef}>
-            <QRCodeCanvas value={randomNumber+"a"} size={200} />
-          </div>
-
-          {!showQR && (
-            <button
-              onClick={() => setShowQR(true)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
-            >
-              Show QR Code
-            </button>
-          )}
-
-          {showQR && (
-            <button
-              onClick={downloadQRCode}
-              className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition"
-            >
-              Download QR Code
-            </button>
-          )}
-        </>
-      )}
+    <div>
+      <h2>Scan Your Ticket Here</h2>
+      <Webcam
+        ref={webcamRef}
+        audio={false}
+        screenshotFormat="image/jpeg"
+        videoConstraints={{ facingMode: "environment" }}
+        onLoadedMetadata={handleLoadedMetadata}
+        style={{
+          width: "100%",
+          maxWidth: "600px",
+          borderRadius: "10px"
+        }}
+      />
+      <div style={{ marginTop: "20px" }}>
+        <strong>Scanned QR Code</strong>
+        {/* <p>{qrCode || "Waiting for scan..."}</p> */}
+      </div>
     </div>
   );
 };
 
-export default RandomNumberGenerator;
+export default QrScanner;
