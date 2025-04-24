@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 const firebaseConfig = {
     apiKey: "AIzaSyD7aKk923ZavyHlGZXR9aHUvCQti92P5i0",
     authDomain: "connectversev1.firebaseapp.com",
@@ -10,6 +11,7 @@ const firebaseConfig = {
     appId: "1:664225251835:web:dbf794a73d42ca8a354b5e",
     measurementId: "G-D4M7YSW6QF"
 };
+
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
@@ -34,3 +36,5 @@ export const signInWithGoogle = () => {
       console.log(error);
     });
 };
+
+export const storage = getStorage(app);

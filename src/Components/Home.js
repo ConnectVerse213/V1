@@ -48,6 +48,12 @@ function Home() {
         .catch((error) => {
             console.error(`error:`, error);
         });
+
+        if(localStorage.getItem('coins'))
+        {
+          window.location.href = '/home2';
+        }
+        
       },[])
   return (
     <div>
@@ -64,7 +70,7 @@ function Home() {
 }}>Wallet </button>
 <br></br>
 
-<h1>Coins : {coins}</h1>
+
 <br></br>
 
 {coins==0 && <button onClick={async()=>{

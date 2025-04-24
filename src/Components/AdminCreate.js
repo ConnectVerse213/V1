@@ -11,12 +11,35 @@ import {
   doc,
 } from "firebase/firestore";
 // import { signInWithGoogle } from "../firebase-config";
+
+
+
 const usersCollectionRef = collection(db, "events");
 const usersCollectionRef1 = collection(db, "user");
+
+
 function AdminCreate() {
 
 
-  
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "my_unsigned_preset"); // 👈 Replace
+    formData.append("cloud_name", "getsetcourse");       // 👈 Replace
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/getsetcourse/image/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    setImageUrl(data.secure_url); // ✅ Final image URL
+  };
 
     const [eventName,setEventName]=useState('')
     const [eventDescription,setEventDescription]=useState('')
@@ -26,7 +49,7 @@ function AdminCreate() {
     const [user,setUser]=useState([])
 
     const createUser = async () => {
-        const result=await addDoc(usersCollectionRef, { Name: eventName, Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
 
         console.log(result.id)
 
@@ -103,6 +126,16 @@ function AdminCreate() {
             setQuestionsArray([...questionsArray,question])
         }}>Add Questions</button>
         <br></br>
+        <div>
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
+      {imageUrl && (
+        <div style={{ marginTop: "10px" }}>
+          <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
+        
+        </div>
+      )}
+    </div>
+    <br></br>
         <hr></hr>
         <button  onClick={()=>{
             createUser()
