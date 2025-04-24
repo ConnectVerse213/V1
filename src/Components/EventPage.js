@@ -102,7 +102,9 @@ function EventPage() {
         },[])
   return (
     <div>
-    
+      <br></br>
+      <br></br>
+    <img style={{width:'20em'}} src={events.length!=0 && events[0].Image}></img>
     <h1> {events.length!=0 && events[0].Name}</h1>
     <h5>Created by {events.length!=0 && events[0].Creator}</h5>
   
@@ -124,6 +126,24 @@ function EventPage() {
         </div>
       ))}
       <button type="submit">Submit</button>
+      <br></br>
+      <br></br>
+      {events.length!=0 &&  <iframe
+            title="Google Map"
+            src={`https://www.google.com/maps?q=${events[0].Address}&output=embed`}
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+          ></iframe>}
+          <br></br>
+          {events.length!=0 &&
+          
+          <h5>{events[0].Address}</h5>
+          }
+     
+
     </form>
     </div>
   )

@@ -9,6 +9,7 @@ import ErrorPage from './Components/ErrorPage';
 import OktoLogin from './Components/OktoLogin';
 import Home from './Components/Home';
 import Home2 from './Components/Home2';
+import MapComponent from './Components/MapComponent';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 function App() {
@@ -40,7 +41,7 @@ function App() {
          <Home2 />
     </OktoProvider>} />
      
-     
+    <Route path="/map" element={ <MapComponent/>} />
       
    
     </Routes>
