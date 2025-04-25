@@ -32,8 +32,11 @@ function OktoLogin() {
 
     const handleGoogleLogin = async (credentialResponse) => {
         const idToken = credentialResponse.credential;
+       
          authenticate(idToken, (authResponse, error) => {
              if (authResponse) {
+              
+              console.log(authResponse)
                setAuthToken(authResponse.auth_token);
                console.log("Authenticated successfully, auth token:", authResponse.auth_token);
                navigate('/home')

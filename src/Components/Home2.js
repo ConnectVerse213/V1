@@ -256,7 +256,7 @@ function Home2() {
           }}>Manage  </Button>
             
           <Button variant="outlined" onClick={()=>{
-            navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
+            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
         
