@@ -22,6 +22,7 @@ import Stack from '@mui/material/Stack';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import coinImg from '../assets/images/coinImg.svg'
 import Alert from '@mui/material/Alert';
+import { ToastContainer, toast } from 'react-toastify';
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
@@ -29,9 +30,22 @@ const usersCollectionRef = collection(db, "user");
 function Home() {
 
 
+
     const [coins,setCoins]=useState(0)
     const { showWidgetModal, closeModal } = useOkto();
     const { createWallet, getUserDetails, getPortfolio } = useOkto();
+    const notify = () => toast("Click on Start Earning to Get Started!",{
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+     
+      });
+
     
     const createUser = async (email) => {
 
@@ -56,6 +70,10 @@ function Home() {
              
               window.location.reload()
             }
+
+          
+              
+            
            
             
         })
@@ -81,9 +99,9 @@ function Home() {
         <div style={{color:'white'}} >
 
         
-      <Button variant="outlined" >Events</Button>
-      <Button variant="outlined" >Movies</Button>
-      <Button variant="outlined" >Concerts</Button>
+      <Button variant="outlined" onClick={notify} >Events</Button>
+      <Button variant="outlined" onClick={notify} >Movies</Button>
+      <Button variant="outlined" onClick={notify} >Concerts</Button>
 
 
         </div>
@@ -145,12 +163,13 @@ function Home() {
 }}>Start Earning</button>}
 <br></br>
 <br></br><br></br><br></br><br></br><br></br><br></br>
-<hr></hr>
+
 
 
 <Alert severity="info" >Click on Start Earning to Get Started !</Alert>
+<ToastContainer/>
 
-<hr></hr>
+
 
 
     </div>
