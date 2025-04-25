@@ -111,6 +111,11 @@ function EventPage() {
   
  
     <br></br>
+    <l style={{color:'white'}}> Start Date : {events.length!=0 && events[0].StartDateTime}</l>
+   
+    <br></br> 
+    <l style={{color:'white'}}>End Date : {events.length!=0 && events[0].EndDateTime}</l>
+    
     <hr></hr>
     <form onSubmit={handleSubmit}>
       {events.length!=0 && events[0].Questions.map((question, index) => (

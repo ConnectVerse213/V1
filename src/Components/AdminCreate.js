@@ -10,6 +10,28 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Button from '@mui/material/Button';
+import logo from '../assets/images/logo.png'
+import Stack from '@mui/material/Stack';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import coinImg from '../assets/images/coinImg.svg'
+import Alert from '@mui/material/Alert';
+import { ToastContainer, toast } from 'react-toastify';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import uploadImg from '../assets/images/uploadImg.png'
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+import './AdminCreate.css'
+
+
 // import { signInWithGoogle } from "../firebase-config";
 
 
@@ -25,9 +47,25 @@ function AdminCreate() {
     const [suggestions, setSuggestions] = useState([]);
     const [mapUrl, setMapUrl] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
+    const [startDateTime, setStartDateTime] = useState('');
+    const [endDateTime, setEndDateTime] = useState('');
+    const [capacity,setCapacity]=useState(10000)
+    const { showWidgetModal, closeModal } = useOkto();
+       const { createWallet, getUserDetails, getPortfolio } = useOkto();
+  
 
   const [imageUrl, setImageUrl] = useState("");
-
+ const notify = () => toast("Event Created!",{
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+     
+      });
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -54,7 +92,7 @@ function AdminCreate() {
     const [user,setUser]=useState([])
 
     const createUser = async () => {
-        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
 
         console.log(result.id)
 
@@ -71,7 +109,9 @@ function AdminCreate() {
                     const userDoc = doc(db, "user", user[0].id);
                     const newFields = { Email: user[0].Email, Coins:user[0].Coins, EventsCreated:[...user[0].EventsCreated,id],EventsRegistered:user[0].EventsRegistered, EventsApproved:user[0].EventsApproved,EventsAttended:user[0].EventsAttended};
                     await updateDoc(userDoc, newFields);
-                    window.location.reload();
+                    notify()
+                  
+
                   };
 
       const getEvents = async () => {
@@ -123,28 +163,107 @@ function AdminCreate() {
    
   return (
     <div>
-      <h1>Admin Create Form</h1>
-
-      {/* {localStorage.getItem('name')?<div>Logged In as {localStorage.getItem('name')}</div>:<button onClick={signInWithGoogle}>
-        Sign in with Google
-      </button>} */}
-      
+      <br></br> <br></br>
+           <div className="full-width-bar" >
+             <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
+            
+     
+             <div style={{color:'white'}} >
+     
+             
+           <Button  variant="contained">Create Events</Button>
+           <Button variant="outlined" >Manage Events</Button>
+           
+     
+     
+             </div>
+               
+                 <div className="text" > <Button variant="outlined" onClick={()=>{
+                   showWidgetModal()
+                 }}> <AccountBalanceWalletIcon/></Button></div>
+               </div>
      
       <br></br>
       <hr></hr>
-      
+      <br></br>
+  
+      <input
+        type="file"
+        accept="image/*"
+        id="fileInput"
+        onChange={handleImageUpload}
+        style={{ display: "none" }}
+      />
+ 
+ {imageUrl.length==0 &&        <center>
+  <l style={{color:'#1876d1',textAlign:'left'}}>Choose an image for poster</l>
+  <br></br><br></br>
+      <label
+  htmlFor="fileInput"
+  style={{
+    width: "300px",
+    height: "300px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundImage: `url(${uploadImg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    color: "white",
+    borderRadius: "10px",
+    cursor: "pointer",
+    fontSize: "18px",
+    fontWeight: "bold",
+    textShadow: "1px 1px 2px black",
+    border:"2px solid #1876d1"
+  }}
+>
 
-        <input placeholder='Event Name' onChange={(e)=>setEventName(e.target.value)}></input>
-        {eventName}
-        <br></br>
-        <input placeholder='Event Description' onChange={(e)=>setEventDescription(e.target.value)}></input>
-        {eventDescription}
-        <br></br>
-        <h5>Questions</h5>
+</label>
+</center>}
+      {imageUrl && (
+        <div style={{ marginTop: "10px" }}>
+          <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
+        
+        </div>
+      )}
+      <br></br>
+      {imageUrl.length!=0 &&  <center>
+      <label
+        htmlFor="fileInput"
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#4A90E2",
+          color: "white",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Change Poster
+      </label>
+      </center>}
+     
+      <br></br>
+      <br></br><br></br>
+      <center>
+      <l style={{color:'#1876d1',textAlign:'left'}}>Name of the event</l>
+      <br></br><br></br>
+      <div class="form__group field">
+    <input type="input" class="form__field" placeholder="Name" required="" onChange={(e)=>setEventName(e.target.value)} />
+  
+    {/* <label for="name" class="form__label">Name</label> */}
+</div>
+
+
+</center>
+       
+      
+     
+        {/* <h5 style={{color:'#1876d1', fontSize: '24px'}}>Questions</h5>
         {questionsArray.map((x)=>{
             return(
-                <div>
-                    {x}
+                <div style={{color:'white'}}>
+                    {x} &nbsp;  <CheckCircleIcon/>
                     <br></br>
                 </div>
             )
@@ -153,29 +272,31 @@ function AdminCreate() {
         <input placeholder='Type In Question' onChange={(e)=>setQuestion(e.target.value)}></input>
         <button onClick={()=>{
             setQuestionsArray([...questionsArray,question])
-        }}>Add Questions</button>
-        <br></br>
+        }}>Add Questions</button> */}
+       
         <div>
-      <input type="file" accept="image/*" onChange={handleImageUpload} />
-      {imageUrl && (
-        <div style={{ marginTop: "10px" }}>
-          <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
-        
-        </div>
-      )}
+      {/* <input type="file" accept="image/*" onChange={handleImageUpload} /> */}
+    
+  
     </div>
-    <br></br>
-    <div style={{ padding: "20px", position: "relative", maxWidth: "600px" }}>
+   
+    <center>
+    <div style={{ position: "relative", width:'100%',maxWidth: '300px' }}>
       <h2>Location Search with Suggestions</h2>
+      <l style={{color:'#1876d1',textAlign:'left'}}>Location of the event</l>
+      <br></br><br></br>
       <input
         type="text"
+        class="form__field"
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
         }}
-        placeholder="Start typing a location..."
-        style={{ padding: "8px", width: "100%" }}
+        placeholder="Enter Location"
+       
       />
+
+
       {suggestions.length > 0 && (
         <ul style={{
           listStyle: "none",
@@ -202,7 +323,7 @@ function AdminCreate() {
       )}
 
       {selectedAddress && (
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "20px" , color:'#1876d1'}}>
           <strong>Selected Address:</strong> {selectedAddress}
         </div>
       )}
@@ -212,8 +333,8 @@ function AdminCreate() {
           <iframe
             title="Google Map"
             src={mapUrl}
-            width="600"
-            height="450"
+            width="300"
+            height="300"
             style={{ border: 0 }}
             allowFullScreen=""
             loading="lazy"
@@ -221,12 +342,97 @@ function AdminCreate() {
         </div>
       )}
     </div>
-    <br></br>
-        <hr></hr>
-        <button  onClick={()=>{
+    </center>
+    <br></br><br></br><br></br><br></br>
+    <l style={{color:'#1876d1',textAlign:'left'}}>Enter Start Date</l>
+    <br></br><br></br>
+    <input type="datetime-local" id="datetime" style={{
+    borderTop: 'none',
+    borderRight: 'none',
+    borderLeft: 'none',
+    borderBottom: '2px solid #1876d1',
+    backgroundColor:'black'
+  }} name="datetime"
+        value={startDateTime}
+       
+        onChange={(e)=>{
+          setStartDateTime(e.target.value)
+
+          
+        }}/>
+           <br></br><br></br><br></br>
+        <l style={{color:'#1876d1'}}>Enter End Date</l>
+    
+        
+        <br></br><br></br>
+        <input type="datetime-local" id="datetime" style={{
+    borderTop: 'none',
+    borderRight: 'none',
+    borderLeft: 'none',
+    borderBottom: '2px solid #1876d1',
+    backgroundColor:'black'
+  }
+} name="datetime" name="datetime"
+        value={endDateTime}
+        onChange={(e)=>{
+          setEndDateTime(e.target.value)
+          
+        }}/>
+        <br></br> <br></br>
+        <br></br><br></br><br></br>
+       
+        <l style={{color:'#1876d1'}}>Select Capacity</l>
+        &nbsp;
+        <input type="number" id="quantity" name="quantity" min="1" max="10000"  style={{
+    borderTop: 'none',
+    borderRight: 'none',
+    borderLeft: 'none',
+    borderBottom: '2px solid #1876d1',
+    backgroundColor:'black',
+    color:'#1876d1'
+  }
+} onChange={(e)=>{
+          setCapacity(e.target.value)
+        }}/>
+        <br></br>
+      
+        <br></br>
+       
+        <div style={{color:'white'}}>
+        <br></br>
+      
+      <br></br>
+     
+     
+        <center>
+        <l style={{color:'#1876d1'}}></l>
+        <br></br> <br></br>
+        <textarea
+  type="input"
+  
+ 
+  required
+  onChange={(e) => setEventDescription(e.target.value)}
+  rows={20}
+  placeholder='Enter description for the event'
+  style={{ width: '60%',  borderTop: 'none',
+    
+    border: '2px solid #1876d1',
+    backgroundColor:'black',
+    color:'#1876d1' }} // Makes the width 100% of its container
+/>
+        </center>
+
+
+      
+
+        </div>
+        <br></br> <br></br> <br></br>
+        <button className='btn4' onClick={()=>{
             createUser()
         }}>Create</button>
-
+        <br></br><br></br><br></br><br></br><br></br>
+<ToastContainer/>
     </div>
   )
 }

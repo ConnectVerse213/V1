@@ -29,6 +29,7 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import ShareIcon from '@mui/icons-material/Share';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -62,6 +63,17 @@ function Home2() {
       theme: "light",
      
       });
+      const notifyClipboard = () => toast("Event link copied to clipboard !",{
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+       
+        });
     
     const downloadQRCode = () => {
       const qrCanvas = qrRef.current.querySelector('canvas');
@@ -242,6 +254,11 @@ function Home2() {
           <Button variant="outlined" onClick={()=>{
             window.location.href=`/manageevent/${x.id}`
           }}>Manage  </Button>
+            
+          <Button variant="outlined" onClick={()=>{
+            navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
+            notifyClipboard()
+          }}><ShareIcon/>  </Button>
         
         </CardContent>
       </CardActionArea>
@@ -317,7 +334,10 @@ function Home2() {
 
             
             </div>:<Button variant="outlined">Approval Pending</Button>}
-        
+            <Button variant="outlined" onClick={()=>{
+            navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
+            notifyClipboard()
+          }}><ShareIcon/>  </Button>
         </CardContent>
       </CardActionArea>
     </Card>

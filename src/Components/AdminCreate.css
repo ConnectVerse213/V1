@@ -1,0 +1,135 @@
+#datetime {
+    width: 280px; /* width for a better look */
+    padding: 12px 18px;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6; /* Light background */
+    color: #1876d1;/* Dark text for readability */
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+  }
+  
+  #datetime:focus {
+    border-color: black; /* Green border when focused */
+    box-shadow: 0 0 5px black; /* Subtle glow effect */
+  }
+  
+  #datetime::-webkit-calendar-picker-indicator {
+    background-color:#1876d1;
+    padding: 4px;
+    border-radius: 4px;
+  }
+  
+  #datetime::placeholder {
+    color:#1876d1 /* Light placeholder text */
+  }
+  
+  #datetime:focus::placeholder {
+    color: transparent; /* Hide placeholder on focus */
+  }
+  
+
+
+  .form__group1 {
+    position: relative;
+    padding: 20px 0 0;
+    width: 100%;
+    
+  }
+
+  .form__group {
+    position: relative;
+    padding: 20px 0 0;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #1876d1;
+    outline: 0;
+    font-size: 17px;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+  
+  .form__field::placeholder {
+    color: transparent;
+  }
+  
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 17px;
+    cursor: text;
+    top: 20px;
+  }
+  
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 17px;
+    color: #1876d1;
+    pointer-events: none;
+  }
+  
+  .form__field:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: #1876d1;
+    border-image-slice: 1;
+  }
+  
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 17px;
+    color: #1876d1;
+    font-weight: 700;
+  }
+  
+  /* reset input */
+  .form__field:required, .form__field:invalid {
+    box-shadow: none;
+  }
+
+  .description{
+    
+    border-color: #1876d1 ;
+    border-radius: 10px;
+    border-width: 3px;
+    border:"solid"
+   
+  }
+
+  .btn4 {
+    cursor: pointer;
+    border: solid rgb(187, 204, 0);
+    font-family: "system-ui";
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    padding: 24px 30px;
+    transition: 2s;
+    width: 301px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+    border-radius: 50px;
+    background: linear-gradient(90deg, rgb(170, 76, 191) 0%, rgb(70, 36, 184) 100%);
+    }
+    
+    .btn4:hover{
+    color: rgb(255, 255, 255);
+    width: 337px;
+    background: rgb(0, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box;
+    border-color: rgb(204, 0, 105);
+    border-width: 2px;
+    border-style: solid;
+    }
