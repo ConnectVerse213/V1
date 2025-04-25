@@ -1,0 +1,34 @@
+.card{
+    background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 2.5px );
+-webkit-backdrop-filter: blur( 2.5px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+width:'40em'
+}
+
+
+.full-width-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background-color:black;
+    box-sizing: border-box;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center; /* Vertically center */
+    gap: 8px; /* Space between image and text */
+    color: aliceblue;
+  }
+  
+  
+  .full-width-bar .text {
+    font-size: 18px;
+    font-weight: bold;
+    color:'white'
+  }

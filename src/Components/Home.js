@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { useOkto } from "okto-sdk-react";
 import { db } from "../firebase-config";
+import './Home.css'
 import {
   collection,
   getDocs,
@@ -9,6 +10,19 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Button from '@mui/material/Button';
+import logo from '../assets/images/logo.png'
+import Stack from '@mui/material/Stack';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import coinImg from '../assets/images/coinImg.svg'
+import Alert from '@mui/material/Alert';
+
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 
@@ -57,23 +71,37 @@ function Home() {
       },[])
   return (
     <div>
-      <h1>Home</h1>
+      <br></br>
+     
+     
+      <br></br>
+      <div className="full-width-bar" >
+        <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
+
+        <div style={{color:'white'}} >
+
+        
+      <Button variant="outlined" >Events</Button>
+      <Button variant="outlined" >Movies</Button>
+      <Button variant="outlined" >Concerts</Button>
+
+
+        </div>
+          
+            <div className="text" > <Button variant="outlined" onClick={()=>{
+              showWidgetModal()
+            }}> <AccountBalanceWalletIcon/></Button></div>
+          </div>
       <hr></hr>
-      <button onClick={()=>{
-    alert('Click on Start Earning to get Started')
-}}>Create Event</button>
-<button onClick={()=>{
-     alert('Click on Start Earning to get Started')
-}}>Manage Event</button>
-      <button onClick={()=>{
-  showWidgetModal()
-}}>Wallet </button>
-<br></br>
 
+<center>
+  
+      <div class="coin" >  <img src={coinImg} style={{width:'5em'}} alt="Logo"  /> &nbsp; <l style={{fontSize:"32px"}}>0</l></div>
+      </center>
 
-<br></br>
+<br></br><br></br>
 
-{coins==0 && <button onClick={async()=>{
+{coins==0 && <button class="btn4" onClick={async()=>{
     
     if( localStorage.getItem('email') )
     {
@@ -115,6 +143,14 @@ function Home() {
     }
    
 }}>Start Earning</button>}
+<br></br>
+<br></br><br></br><br></br><br></br><br></br><br></br>
+<hr></hr>
+
+
+<Alert severity="info" >Click on Start Earning to Get Started !</Alert>
+
+<hr></hr>
 
 
     </div>

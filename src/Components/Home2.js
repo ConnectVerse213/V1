@@ -163,14 +163,14 @@ function Home2() {
 }}>Wallet </button>
 <br></br>
 
-<h1>Coins : {coins}</h1>
+<h1 style={{color:'white'}}>Coins : {coins}</h1>
 <br></br>
 <hr></hr>
 <br></br>
-<h5>Created</h5>
+<h2 style={{color:'white'}}>Created</h2>
 {createdEvents.length!=0 && createdEvents.map((x)=>{
   return(
-    <div style={{border:'2px solid black'}}>
+    <div style={{border:'2px solid black',color:'white'}}>
      <img style={{width:'20em'}} src={x.Image}></img>
      <br></br>
       {x.Name}
@@ -180,10 +180,10 @@ function Home2() {
 <br></br>
 <hr></hr>
 <br></br>
-<h5>Registered</h5>
+<h2 style={{color:'white'}}>Registered</h2>
 {registeredEvents.length!=0 && registeredEvents.map((x)=>{
   return(
-    <div style={{border:'2px solid black'}}>
+    <div style={{border:'2px solid black',color:'white'}}>
       
  <img style={{width:'20em'}} src={x.Image}></img>
  <br></br>
