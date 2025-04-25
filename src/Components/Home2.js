@@ -10,6 +10,25 @@ import {
   doc,
 } from "firebase/firestore";
 import { QRCodeCanvas } from 'qrcode.react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Button from '@mui/material/Button';
+import logo from '../assets/images/logo.png'
+import Stack from '@mui/material/Stack';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import coinImg from '../assets/images/coinImg.svg'
+import Alert from '@mui/material/Alert';
+import { ToastContainer, toast } from 'react-toastify';
+import './Home2.css'
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -32,7 +51,17 @@ function Home2() {
       setShowQR(false);
     };
   
-
+ const notify = () => toast("Coming Soon!",{
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+     
+      });
     
     const downloadQRCode = () => {
       const qrCanvas = qrRef.current.querySelector('canvas');
@@ -150,46 +179,103 @@ function Home2() {
       },[])
   return (
     <div>
-      <h1>Home</h1>
+       <br></br> <br></br>
+      <div className="full-width-bar" >
+        <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
+       
+
+        <div style={{color:'white'}} >
+
+        
+      <Button  variant="contained"  >Events</Button>
+      <Button variant="outlined" onClick={notify} >Movies</Button>
+      <Button variant="outlined" onClick={notify} >Concerts</Button>
+
+
+        </div>
+          
+            <div className="text" > <Button variant="outlined" onClick={()=>{
+              showWidgetModal()
+            }}> <AccountBalanceWalletIcon/></Button></div>
+          </div>
       <hr></hr>
-      <button onClick={()=>{
-     window.location.href = '/creator';
-}}>Create Event</button>
-<button onClick={()=>{
-     window.location.href = '/manage';
-}}>Manage Event</button>
-      <button onClick={()=>{
-  showWidgetModal()
-}}>Wallet </button>
+
+  
+
+<center>
+  
+      <div class="coin" >  <img src={coinImg} style={{width:'5em'}} alt="Logo"  /> &nbsp; <l style={{fontSize:"32px"}}>{coins}</l></div>
+      </center>
 <br></br>
 
-<h1 style={{color:'white'}}>Coins : {coins}</h1>
 <br></br>
-<hr></hr>
-<br></br>
-<h2 style={{color:'white'}}>Created</h2>
+<Button variant="outlined" onClick={()=>{
+     window.location.href = '/creator';
+}}>Create Event &nbsp;<AddCircleIcon/></Button>
+<Button variant="outlined" onClick={()=>{
+     window.location.href = '/manage';
+}}>Manage Event &nbsp;<EditCalendarIcon/></Button>
+    
+<br></br><br></br>
+{createdEvents.length==0 && <h2 style={{color:'white'}}>Created(0)</h2>}
+{createdEvents.length!=0 && <h2 style={{color:'white'}}>Created({createdEvents.length})</h2>}
+
+<div className="events">
+
 {createdEvents.length!=0 && createdEvents.map((x)=>{
   return(
-    <div style={{border:'2px solid black',color:'white'}}>
-     <img style={{width:'20em'}} src={x.Image}></img>
-     <br></br>
-      {x.Name}
-      </div>
+
+    <Card sx={{ maxWidth: 345 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+      <CardActionArea>
+        <br></br>
+        <img style={{width:'20em'}} src={x.Image}></img>
+       
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+          {x.Name}
+          </Typography>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
+       
+        </Typography>
+
+          <br></br>
+          <Button variant="outlined" onClick={()=>{
+            window.location.href=`/manageevent/${x.id}`
+          }}>Manage  </Button>
+        
+        </CardContent>
+      </CardActionArea>
+    </Card>
+   
   )
 })}
+</div>
 <br></br>
 <hr></hr>
 <br></br>
-<h2 style={{color:'white'}}>Registered</h2>
+
+{registeredEvents.length==0 && <h2 style={{color:'white'}}>Registered(0)</h2>}
+{registeredEvents.length!=0 && <h2 style={{color:'white'}}>Registered({registeredEvents.length})</h2>}
+<div className="events">
 {registeredEvents.length!=0 && registeredEvents.map((x)=>{
   return(
     <div style={{border:'2px solid black',color:'white'}}>
       
- <img style={{width:'20em'}} src={x.Image}></img>
- <br></br>
-      {x.Name}
-      <br></br>
-      {userApprovedArray.includes(x.id) ? <div>{randomNumber && (
+      <Card sx={{ maxWidth: 345 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+      <CardActionArea>
+        <br></br>
+        <img style={{width:'20em'}} src={x.Image}></img>
+       
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+          {x.Name}
+          </Typography>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
+       
+        </Typography>
+
+          <br></br>
+          {userApprovedArray.includes(x.id) ? <div>{randomNumber && (
               <>
  
       
@@ -218,7 +304,7 @@ function Home2() {
               </>
             )}
             <br></br>
-           {randomNumber=='' &&  <button
+           {randomNumber=='' &&  <Button variant='outlined' color="success"
         onClick={()=>{
 
          window.location.href=`/qr/${x.id}`
@@ -227,15 +313,39 @@ function Home2() {
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
        Get Ticket
-      </button>} 
+      </Button>} 
 
             
-            </div>:<h5>Approval Pending</h5>}
+            </div>:<Button variant="outlined">Approval Pending</Button>}
+        
+        </CardContent>
+      </CardActionArea>
+    </Card>
+     
+    
       </div>
   )
 })}
+</div>
 
+<ToastContainer/>
+<Box
+  sx={{
+    position: 'fixed',   // Fixes it relative to the viewport
+    bottom: 30,          // 16px from the bottom
+    right: 16,           // 16px from the right
+    zIndex: 1000,        // Ensure it stays above other elements
+    '& > :not(style)': { m: 1 },
+  }}
 
+  onClick={()=>{
+    window.location.href="/creator"
+  }}
+>
+  <Fab color="primary" aria-label="add"  size="large">
+    <AddIcon />
+  </Fab>
+</Box>
 
     </div>
   )
