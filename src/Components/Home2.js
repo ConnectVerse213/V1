@@ -135,7 +135,7 @@ function Home2() {
     const [createdEvents,setCreatedEvents]=useState([])
     const [registeredEvents,setRegisteredEvents]=useState([])
     const [userApprovedArray,setUserApprovedArray]=useState([])
-    const [showConfetti,setShowConfetti]=useState(true)
+    const [showConfetti,setShowConfetti]=useState(localStorage.getItem('count')?false:true)
     const [showDiv,setShowDiv]=useState(localStorage.getItem('count')?false:true)
     
     const createUser = async (email) => {
