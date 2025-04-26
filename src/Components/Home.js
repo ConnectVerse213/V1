@@ -115,7 +115,10 @@ function Home() {
       },[])
 
       useEffect(()=>{
+        if(localStorage.getItem('email'))
+        {
         notify()
+        }
         const timer = setTimeout(() => {
           setShowDiv(true);
         }, 1000); // 2 seconds
