@@ -20,7 +20,7 @@ import Button from '@mui/material/Button';
 import logo from '../assets/images/logo.png'
 import Stack from '@mui/material/Stack';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-import coinImg from '../assets/images/coinImg.svg'
+import coinImg from '../assets/images/coinImg.png'
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
 import './Home2.css'
@@ -30,6 +30,8 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import ShareIcon from '@mui/icons-material/Share';
+import Confetti from 'react-confetti'
+
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -63,6 +65,19 @@ function Home2() {
       theme: "light",
      
       });
+
+      const notifyGift = () => toast("100 coins claimed!",{
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        type:'success'
+       
+        });
       const notifyClipboard = () => toast("Event link copied to clipboard !",{
         position: "top-center",
         autoClose: 5000,
@@ -120,6 +135,8 @@ function Home2() {
     const [createdEvents,setCreatedEvents]=useState([])
     const [registeredEvents,setRegisteredEvents]=useState([])
     const [userApprovedArray,setUserApprovedArray]=useState([])
+    const [showConfetti,setShowConfetti]=useState(true)
+    const [showDiv,setShowDiv]=useState(localStorage.getItem('count')?false:true)
     
     const createUser = async (email) => {
 
@@ -189,16 +206,79 @@ function Home2() {
       useEffect(()=>{
         getUserId()
       },[])
+    
   return (
     <div>
        <br></br> <br></br>
+
+{showConfetti && <Confetti 
+      width={"1500px"}
+      height={"800px"}
+    />}
+{showDiv && (
+        <div style={{
+          width: '330px', 
+          height: '400px',
+          padding: '20px', 
+          backgroundColor: '#fff', 
+          border: '1px solid #ddd', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '20%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+        }}>
+          <h1>Congratulations!</h1>
+          <img  style={{width: '130px', 
+    height: '100px', 
+    objectFit: 'cover' }}  src={coinImg}></img>
+          <br></br>
+          <h1>100</h1>
+          <p>You just won 100 coins !</p>
+          <br></br>
+          <center>
+          <button class="button-85" onClick={()=>{
+            if(localStorage.getItem('coins') && localStorage.getItem('coins')==100 )
+            {
+             setShowDiv(false)
+             setShowConfetti(false)
+             localStorage.setItem('count',1)
+             notifyGift()
+            }
+            
+           
+          }}>Claim</button>
+          </center>
+        </div>
+      )}
+
+      {/* Keyframes for animation */}
+      <style>
+        {`
+          @keyframes popupAnimation {
+            0% {
+              opacity: 0;
+              transform: translateX(-50%) scale(0.5);
+            }
+            100% {
+              opacity: 1;
+              transform: translateX(-50%) scale(1);
+            }
+          }
+        `}
+      </style>
+
+     
       <div className="full-width-bar" >
         <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
        
 
         <div style={{color:'white'}} >
 
-        
+  
       <Button  variant="contained"  >Events</Button>
       <Button variant="outlined" onClick={notify} >Movies</Button>
       <Button variant="outlined" onClick={notify} >Concerts</Button>
@@ -214,13 +294,17 @@ function Home2() {
 
   
 
-<center>
+
   
-      <div class="coin" >  <img src={coinImg} style={{width:'5em'}} alt="Logo"  /> &nbsp; <l style={{fontSize:"32px"}}>{coins}</l></div>
-      </center>
+      <div class="coin" style={{marginLeft:'0%',marginTop:'0%'}}>  <img src={coinImg} style={{width: '130px', 
+    height: '200px', 
+    objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}>{coins}</l></div>
+     
 <br></br>
 
 <br></br>
+
+
 <Button variant="outlined" onClick={()=>{
      window.location.href = '/creator';
 }}>Create Event &nbsp;<AddCircleIcon/></Button>
@@ -237,7 +321,7 @@ function Home2() {
 {createdEvents.length!=0 && createdEvents.map((x)=>{
   return(
 
-    <Card sx={{ maxWidth: 345 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>

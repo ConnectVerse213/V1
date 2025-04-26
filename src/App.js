@@ -13,11 +13,12 @@ import MapComponent from './Components/MapComponent';
 import QR from './Components/QR';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
+import Testing from './Components/Testing'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
     <div className="App">
-  
+ 
 
     <Router>
     <Routes>
@@ -44,7 +45,7 @@ function App() {
      
     <Route path="/map/:event_id" element={ <MapComponent/>} />
     <Route path="/qr/:event_id" element={ <QR/>} />
-      
+    <Route path="/testing" element={ <Testing/>} />
       
    
     </Routes>

@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect, use} from 'react'
 import { useOkto } from "okto-sdk-react";
 import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,8 @@ import CardActionArea from '@mui/material/CardActionArea';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Button from '@mui/material/Button';
 import logo from '../assets/images/logo.png'
+import a2e from '../assets/images/a2e.gif'
+import { ToastContainer, toast } from 'react-toastify';
 
 import './OktoLogin.css'
 
@@ -30,6 +32,18 @@ function OktoLogin() {
       }
     };
 
+      const notify = () => toast("Sign in to start earning!",{
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            type:'default'
+      })
+
     const handleGoogleLogin = async (credentialResponse) => {
         const idToken = credentialResponse.credential;
        
@@ -47,9 +61,15 @@ function OktoLogin() {
                }
            });
         };
+        useEffect(()=>{
+          notify()
+        },[])
   return (
     <div>
 
+    
+   
+<div className="page">
 <div className="full-width-bar" >
   <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /> &nbsp; ConnectVerse</div>
     
@@ -57,14 +77,19 @@ function OktoLogin() {
         window.location.reload()
       }}>Sign In</Button></div>
     </div>
-      <h1>Okto Login</h1>
-   
-
+      <video autoPlay loop muted playsInline className="background-video">
+        <source src="/background.mov" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className="content">
+ 
+  
       {!authToken ? (
           
         <center>
 
-<Card sx={{ maxWidth: 345 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+
+<Card sx={{ maxWidth: 345 }} style={{marginTop:'-5%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <PersonAddIcon fontSize='large' style={{color:'white'}}/>
@@ -114,6 +139,12 @@ function OktoLogin() {
 ) : (
   <p>Authenticated</p>
 )}
+      </div>
+    </div>
+
+
+<ToastContainer/>
+
     </div>
   )
 }
