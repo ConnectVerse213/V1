@@ -32,6 +32,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ShareIcon from '@mui/icons-material/Share';
 import Confetti from 'react-confetti'
 import ResponsiveAppBar from './ResponsiveAppBar';
+import CountUp from 'react-countup';
+import coinAnimation from '../assets/images/coinBackground3.gif'
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
@@ -276,15 +278,41 @@ function Home2() {
 
      
      
-      <hr></hr>
-
-  
 
 
   
-      <div class="coin" style={{marginLeft:'0%',marginTop:'0%'}}>  <img src={coinImg} style={{width: '130px', 
+
+<div style={{
+  background: 'rgba(255, 255, 255, 0)',
+  backgroundImage:`url(${coinAnimation})`,
+  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+  backdropFilter: 'blur(2.5px)',
+  WebkitBackdropFilter: 'blur(2.5px)',
+
+  borderBottom: '0.2px solid white',
+  borderTop: '0.2px solid white',
+ 
+  backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
+  backgroundPosition: 'center center', // Centers the image within the div
+  backgroundRepeat: 'no-repeat', // Prevents repeating of the image
+
+}}>
+  
+
+      <div class="coin" style={{marginLeft:'0%',marginTop:'0%'
+        }}> 
+
+    
+    <img src={coinImg} style={{width: '130px', 
     height: '200px', 
-    objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}>{coins}</l></div>
+    objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}><CountUp start={coins-100} end={coins} /></l></div>
+     
+
+<br></br>
+
+
+</div>
+  
      
 <br></br>
 
