@@ -357,7 +357,11 @@ function Home2() {
 
 }}>
   
-      <div class="coin" style={{marginLeft:'0%',marginTop:'0%'}}>  <img src={coinImg} style={{width: '130px', 
+  
+      <div class="coin" style={{marginLeft:'0%',marginTop:'0%'}}> 
+
+    
+    <img src={coinImg} style={{width: '130px', 
     height: '200px', 
     objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}>{coins}</l></div>
      
