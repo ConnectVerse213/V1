@@ -11,6 +11,7 @@ import Home from './Components/Home';
 import Home2 from './Components/Home2';
 import MapComponent from './Components/MapComponent';
 import QR from './Components/QR';
+import Dashboard from './Components/Dashboard'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 import Testing from './Components/Testing'
@@ -41,6 +42,11 @@ function App() {
         
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
          <Home2 />
+    </OktoProvider>} />
+    <Route path="/dashboard" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+        <Dashboard/>
     </OktoProvider>} />
      
     <Route path="/map/:event_id" element={ <MapComponent/>} />

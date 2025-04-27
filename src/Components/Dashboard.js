@@ -23,7 +23,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import coinImg from '../assets/images/coinImg.png'
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
-import './Home2.css'
+import './Dashboard.css'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import Box from '@mui/material/Box';
@@ -31,22 +31,8 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import ShareIcon from '@mui/icons-material/Share';
 import Confetti from 'react-confetti'
-import WhatshotIcon from '@mui/icons-material/Whatshot';
-import CategoryIcon from '@mui/icons-material/Category';
-import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
-import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import ResponsiveAppBar from './ResponsiveAppBar';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -148,20 +134,11 @@ function Home2() {
     const { showWidgetModal, closeModal } = useOkto();
     const { createWallet, getUserDetails, getPortfolio } = useOkto();
     const [createdEvents,setCreatedEvents]=useState([])
-    const [allEvents,setAllEvents]=useState([])
     const [registeredEvents,setRegisteredEvents]=useState([])
     const [userApprovedArray,setUserApprovedArray]=useState([])
     const [showConfetti,setShowConfetti]=useState(localStorage.getItem('count')?false:true)
     const [showDiv,setShowDiv]=useState(localStorage.getItem('count')?false:true)
-    const [buttonHight,setButtonHighlight]=useState(1)
-    const [trendingEvents,setTrendingEvents]=useState([])
-
-
-    const [open, setOpen] = useState(false);
-
-    const toggleDrawer = (newOpen) => () => {
-      setOpen(newOpen);
-    };
+    
     const createUser = async (email) => {
 
             try{
@@ -174,22 +151,6 @@ function Home2() {
            
           };
 
-          const DrawerList = (
-            <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-              <List>
-                {['DeFi', 'GameFi',"SocialFi", 'AI Agents', 'L1',"L2","L3","LLM","Other Technologies","Non Tech"].map((text, index) => (
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                     
-                      <ListItemText primary={text} />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </List>
-              <Divider />
-             
-            </Box>
-          );
 
     useEffect(()=>{
         getUserDetails()
@@ -228,13 +189,6 @@ function Home2() {
                     let data1 = await getDocs(usersCollectionRef);
                                    
                     let eventsTemp=await data1.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-                    setAllEvents(eventsTemp)
-
-                    const newArray = [...eventsTemp]; 
-                    newArray.sort(() => Math.random() - 0.5); 
-
-                    setTrendingEvents(newArray);
-                    console.log("trending events",trendingEvents)
                     
 
                     let eventsCreatedFound=eventsTemp.filter(obj =>  userCreationsFound.includes(obj.id))
@@ -256,7 +210,7 @@ function Home2() {
     
   return (
     <div>
-      <br></br>
+     <br></br>
            <ResponsiveAppBar/>
     
 
@@ -320,175 +274,31 @@ function Home2() {
         `}
       </style>
 
-
-      {/* <div className="full-width-bar" >
-        <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
-       
-
-        <div style={{color:'white'}} >
-
-  
-      <Button  variant="contained" style={{borderRadius:'0px'}} >Events</Button>
-      <Button variant="outlined" style={{color:'#1876d1'}} style={{borderRadius:'0px'}} onClick={notify} >Concerts</Button>
-      <Button variant="outlined" style={{color:'#1876d1'}} style={{borderRadius:'0px'}} onClick={notify} >Movies</Button>
-      <Button  variant="outlined" style={{color:'#1876d1'}} style={{borderRadius:'0px'}} onClick={notify} >Sports</Button>
-    
-
-
-        </div>
-          
-            <div className="text" > <Button  onClick={()=>{
-              showWidgetModal()
-            }}> <AccountBalanceWalletIcon/></Button></div>
-          </div> */}
-
-<hr style={{ border: 'none', height: '0.1px', backgroundColor: 'white' }} />
-      {/* <hr></hr> */}
+     
+     
+      <hr></hr>
 
   
 
-<div style={{
-  background: 'rgba(255, 255, 255, 0)',
-  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-  backdropFilter: 'blur(2.5px)',
-  WebkitBackdropFilter: 'blur(2.5px)',
 
-  borderBottom: '0.2px solid white',
-
-}}>
   
       <div class="coin" style={{marginLeft:'0%',marginTop:'0%'}}>  <img src={coinImg} style={{width: '130px', 
     height: '200px', 
     objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}>{coins}</l></div>
      
-<Button variant="outlined" style={{border:"green 0.5px solid",color:'green'}}>Leaderboard &nbsp; <LeaderboardIcon/></Button>
-<br></br><br></br>
-
-
-</div>
-
-{/* <hr style={{ border: 'none', height: '0.1px', backgroundColor: '#1876d1', margin: '20px 0' }} /> */}
-<br></br> 
 <br></br>
-<div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
 
-  {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-    
-}}>All </Button>}
- {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-     setButtonHighlight(1)
-}}>All </Button>}
-{buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-    
-}}>Trending &nbsp;<WhatshotIcon style={{color:'red'}}/></Button>}
-{buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-      setButtonHighlight(2)
-      
-}}>Trending &nbsp;<WhatshotIcon style={{color:'red'}}/></Button>}
-
-  {buttonHight==3 && <Button variant="conatined"  style={{borderRadius:'0px',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
-       
-  }}>Category &nbsp;<CategoryIcon /></Button>}
+<br></br>
 
 
-    {buttonHight!=3 &&  <Button variant="outlined" style={{borderRadius:'0px', border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-      if(open==false)
-      {
-        setOpen(true)
-      }
-      else{
-        setOpen(false)
-      }
-       
-       setButtonHighlight(3)
-      
-      }}>Category &nbsp;<CategoryIcon style={{color:'white'}} /></Button>}
-
-</div>
-
+<Button variant="outlined" onClick={()=>{
+     window.location.href = '/creator';
+}}>Create Event &nbsp;<AddCircleIcon/></Button>
+<Button variant="outlined" onClick={()=>{
+     window.location.href = '/manage';
+}}>Manage Event &nbsp;<EditCalendarIcon/></Button>
     
 <br></br><br></br>
-{trendingEvents.length==0 && buttonHight==2 && <h2 style={{color:'white'}}>Trending</h2>}
-{trendingEvents.length!=0 && buttonHight==2 && <h2 style={{color:'white'}}>Trending</h2>}
-
-<div className="events">
-
-{trendingEvents.length!=0 && buttonHight==2 &&  trendingEvents.map((x)=>{
-  return(
-
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
-      <CardActionArea>
-        <br></br>
-        <img style={{width:'20em'}} src={x.Image}></img>
-       
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
-        </Typography>
-
-          <br></br>
-          <Button variant="outlined" onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
-          }}>Manage  </Button>
-            
-          <Button variant="outlined" onClick={()=>{
-            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
-            notifyClipboard()
-          }}><ShareIcon/>  </Button>
-        
-        </CardContent>
-      </CardActionArea>
-    </Card>
-   
-  )
-})}
-</div>
-
-<br></br>
-{allEvents.length==0 && <h2 style={{color:'white'}}>All</h2>}
-{allEvents.length!=0 && <h2 style={{color:'white'}}>All</h2>}
-
-<div className="events">
-
-{allEvents.length!=0 && allEvents.map((x)=>{
-  return(
-
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
-      <CardActionArea>
-        <br></br>
-        <img style={{width:'20em'}} src={x.Image}></img>
-       
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
-        </Typography>
-
-          <br></br>
-          <Button variant="outlined" onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
-          }}>Manage  </Button>
-            
-          <Button variant="outlined" onClick={()=>{
-            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
-            notifyClipboard()
-          }}><ShareIcon/>  </Button>
-        
-        </CardContent>
-      </CardActionArea>
-    </Card>
-   
-  )
-})}
-</div>
-<br></br>
-<hr></hr>
-<br></br>
 {createdEvents.length==0 && <h2 style={{color:'white'}}>Created(0)</h2>}
 {createdEvents.length!=0 && <h2 style={{color:'white'}}>Created({createdEvents.length})</h2>}
 
@@ -626,9 +436,6 @@ function Home2() {
     <AddIcon />
   </Fab>
 </Box>
-<Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
 
     </div>
   )
