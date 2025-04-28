@@ -382,7 +382,7 @@ function AdminCreate() {
 
 <div class="location2"><l style={{fontSize:'20px'}}>
   
-  {selectedAddress.length!=0 && selectedAddress.split(',')[0]}
+  {selectedAddress.length!=0 && <l>&nbsp;&nbsp;&nbsp;&nbsp;{selectedAddress.split(',')[0]}</l>}
   {selectedAddress.length==0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small'/> Add Location</l>}
   
   </l>
