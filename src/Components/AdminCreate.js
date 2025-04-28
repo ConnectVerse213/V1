@@ -67,8 +67,8 @@ function AdminCreate() {
     const [suggestions, setSuggestions] = useState([]);
     const [mapUrl, setMapUrl] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
-    const [startDateTime, setStartDateTime] = useState('');
-    const [endDateTime, setEndDateTime] = useState('');
+    const [startDateTime, setStartDateTime] = useState('2025-04-30T08:00');
+    const [endDateTime, setEndDateTime] = useState('2025-05-01T14:00');
     const [capacity,setCapacity]=useState(200)
     const { showWidgetModal, closeModal } = useOkto();
 
@@ -312,7 +312,7 @@ function AdminCreate() {
       <div class="form__group field">
 <div class="eventName">
     
-    <input type="input" style={{fontSize:'40px',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)", width:'100%',color:'white'}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
+    <input type="input" style={{fontSize:'40px',background: "transparent", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "none", width:'100%',color:'white'}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
     </div>
    
 </div>
