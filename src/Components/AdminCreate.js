@@ -28,8 +28,27 @@ import uploadImg from '../assets/images/uploadImg.png'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
-
+import CircleIcon from '@mui/icons-material/Circle';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import LocationPinIcon from '@mui/icons-material/LocationPin';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import DescriptionIcon from '@mui/icons-material/Description';
+import { EditorContent, useEditor } from '@tiptap/react';
+import { StarterKit } from '@tiptap/starter-kit';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import EditIcon from '@mui/icons-material/Edit';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import AddCardIcon from '@mui/icons-material/AddCard';
 import './AdminCreate.css'
 
 
@@ -50,21 +69,53 @@ function AdminCreate() {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [startDateTime, setStartDateTime] = useState('');
     const [endDateTime, setEndDateTime] = useState('');
-    const [capacity,setCapacity]=useState(10000)
+    const [capacity,setCapacity]=useState(200)
     const { showWidgetModal, closeModal } = useOkto();
+
+    const [description,setDescription]=useState(false)
+    const [showCapacity,setShowCapacity]=useState(false)
        const { createWallet, getUserDetails, getPortfolio } = useOkto();
+
+        const editor = useEditor({
+           extensions: [StarterKit], // Add basic features: bold, italic, headings, etc.
+           content: '<p>Start writing...</p>',
+         });
+         const [text,setText]=useState('')
+       
+        
+
+       const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [open_description, setOpen_description] = useState(false);
+
+  const handleClickOpen_description = () => {
+    setOpen_description(true);
+  };
+
+  const handleClose_description = () => {
+    setOpen_description(false);
+  };
   
 
   const [imageUrl, setImageUrl] = useState("");
- const notify = () => toast("Event Created!",{
-      position: "top-right",
+ const notify = (text,theme,position,type) => toast(text,{
+      position: position,
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme: theme,
+      type:type
      
       });
   const handleImageUpload = async (e) => {
@@ -93,7 +144,7 @@ function AdminCreate() {
     const [user,setUser]=useState([])
 
     const createUser = async () => {
-        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: eventDescription, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
 
         console.log(result.id)
 
@@ -110,7 +161,7 @@ function AdminCreate() {
                     const userDoc = doc(db, "user", user[0].id);
                     const newFields = { Email: user[0].Email, Coins:user[0].Coins, EventsCreated:[...user[0].EventsCreated,id],EventsRegistered:user[0].EventsRegistered, EventsApproved:user[0].EventsApproved,EventsAttended:user[0].EventsAttended};
                     await updateDoc(userDoc, newFields);
-                    notify()
+                    notify("Event Created!","light","top-right","success")
                   
 
                   };
@@ -138,6 +189,9 @@ function AdminCreate() {
       
               },[])
 
+   
+      
+       
                 useEffect(() => {
                   const timeout = setTimeout(() => {
                     if (query.trim() === "") {
@@ -164,7 +218,8 @@ function AdminCreate() {
    
   return (
     <div>
-      <br></br> <br></br>
+      <br></br> 
+
            <div className="full-width-bar" >
              <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
             
@@ -172,8 +227,8 @@ function AdminCreate() {
              <div style={{color:'white'}} >
      
              
-           <Button  variant="contained">Create Events</Button>
-           <Button variant="outlined" >Manage Events</Button>
+           <Button variant="outlined" style={{border:'none'}} >Home</Button>
+           <Button  variant="outlined" style={{border:'none'}} >Manage </Button>
            
      
      
@@ -184,11 +239,17 @@ function AdminCreate() {
                  }}> <AccountBalanceWalletIcon/></Button></div>
                </div>
      
-      <br></br>
-      <hr></hr>
-      <br></br>
+               <hr style={{ 
   
-      <input
+  border: '0.05px solid white', // A bit thicker for visibility
+  margin: '10px 0' ,
+  color:'white'
+}} />
+      <br></br>
+
+
+      <div class="main">
+        <div class="main1">     <input
         type="file"
         accept="image/*"
         id="fileInput"
@@ -197,8 +258,8 @@ function AdminCreate() {
       />
  
  {imageUrl.length==0 &&        <center>
-  <l style={{color:'#1876d1',textAlign:'left'}}>Choose an image for poster</l>
-  <br></br><br></br>
+  
+ 
       <label
   htmlFor="fileInput"
   style={{
@@ -216,20 +277,21 @@ function AdminCreate() {
     fontSize: "18px",
     fontWeight: "bold",
     textShadow: "1px 1px 2px black",
-    border:"2px solid #1876d1"
+    border:"5px solid #1876d1"
   }}
 >
 
 </label>
+<br></br>
+<l style={{color:'#1876d1',textAlign:'left'}}>Choose an image for poster</l>
 </center>}
-      {imageUrl && (
+{imageUrl && (
         <div style={{ marginTop: "10px" }}>
           <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
         
         </div>
       )}
-      <br></br>
-      {imageUrl.length!=0 &&  <center>
+{imageUrl.length!=0 &&  <center>
       <label
         htmlFor="fileInput"
         style={{
@@ -243,62 +305,192 @@ function AdminCreate() {
         Change Poster
       </label>
       </center>}
+      </div>
+        <div class="main2"> 
      
-      <br></br>
-      <br></br><br></br>
-      <center>
-      <l style={{color:'#1876d1',textAlign:'left'}}>Name of the event</l>
-      <br></br><br></br>
       <div class="form__group field">
-    <input type="input" class="form__field" placeholder="Name" required="" onChange={(e)=>setEventName(e.target.value)} />
+
+    
+    <input type="input" style={{fontSize:'40px',width:'105%',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)"}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
   
-    {/* <label for="name" class="form__label">Name</label> */}
+   
 </div>
 
 
-</center>
+
        
       
-     
-        {/* <h5 style={{color:'#1876d1', fontSize: '24px'}}>Questions</h5>
-        {questionsArray.map((x)=>{
-            return(
-                <div style={{color:'white'}}>
-                    {x} &nbsp;  <CheckCircleIcon/>
-                    <br></br>
-                </div>
-            )
-        })}
-       
-        <input placeholder='Type In Question' onChange={(e)=>setQuestion(e.target.value)}></input>
-        <button onClick={()=>{
-            setQuestionsArray([...questionsArray,question])
-        }}>Add Questions</button> */}
+  
        
         <div>
-      {/* <input type="file" accept="image/*" onChange={handleImageUpload} /> */}
+  
     
   
     </div>
-   
-    <center>
-    <div style={{ position: "relative", width:'100%',maxWidth: '300px' }}>
-      <h2>Location Search with Suggestions</h2>
-      <l style={{color:'#1876d1',textAlign:'left'}}>Location of the event</l>
-      <br></br><br></br>
-      <input
-        type="text"
-        class="form__field"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-        }}
-        placeholder="Enter Location"
+    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+
+<div class="datetime1">
+  <div class="datetime1a"><CircleIcon fontSize="small"/><MoreVertIcon/><RadioButtonUncheckedIcon fontSize="small"/></div>
+  <div class="datetime1b"><l>Start</l>
+  <l>End</l></div>
+
+
+
+</div>
+<div class="datetime2">
+ 
+    <input type="datetime-local"  style={{ height:'2.5em',
+          backgroundColor: 'transparent',
+          color: 'white',
+         border:"none"
+        }} name="datetime"
+  
+        value={startDateTime}
        
-      />
+        onChange={(e)=>{
+          setStartDateTime(e.target.value)
+
+          
+        }}/>
+        
+           
+   
+    
+        
+       
+        <input type="datetime-local" name="datetime" name="datetime"
+        value={endDateTime}
+        style={{ height:'2.5em',
+          backgroundColor: 'transparent',
+          color: 'white',
+         border:"none"
+        }}
+        onChange={(e)=>{
+          setEndDateTime(e.target.value)
+          
+        }}/>
+        <style>
+{`
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: brightness(0) invert(1);
+  }
+`}
+</style>
+   </div>
+   </div>
+  <div class="location" onClick={handleClickOpen} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+ 
+<div class="location1"><LocationPinIcon fontSize='small'/></div>
+<div class="location2"><l style={{fontSize:'20px'}}>
+  
+  {selectedAddress.length!=0 && selectedAddress.split(',')[0]}
+  {selectedAddress.length==0 && <l>Add Location</l>}
+  
+  </l>
+<l>Offline location</l>
 
 
-      {suggestions.length > 0 && (
+</div>
+
+  </div>
+
+
+
+      {mapUrl && (
+        <div >
+          <iframe
+            title="Google Map"
+            src={mapUrl}
+            width="400"
+            height="150"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      )}
+   
+  <div class="description" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }} onClick={()=>{
+    setDescription(true)
+  }}><DescriptionIcon fontSize='small'/> &nbsp;{text.length==0 ? <l style={{fontSize:'20px'}}>Add Description</l>:<div style={{fontSize:'20px'}} >{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div>
+
+   
+       
+       
+        <l style={{color:'#1876d1'}}>Event Options</l>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+          <div class="tickets" onClick={()=>{
+              notify("Subscribe to premium for paid tickets","light","top-right","warning")
+          }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free&nbsp;<EditIcon fontSize='small'/></div></div>
+          <div class="capacity" onClick={()=>{
+            setShowCapacity(true)
+            notify("Subscribe to premium for unlimited capacity","light","top-right","warning")
+          }}><div style={{display:'flex',alignItems:'center'}}><PeopleAltIcon fontSize='small'/>&nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}>{capacity}&nbsp;<EditIcon fontSize='small'/></div></div>
+
+
+          
+        </div>
+      <br></br><br></br>
+        <button  className='button-85' onClick={()=>{
+            createUser()
+        }}>Create</button>
+       
+     
+      
+      </div>
+
+     
+       
+      </div>
+  
+ 
+    
+      <br></br>
+      <br></br>
+
+
+    
+       
+<ToastContainer/>
+
+<Dialog
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          paper: {
+            component: 'form',
+            onSubmit: (event) => {
+              event.preventDefault();
+              const formData = new FormData(event.currentTarget);
+              const formJson = Object.fromEntries(formData.entries());
+              const email = formJson.email;
+              console.log(email);
+              handleClose();
+            },
+          },
+        }}
+      >
+       
+        <DialogContent style={{width:'35em',minHeight:'20em'}}>
+          <DialogContentText>
+          &nbsp;Enter Location
+          </DialogContentText>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+        
+            fullWidth
+            variant="standard"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+            placeholder=" Search Location"
+          />
+          <br></br>
+          {suggestions.length > 0 && (
         <ul style={{
           listStyle: "none",
           margin: 0,
@@ -342,98 +534,145 @@ function AdminCreate() {
           ></iframe>
         </div>
       )}
-    </div>
-    </center>
-    <br></br><br></br><br></br><br></br>
-    <l style={{color:'#1876d1',textAlign:'left'}}>Enter Start Date</l>
-    <br></br><br></br>
-    <input type="datetime-local" id="datetime" style={{
-    borderTop: 'none',
-    borderRight: 'none',
-    borderLeft: 'none',
-    borderBottom: '2px solid #1876d1',
-    backgroundColor:'black'
-  }} name="datetime"
-        value={startDateTime}
-       
-        onChange={(e)=>{
-          setStartDateTime(e.target.value)
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit">Add</Button>
+        </DialogActions>
+      </Dialog>
 
+
+      {description &&  <div style={{
+          width: '330px', 
+          height: '700px',
+          padding: '20px', 
+          backgroundColor: '#fff', 
+          border: '1px solid #ddd', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+        }}>
+          <h2>Description</h2>
+          <div >
+                {/* Toolbar with buttons */}
+                <div>
+                  <div class="editorIcons">
+                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
+                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
+                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
+                 
+                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
+                  <Button variant="outlined"onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
+                  </div>
+                </div>
           
-        }}/>
-           <br></br><br></br><br></br>
-        <l style={{color:'#1876d1'}}>Enter End Date</l>
-    
-        
-        <br></br><br></br>
-        <input type="datetime-local" id="datetime" style={{
-    borderTop: 'none',
-    borderRight: 'none',
-    borderLeft: 'none',
-    borderBottom: '2px solid #1876d1',
-    backgroundColor:'black'
-  }
-} name="datetime" name="datetime"
-        value={endDateTime}
-        onChange={(e)=>{
-          setEndDateTime(e.target.value)
+                {/* The editable content area with increased height */}
+                <center>
+                <div
+                  style={{
+                    height: '60vh',
+                    overflowY: 'auto',
+                    border: '1px solid #ccc', // Optional: Add a border to the editor
+                    backgroundColor:'white',width:'20em',
+                    textAlign: 'left'
+                  }}
+                >
+                  <EditorContent
+                    editor={editor}
+                    style={{
+                      padding: '10px', // Optional: Add padding for better layout
+                    }}
+                  />
+                </div>
+                </center>
+          <br></br>
+         
+                {/* Inline CSS to remove focus outline */}
+                <style>
+                  {`
+                    .ProseMirror:focus {
+                      outline: none !important;  /* Remove focus outline */
+                      box-shadow: none !important; /* Remove focus shadow */
+                    }
+                  `}
+                </style>
+                <br></br>
           
-        }}/>
-        <br></br> <br></br>
-        <br></br><br></br><br></br>
-       
-        <l style={{color:'#1876d1'}}>Select Capacity</l>
-        &nbsp;
-        <input type="number" id="quantity" name="quantity" min="1" max="10000"  style={{
-    borderTop: 'none',
-    borderRight: 'none',
-    borderLeft: 'none',
-    borderBottom: '2px solid #1876d1',
-    backgroundColor:'black',
-    color:'#1876d1'
+                
+               
+              </div>
+     
+          <center>
+          <Button variant="contained"  onClick={()=>{
+            
+            setDescription(false)
+           
+          }}>Cancel</Button>
+          &nbsp;  &nbsp;   &nbsp;  &nbsp;
+          <Button variant="contained"  onClick={()=>{
+            
+            setText(editor.getHTML())
+            setDescription(false)
+            console.log(editor.getHTML())
+           
+          }}>Save</Button>
+          </center>
+        </div>}
+ 
+
+        {showCapacity &&  <div style={{
+          width: '360px', 
+          height: '250px',
+          padding: '20px', 
+          backgroundColor: '#fff', 
+          border: '1px solid #ddd', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+        }}>
+          <h2>Tickets</h2>
+          <l>Maximum Capacity : 200</l>
+          <br></br><br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
+          <br></br><l></l>
+          <div >
+          <input  style={{height:'300px'}}type="number" id="quantity" name="quantity" min="1" max="200" placeholder='200'  style={{
+  
   }
 } onChange={(e)=>{
           setCapacity(e.target.value)
         }}/>
-        <br></br>
-      
-        <br></br>
-       
-        <div style={{color:'white'}}>
-        <br></br>
-      
-      <br></br>
-     
-     
-        <center>
-        <l style={{color:'#1876d1'}}></l>
-        <br></br> <br></br>
-        <textarea
-  type="input"
-  
+               
+                
+               
+              </div>
+     <br></br><br></br>
+          <center>
+          <Button variant="contained"  onClick={()=>{
+            
+            setCapacity(200)
+            setShowCapacity(false)
+           
+          }}>Cancel</Button>
+          &nbsp;  &nbsp;   &nbsp;  &nbsp;
+          <Button variant="contained"  onClick={()=>{
+            
+            setShowCapacity(false)
+           
+          }}>Save</Button>
+          </center>
+        </div>}
  
-  required
-  onChange={(e) => setEventDescription(e.target.value)}
-  rows={20}
-  placeholder='Enter description for the event'
-  style={{ width: '60%',  borderTop: 'none',
-    
-    border: '2px solid #1876d1',
-    backgroundColor:'black',
-    color:'#1876d1' }} // Makes the width 100% of its container
-/>
-        </center>
 
-
-      
-
-        </div>
-        <br></br> <br></br> <br></br>
-        <button className='btn4' onClick={()=>{
-            createUser()
-        }}>Create</button>
-        <br></br><br></br><br></br><br></br><br></br>
-<ToastContainer/>
     </div>
   )
 }

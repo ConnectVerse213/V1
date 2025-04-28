@@ -16,6 +16,8 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tiptap/react": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
     "@yudiel/react-qr-scanner": "^2.2.1",
     "bootstrap": "^5.3.5",
     "canvas-nest.js": "^2.0.4",
