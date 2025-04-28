@@ -666,7 +666,7 @@ function AdminCreate() {
           <h2>Tickets</h2>
          
           <br></br>
-          <input style={{fontSize:'35px'}}onChange={(e)=>{
+          <input style={{fontSize:'28px'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
           <br></br>
