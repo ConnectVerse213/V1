@@ -162,7 +162,8 @@
       justify-content: flex-start;
       align-items:flex-start;
       gap:10px;
-        color:white
+        color:white;
+      
     }
 
     .eventName{
@@ -181,11 +182,14 @@
      
       gap:40px;
       
+      height:8em;
+      align-items: center;
+      
       
     }
     .datetime1{
       width:'100%';
-   
+       margin-left:0.5em;
       display: flex;
      
     }
@@ -213,9 +217,9 @@
     .location{
       display: flex;
      
-      height:3em;
+      height:4em;
       width:100%;
-      align-items: flex-start
+      align-items: center;
       
     }
     
@@ -240,8 +244,9 @@
       display: flex;
       width:100%;
       border-radius: 0%;
-      height:2.5em;
+     
       align-items: center;
+   
     }
 
     .editorIcons{
@@ -252,7 +257,7 @@
     .eventOptions{
       display: flex;
       flex-direction: column;
-      height:3.5em;
+      height:4em;
       align-items: center;
       justify-content: center;
       gap:5px;
@@ -261,11 +266,14 @@
     }
     .tickets{
       display: flex;
-      gap:180px
+      gap:180px;
+      margin-left:0.7em;
+
     }
     .capacity{
       display: flex;
-      gap:170px
+      gap:170px;
+      margin-left:0.7em;
     }
     .subscribe{
       display: flex;

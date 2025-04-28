@@ -69,7 +69,7 @@ function AdminCreate() {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [startDateTime, setStartDateTime] = useState('2025-04-30T08:00');
     const [endDateTime, setEndDateTime] = useState('2025-05-01T14:00');
-    const [capacity,setCapacity]=useState(200)
+    const [capacity,setCapacity]=useState(50)
     const { showWidgetModal, closeModal } = useOkto();
 
     const [description,setDescription]=useState(false)
@@ -341,9 +341,11 @@ function AdminCreate() {
 <div class="datetime2">
  
     <input type="datetime-local"  style={{ height:'2.5em',
-          backgroundColor: 'rgba(255,255,255,0.4)'
+         
+            backgroundColor: '#8193FE'
          ,color:'white',
-           borderRadius:'15px'
+           borderRadius:'10px',
+           border:'none',
         
         }} name="datetime"
   
@@ -363,9 +365,10 @@ function AdminCreate() {
         <input type="datetime-local" name="datetime" name="datetime"
         value={endDateTime}
         style={{ height:'2.5em',
-          backgroundColor: 'rgba(255,255,255,0.4)',
+          backgroundColor: '#8193FE',
           color:'white', border:"none",
-          borderRadius:'15px'
+          border:'none',
+          borderRadius:'10px'
         }}
         onChange={(e)=>{
           setEndDateTime(e.target.value)
@@ -376,14 +379,14 @@ function AdminCreate() {
    </div>
   <div class="location" onClick={handleClickOpen} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
-<div class="location1"><LocationPinIcon fontSize='small'/></div>
+
 <div class="location2"><l style={{fontSize:'20px'}}>
   
   {selectedAddress.length!=0 && selectedAddress.split(',')[0]}
-  {selectedAddress.length==0 && <l>Add Location</l>}
+  {selectedAddress.length==0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small'/> Add Location</l>}
   
   </l>
-<l>Offline location</l>
+<l>&nbsp;&nbsp;&nbsp; &nbsp; Offline location</l>
 
 
 </div>
@@ -406,13 +409,13 @@ function AdminCreate() {
         </div>
       )}
 
-      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left'}}>
-   
+      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
+   <br></br> 
   <div  onClick={()=>{
     
     setDescription(true)
 
-  }}> {text.length==0 ? <l style={{fontSize:'20px'}}><DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div></a>
+  }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div></a>
 
    
        
@@ -424,12 +427,23 @@ function AdminCreate() {
           }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free&nbsp;<EditIcon fontSize='small'/></div></div>
           
 
-          <a href="#up"  style={{ color:'white',textDecoration:"none",width:'100%',textAlign:'left'}}>
+          
           <div class="capacity" onClick={()=>{
-            setShowCapacity(true)
-            notify("Subscribe to premium for unlimited capacity","light","bottom-center","warning")
-          }}><div style={{display:'flex',alignItems:'center'}}><PeopleAltIcon fontSize='small'/>&nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}>{capacity}&nbsp;<EditIcon fontSize='small'/></div></div>
-          </a>
+            if(capacity>=200)
+            {
+              setShowCapacity(true)
+            }
+           if(capacity==50 )
+           {
+            notify("Subscribe to premium for unlimited capacity","light","top-right","warning")
+           }
+           
+          }}><div style={{display:'flex',alignItems:'center'}}><PeopleAltIcon fontSize='small'/>&nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input  style={{backgroundColor: '#8193FE',border:'none',color:'white',borderRadius:'8px'}}type="number" id="quantity" name="quantity" min="1" max="200" placeholder='50'  
+        onChange={(e)=>{
+                  setCapacity(e.target.value)
+                }}/>
+                      </div></div>
+      
           
           
 
@@ -649,19 +663,11 @@ function AdminCreate() {
           animation: 'popupAnimation 0.5s ease',
         }}>
           <h2>Tickets</h2>
-          <l>Maximum Capacity : 200</l>
+         
           <br></br><br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
           <br></br><l></l>
           <div >
-          <input  style={{height:'300px'}}type="number" id="quantity" name="quantity" min="1" max="200" placeholder='200'  style={{
-  
-  }
-} onChange={(e)=>{
-          setCapacity(e.target.value)
-        }}/>
-               
-                
-               
+         
               </div>
      <br></br><br></br>
           <center>
@@ -676,7 +682,7 @@ function AdminCreate() {
             
             setShowCapacity(false)
            
-          }}>Save</Button>
+          }}>Buy</Button>
           </center>
         </div>}
  
