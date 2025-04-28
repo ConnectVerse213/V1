@@ -219,7 +219,7 @@ function AdminCreate() {
   return (
     <div>
       <br></br> 
-
+      <div id="up"></div>
            <div className="full-width-bar" >
              <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
             
@@ -233,7 +233,7 @@ function AdminCreate() {
      
      
              </div>
-               
+           
                  <div className="text" > <Button variant="outlined" onClick={()=>{
                    showWidgetModal()
                  }}> <AccountBalanceWalletIcon/></Button></div>
@@ -246,6 +246,7 @@ function AdminCreate() {
   color:'white'
 }} />
       <br></br>
+      
 
 
       <div class="main">
@@ -311,7 +312,7 @@ function AdminCreate() {
       <div class="form__group field">
 
     
-    <input type="input" style={{fontSize:'40px',width:'105%',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)"}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
+    <input type="input" style={{fontSize:'40px',width:'100%',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)"}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
   
    
 </div>
@@ -401,7 +402,7 @@ function AdminCreate() {
           <iframe
             title="Google Map"
             src={mapUrl}
-            width="400"
+            width="320"
             height="150"
             style={{ border: 0 }}
             allowFullScreen=""
@@ -409,10 +410,14 @@ function AdminCreate() {
           ></iframe>
         </div>
       )}
+
+      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left'}}>
    
-  <div class="description" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }} onClick={()=>{
+  <div  onClick={()=>{
+    
     setDescription(true)
-  }}><DescriptionIcon fontSize='small'/> &nbsp;{text.length==0 ? <l style={{fontSize:'20px'}}>Add Description</l>:<div style={{fontSize:'20px'}} >{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div>
+
+  }}> {text.length==0 ? <l style={{fontSize:'20px'}}><DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div></a>
 
    
        
@@ -422,10 +427,16 @@ function AdminCreate() {
           <div class="tickets" onClick={()=>{
               notify("Subscribe to premium for paid tickets","light","top-right","warning")
           }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free&nbsp;<EditIcon fontSize='small'/></div></div>
+          
+
+          <a href="#up"  style={{ color:'white',textDecoration:"none",width:'100%',textAlign:'left'}}>
           <div class="capacity" onClick={()=>{
             setShowCapacity(true)
-            notify("Subscribe to premium for unlimited capacity","light","top-right","warning")
+            notify("Subscribe to premium for unlimited capacity","light","bottom-center","warning")
           }}><div style={{display:'flex',alignItems:'center'}}><PeopleAltIcon fontSize='small'/>&nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}>{capacity}&nbsp;<EditIcon fontSize='small'/></div></div>
+          </a>
+          
+          
 
 
           
@@ -473,7 +484,7 @@ function AdminCreate() {
         }}
       >
        
-        <DialogContent style={{width:'35em',minHeight:'20em'}}>
+        <DialogContent style={{width:'15em',minHeight:'20em'}}>
           <DialogContentText>
           &nbsp;Enter Location
           </DialogContentText>
@@ -500,7 +511,7 @@ function AdminCreate() {
           background: "#fff",
           border: "1px solid #ccc",
           position: "absolute",
-          width: "100%",
+          width: "10em",
           zIndex: 10,
           maxHeight: "200px",
           overflowY: "auto"
@@ -528,7 +539,7 @@ function AdminCreate() {
           <iframe
             title="Google Map"
             src={mapUrl}
-            width="300"
+            width="250"
             height="300"
             style={{ border: 0 }}
             allowFullScreen=""
