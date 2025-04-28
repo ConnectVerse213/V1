@@ -433,14 +433,13 @@ function AdminCreate() {
 
           
           <div class="capacity" style={{display:'flex',alignItems:'center',backgroundColor:'yellow'}} onClick={()=>{
-            if(capacity>=200)
-            {
+            
               setShowCapacity(true)
-            }
+         
           
            
-          }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><PeopleAltIcon fontSize='small'/>
-          &nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input style={{width:'4em' , fontSize: '13px' }} placeholder="50"></input></div>
+          }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}} ><PeopleAltIcon fontSize='small'/>
+          &nbsp;<l>Capacity</l></div>
                       </div>
       
           
@@ -651,7 +650,7 @@ function AdminCreate() {
 
         {showCapacity &&  <div style={{
           width: '360px', 
-          height: '250px',
+          height: '300px',
           padding: '20px', 
           backgroundColor: '#fff', 
           border: '1px solid #ddd', 
@@ -666,7 +665,12 @@ function AdminCreate() {
         }}>
           <h2>Tickets</h2>
          
-          <br></br><br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
+          <br></br>
+          <input style={{fontSize:'35px'}}onChange={(e)=>{
+            setCapacity(parseInt(e.target.value))
+          }} placeholder='Enter Capacity'></input>
+          <br></br>
+          <br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
           <br></br><l></l>
           <div >
          
@@ -675,7 +679,7 @@ function AdminCreate() {
           <center>
           <Button variant="contained"  onClick={()=>{
             
-            setCapacity(200)
+            setCapacity(50)
             setShowCapacity(false)
            
           }}>Cancel</Button>
@@ -684,7 +688,7 @@ function AdminCreate() {
             
             setShowCapacity(false)
            
-          }}>Buy</Button>
+          }}>Save</Button>
           </center>
         </div>}
  
