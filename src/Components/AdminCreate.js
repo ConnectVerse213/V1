@@ -437,10 +437,7 @@ function AdminCreate() {
             {
               setShowCapacity(true)
             }
-           if(capacity==50 )
-           {
-            notify("Subscribe to premium for unlimited capacity","light","top-right","warning")
-           }
+          
            
           }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><PeopleAltIcon fontSize='small'/>
           &nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input style={{width:'4em' , fontSize: '13px' }} placeholder="50"></input></div>
