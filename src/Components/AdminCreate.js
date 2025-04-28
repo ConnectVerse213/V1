@@ -341,8 +341,9 @@ function AdminCreate() {
 <div class="datetime2">
  
     <input type="datetime-local"  style={{ height:'2.5em',
-          backgroundColor: 'rgba(255,255,255,0.4)',
-         
+          backgroundColor: 'rgba(255,255,255,0.4)'
+         ,color:'white',
+           borderRadius:'15px'
         
         }} name="datetime"
   
@@ -363,8 +364,8 @@ function AdminCreate() {
         value={endDateTime}
         style={{ height:'2.5em',
           backgroundColor: 'rgba(255,255,255,0.4)',
-        
-         border:"none"
+          color:'white', border:"none",
+          borderRadius:'15px'
         }}
         onChange={(e)=>{
           setEndDateTime(e.target.value)
