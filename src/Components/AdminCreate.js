@@ -421,26 +421,29 @@ function AdminCreate() {
        
        
         <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center'}}>
 
 
 
-          <div class="tickets" style={{display:'flex',alignItems:'center',backgroundColor:'yellow'}} onClick={()=>{
+          <div class="tickets" style={{display:'flex',alignItems:'center',marginTop:'2.5%'}} onClick={()=>{
               notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free &nbsp;
+          }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free &nbsp;
           <EditIcon fontSize='small'/></div></div>
           
-
+          <a href="#up"  style={{ background: "transparent", border: "none" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
           
-          <div class="capacity" style={{display:'flex',alignItems:'center',backgroundColor:'yellow'}} onClick={()=>{
+          <div class="capacity" style={{display:'flex',alignItems:'center'}} onClick={()=>{
             
               setShowCapacity(true)
          
           
            
-          }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}} ><PeopleAltIcon fontSize='small'/>
+          }}><div  style={{display:'flex',alignItems:'center'}} ><PeopleAltIcon fontSize='small'/>
           &nbsp;<l>Capacity</l></div>
+          <div style={{display:'flex',alignItems:'center'}}>{capacity} &nbsp;
+          <EditIcon fontSize='small'/></div>
                       </div>
+                      </a>
       
           
           
@@ -461,8 +464,7 @@ function AdminCreate() {
        
       </div>
   <br></br>  <br></br>
-      <input style={{width:'4em' , fontSize: '40px',border:'2px solid white',color:'black' }} placeholder="50"></input>
-      <br></br>
+     
       {/* <br></br>
       <input style={{ fontSize: '40px',border:'2px solid white',color:'white' }} placeholder="50"></input> */}
     
@@ -666,9 +668,11 @@ function AdminCreate() {
           <h2>Tickets</h2>
          
           <br></br>
+          <center>
           <input style={{fontSize:'28px'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
+          </center>
           <br></br>
           <br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
           <br></br><l></l>
