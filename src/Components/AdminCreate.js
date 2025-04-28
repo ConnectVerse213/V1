@@ -310,10 +310,10 @@ function AdminCreate() {
         <div class="main2"> 
      
       <div class="form__group field">
-
+<div class="eventName">
     
-    <input type="input" style={{fontSize:'40px',width:'100%',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)"}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
-  
+    <input type="input" style={{fontSize:'40px',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)", width:'100%',color:'white'}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
+    </div>
    
 </div>
 
@@ -341,9 +341,9 @@ function AdminCreate() {
 <div class="datetime2">
  
     <input type="datetime-local"  style={{ height:'2.5em',
-          backgroundColor: 'transparent',
-          color: 'white',
-         border:"none"
+          backgroundColor: 'rgba(255,255,255,0.4)',
+         
+        
         }} name="datetime"
   
         value={startDateTime}
@@ -362,21 +362,15 @@ function AdminCreate() {
         <input type="datetime-local" name="datetime" name="datetime"
         value={endDateTime}
         style={{ height:'2.5em',
-          backgroundColor: 'transparent',
-          color: 'white',
+          backgroundColor: 'rgba(255,255,255,0.4)',
+        
          border:"none"
         }}
         onChange={(e)=>{
           setEndDateTime(e.target.value)
           
         }}/>
-        <style>
-{`
-  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    filter: brightness(0) invert(1);
-  }
-`}
-</style>
+
    </div>
    </div>
   <div class="location" onClick={handleClickOpen} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
