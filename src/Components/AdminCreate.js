@@ -461,8 +461,11 @@ function AdminCreate() {
      
        
       </div>
-  
- 
+  <br></br>  <br></br>
+      <input style={{width:'4em' , fontSize: '13px',border:'2px solid white',color:'white' }} placeholder="50"></input>
+      <br></br>
+      <br></br>
+      <input style={{ fontSize: '13px',border:'2px solid white',color:'white' }} placeholder="50"></input>
     
       <br></br>
       <br></br>
