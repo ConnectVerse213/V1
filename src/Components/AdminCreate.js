@@ -443,7 +443,7 @@ function AdminCreate() {
            }
            
           }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><PeopleAltIcon fontSize='small'/>
-          &nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input style={{width:'4em'} } placeholder="50"></input></div>
+          &nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input style={{width:'4em' , fontSize: '13px' }} placeholder="50"></input></div>
                       </div>
       
           
