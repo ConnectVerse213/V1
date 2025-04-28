@@ -267,13 +267,15 @@
     .tickets{
       display: flex;
       gap:180px;
-      margin-left:0.7em;
+      justify-content: flex-start;
+      margin-left: 0.5em;
 
     }
     .capacity{
       display: flex;
       gap:170px;
-      margin-left:0.7em;
+      justify-content: flex-start;
+      margin-left: 0.5em;
     }
     .subscribe{
       display: flex;

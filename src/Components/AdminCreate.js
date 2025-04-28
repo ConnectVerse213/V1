@@ -422,13 +422,17 @@ function AdminCreate() {
        
         <l style={{color:'#1876d1'}}>Event Options</l>
         <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
-          <div class="tickets" onClick={()=>{
+
+
+
+          <div class="tickets" style={{display:'flex',alignItems:'center',backgroundColor:'yellow'}} onClick={()=>{
               notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free&nbsp;<EditIcon fontSize='small'/></div></div>
+          }}><div style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free &nbsp;
+          <EditIcon fontSize='small'/></div></div>
           
 
           
-          <div class="capacity" onClick={()=>{
+          <div class="capacity" style={{display:'flex',alignItems:'center',backgroundColor:'yellow'}} onClick={()=>{
             if(capacity>=200)
             {
               setShowCapacity(true)
@@ -438,11 +442,9 @@ function AdminCreate() {
             notify("Subscribe to premium for unlimited capacity","light","top-right","warning")
            }
            
-          }}><div style={{display:'flex',alignItems:'center'}}><PeopleAltIcon fontSize='small'/>&nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input  style={{backgroundColor: '#8193FE',border:'none',color:'white',borderRadius:'8px'}}type="number" id="quantity" name="quantity" min="1" max="200" placeholder='50'  
-        onChange={(e)=>{
-                  setCapacity(e.target.value)
-                }}/>
-                      </div></div>
+          }}><div  style={{display:'flex',alignItems:'center',backgroundColor:'blue'}}><PeopleAltIcon fontSize='small'/>
+          &nbsp;<l>Capacity</l></div><div style={{display:'flex',alignItems:'center'}}><input style={{width:'4em'} } placeholder="50"></input></div>
+                      </div>
       
           
           
