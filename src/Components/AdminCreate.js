@@ -484,10 +484,10 @@ function AdminCreate() {
         <DialogContent style={{width:'15em',minHeight:'20em',backgroundColor:'black',border:'1px solid #1876d1',borderRadius:'0'}}>
           <DialogContentText>
             <br></br> <br></br>
-          &nbsp;<l style={{color:'white'}}>Search Location</l>
+          &nbsp;&nbsp;&nbsp;&nbsp;<l style={{color:'white'}}>Enter Location</l>
           </DialogContentText>
           <br></br>
-         
+         <center>
           <input
             
             style={{fontSize:'20px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
@@ -497,9 +497,9 @@ function AdminCreate() {
             onChange={(e) => {
               setQuery(e.target.value);
             }}
-            placeholder=" Search Location"
+            placeholder="&nbsp; 🔍 Search Location"
           />
-         
+         </center>
           <br></br>
           {suggestions.length > 0 && (
         <ul style={{
