@@ -50,6 +50,7 @@ import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import './AdminCreate.css'
+import ResponsiveAppBar from './ResponsiveAppBar';
 
 
 // import { signInWithGoogle } from "../firebase-config";
@@ -219,26 +220,9 @@ function AdminCreate() {
   return (
     <div>
       <br></br> 
+       <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
       <div id="up"></div>
-           <div className="full-width-bar" >
-             <div class="logo" >  <img src={logo} style={{width:'3em'}} alt="Logo" /></div>
-            
-     
-             <div style={{color:'white'}} >
-     
-             
-           <Button variant="outlined" style={{border:'none'}} >Home</Button>
-           <Button  variant="outlined" style={{border:'none'}} >Manage </Button>
-           
-     
-     
-             </div>
-           
-                 <div className="text" > <Button variant="outlined" onClick={()=>{
-                   showWidgetModal()
-                 }}> <AccountBalanceWalletIcon/></Button></div>
-               </div>
-     
+         
                <hr style={{ 
   
   border: '0.05px solid white', // A bit thicker for visibility

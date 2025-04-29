@@ -213,7 +213,7 @@ function Home2() {
   return (
     <div>
      <br></br>
-           <ResponsiveAppBar/>
+           <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="contained"/>
     
 
 {showConfetti && <Confetti 

@@ -49,6 +49,9 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import CountUp from 'react-countup';
 import coinAnimation from '../assets/images/coinBackground3.gif'
+import EventIcon from '@mui/icons-material/Event';
+import CelebrationIcon from '@mui/icons-material/Celebration';
+
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -259,7 +262,7 @@ function Home2() {
   return (
     <div>
       <br></br>
-           <ResponsiveAppBar/>
+           <ResponsiveAppBar homeButtonStyle="contained" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
     
 
 {showConfetti && <Confetti 
@@ -635,13 +638,35 @@ function Home2() {
     window.location.href="/creator"
   }}
 >
-  <Fab color="primary" aria-label="add"  size="large">
+  <Fab color="primary" aria-label="add"  size="large" style={{bottom:'40%'}}>
     <AddIcon />
   </Fab>
 </Box>
 <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
       </Drawer>
+
+      <div style={{position:'fixed',bottom:'0',width:'100%'}}>
+     
+
+      <div className="full-width-bar" style={{height:'3em'}} >
+                
+                  
+           
+                   <div style={{color:'white'}} >
+           
+                   
+                   <Button variant="contained"><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><EventIcon fontSize='small'/> <l>Events</l></div></Button>
+                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><LocalMoviesIcon fontSize='small'/> <l>Movies</l></div></Button>
+                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><CelebrationIcon fontSize='small'/> <l>Concerts</l></div></Button>
+                
+           
+           
+                   </div>
+                 
+                    
+                     </div>
+      </div>
 
     </div>
   )

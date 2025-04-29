@@ -15,13 +15,16 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../assets/images/logo.png'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import HomeIcon from '@mui/icons-material/Home';
+import PaidIcon from '@mui/icons-material/Paid';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import './ResponsiveAppBar.css'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,dashboardButtonStyle}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -96,13 +99,17 @@ function ResponsiveAppBar() {
             >
              
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }} ><Button variant="contained">Events</Button></Typography>
+                  <Typography sx={{ textAlign: 'center' }} ><Button variant={homeButtonStyle} onClick={()=>{
+            window.location.href="/home2"
+          }}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><HomeIcon fontSize='small'/> <l>Home</l></div></Button></Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}><Button variant="outlined">Movies</Button></Typography>
+                  <Typography sx={{ textAlign: 'center' }}><Button variant={earnButtonStyle}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><PaidIcon fontSize='small'/> <l>Earn</l></div></Button></Typography>
                 </MenuItem>
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}><Button variant="outlined">Concerts</Button></Typography>
+                  <Typography sx={{ textAlign: 'center' }}><Button variant={createButtonStyle} onClick={()=>{
+            window.location.href="/creator"
+          }}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><AddCircleOutlineIcon fontSize='small'/> <l>Create</l></div></Button></Typography>
                 </MenuItem>
             
             </Menu>
@@ -132,43 +139,18 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             
           
-              <Button
-               
-               variant='contained'
-                sx={{ my: 2, color: 'white', display: 'block' }} 
-              >
-               Events
-              </Button>
-              <Button
-               
-               
-               sx={{ my: 2, color: 'white', display: 'block' }}
-               style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}}
-             >
-              Movies 
-             </Button>
-             <Button
-               
-               
-               sx={{ my: 2, color: 'white', display: 'block' }}
-               style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}}
-             >
-              Concerts
-             </Button>
-             <Button
-               
-               
-               sx={{ my: 2, color: 'white', display: 'block' }}
-               style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}}
-             >
-              Sports
-             </Button>
-        
+          <Button variant={homeButtonStyle} onClick={()=>{
+            window.location.href="/home2"
+          }}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><HomeIcon fontSize='small'/> <l>Home</l></div></Button>
+          <Button variant={earnButtonStyle}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><PaidIcon fontSize='small'/> <l>Earn</l></div></Button>
+          <Button variant={createButtonStyle} onClick={()=>{
+            window.location.href="/creator"
+          }}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><AddCircleOutlineIcon fontSize='small'/> <l>Create</l></div></Button>
           </Box>
           <Box sx={{ flexGrow: 0 }} >
 
 <div class="flexWala">
-          <Button variant="outlined" onClick={()=>{
+          <Button variant={dashboardButtonStyle} onClick={()=>{
             window.location.href="/dashboard"
           }}>Dashboard</Button>
           <Button variant="outlined" onClick={()=>{
