@@ -490,7 +490,7 @@ function AdminCreate() {
          
           <input
             
-            style={{fontSize:'24px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
+            style={{fontSize:'20px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
             
             
             value={query}
