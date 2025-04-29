@@ -466,6 +466,7 @@ function AdminCreate() {
 <Dialog
         open={open}
         onClose={handleClose}
+        
         slotProps={{
           paper: {
             component: 'form',
@@ -481,7 +482,7 @@ function AdminCreate() {
         }}
       >
        
-        <DialogContent style={{width:'15em',minHeight:'20em',backgroundColor:'black',border:'1px solid #1876d1',borderRadius:'0'}}>
+        <DialogContent style={{width:'15em',minHeight:'16em',backgroundColor:'black',border:'1px solid #1876d1',borderRadius:'0'}}>
           <DialogContentText>
             <br></br> <br></br>
           &nbsp;&nbsp;&nbsp;&nbsp;<l style={{color:'white'}}>Enter Location</l>
