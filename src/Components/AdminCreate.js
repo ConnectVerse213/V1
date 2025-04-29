@@ -511,13 +511,14 @@ function AdminCreate() {
           border: "1px solid #ccc",
           position: "absolute",
           width: "10em",
-          zIndex: 10,
+          zIndex: 9999,
+          
           maxHeight: "200px",
           overflowY: "auto",
           color:'white'
         }}>
           {suggestions.map((place, index) => (
-            <li
+            <li 
               key={index}
               onClick={() => handleSelect(place)}
               style={{ padding: "8px", cursor: "pointer" }}
