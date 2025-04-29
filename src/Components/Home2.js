@@ -446,7 +446,7 @@ function Home2() {
 
 </div>
 <br></br><br></br>
-<input style={{backgroundColor:'white',width:'18em',height:'2.5em',borderRadius:'1.5em',border:'none'}} onChange={(e)=>{
+<input style={{backgroundColor:'white',width:'26em',height:'2.5em',borderRadius:'1.5em',border:'none'}} onChange={(e)=>{
   setCity(e.target.value)
 }} placeholder="&nbsp; &nbsp;🔍 Search by location"></input>
 
@@ -746,3 +746,5 @@ function Home2() {
 }
 
 export default Home2
+
+
