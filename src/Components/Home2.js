@@ -506,8 +506,10 @@ function Home2() {
 <div className="events">
 
 {allEvents.length!=0 && city.length!=0 && allEvents.map((x)=>{
-   const input=city.trim().toLowerCase().replace(/[^\w\s]/g, '')
-   if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).includes(input))
+   const input=city.toLowerCase().replace(/[^\w\s]/g, '').trim();
+
+   
+   if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').includes(input))
   return(
 
     <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
