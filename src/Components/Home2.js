@@ -498,7 +498,7 @@ function Home2() {
      
 <input style={{fontSize:'30px',background: "transparent", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", borderTop: "none",borderLeft:'none',borderRight:'none',borderBottom:'0.2px solid white', width:'100%',color:'white',maxWidth:'12em'}} onChange={(e)=>{
   setCity(e.target.value)
-}} placeholder="&nbsp; &nbsp;🔍 Search by city"></input>
+}} placeholder="&nbsp; &nbsp;🔍 Search by location"></input>
 
 <br></br>
 
