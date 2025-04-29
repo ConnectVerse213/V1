@@ -52,11 +52,32 @@ import coinAnimation from '../assets/images/coinBackground3.gif'
 import EventIcon from '@mui/icons-material/Event';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import SearchIcon from '@mui/icons-material/Search';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import LocationPinIcon from '@mui/icons-material/LocationPin';
 import axios from 'axios';
+import { getCode } from 'country-list';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
 
+const getEmojiFlag = (address) =>
+{
+
+  let countryName=address.slice(address.lastIndexOf(",") + 2)
+  console.log(countryName.length)
+  
+  if(countryName.toLowerCase()=="united states")
+  {
+    countryName="United States of America"
+  }
+  
+  const code = getCode(countryName);
+  if (!code) return '🏳️'; // fallback for unknown countries
+
+  return String.fromCodePoint(
+    ...[...code.toUpperCase()].map(char => 127397 + char.charCodeAt()))
+
+}
 function Home2() {
 
     const [randomNumber, setRandomNumber] = useState('');
@@ -75,6 +96,10 @@ function Home2() {
       setShowQR(false);
     };
   
+
+
+    
+
  const notify = () => toast("Coming Soon!",{
       position: "bottom-right",
       autoClose: 5000,
@@ -190,6 +215,27 @@ function Home2() {
     const toggleDrawer = (newOpen) => () => {
       setOpen(newOpen);
     };
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+    
+      const day = date.getDate();
+      const month = date.toLocaleString('default', { month: 'short' }); // e.g., "Feb"
+      const year = date.getFullYear();
+    
+      // Get ordinal suffix for day
+      const getOrdinal = (n) => {
+        if (n > 3 && n < 21) return 'th';
+        switch (n % 10) {
+          case 1: return 'st';
+          case 2: return 'nd';
+          case 3: return 'rd';
+          default: return 'th';
+        }
+      };
+    
+      return `${day}${getOrdinal(day)} ${month}, ${year}`;
+    }
     const createUser = async (email) => {
 
             try{
@@ -446,6 +492,10 @@ function Home2() {
 
 </div>
 <br></br><br></br>
+
+
+     
+     
 <input style={{fontSize:'30px',background: "transparent", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", borderTop: "none",borderLeft:'none',borderRight:'none',borderBottom:'0.2px solid white', width:'100%',color:'white',maxWidth:'12em'}} onChange={(e)=>{
   setCity(e.target.value)
 }} placeholder="&nbsp; &nbsp;🔍 Search by location"></input>
@@ -460,7 +510,7 @@ function Home2() {
    if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).includes(input))
   return(
 
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>
@@ -469,10 +519,19 @@ function Home2() {
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+        <LocationPinIcon fontSize='small'/>
+        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+        </Typography>
         </Typography>
 
+        
+
+        {/* const countryName = 'united arab emirates'; // 🔥 Manually set this
+    const code = getCode(countryName);
+    const emoji = code ? getEmojiFlag(code) : '🏳️' */}
           <br></br>
           <Button variant="outlined" onClick={()=>{
             window.location.href=`/manageevent/${x.id}`
@@ -501,7 +560,7 @@ function Home2() {
 {trendingEvents.length!=0 && buttonHight==2 &&  trendingEvents.map((x)=>{
   return(
 
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>
@@ -510,10 +569,17 @@ function Home2() {
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
-        </Typography>
 
+
+          
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+        <LocationPinIcon fontSize='small'/>
+        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+        </Typography>
+        </Typography>
+        
           <br></br>
           <Button variant="outlined" onClick={()=>{
             window.location.href=`/manageevent/${x.id}`
@@ -544,7 +610,7 @@ function Home2() {
 {allEvents.length!=0 && allEvents.map((x)=>{
   return(
 
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>
@@ -554,8 +620,12 @@ function Home2() {
           {x.Name}
           </Typography>
 
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-          
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+        <LocationPinIcon fontSize='small'/>
+        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+        </Typography>
         </Typography>
 
           <br></br>
@@ -586,7 +656,7 @@ function Home2() {
 {createdEvents.length!=0 && createdEvents.map((x)=>{
   return(
 
-    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345,minWidth:300 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>
@@ -595,8 +665,12 @@ function Home2() {
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+        <LocationPinIcon fontSize='small'/>
+        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+        </Typography>
         </Typography>
 
           <br></br>
@@ -627,18 +701,27 @@ function Home2() {
   return(
     <div style={{border:'2px solid black',color:'white'}}>
       
-      <Card sx={{ maxWidth: 345 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+      <Card sx={{ maxWidth:345,minWidth:300  }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
       <CardActionArea>
         <br></br>
         <img style={{width:'20em'}} src={x.Image}></img>
        
         <CardContent>
+
+
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
+
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+        <LocationPinIcon fontSize='small'/>
+        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
         </Typography>
+        </Typography>
+
+        
 
           <br></br>
           {userApprovedArray.includes(x.id) ? <div>{randomNumber && (
@@ -696,6 +779,7 @@ function Home2() {
   )
 })}
 </div>
+<br></br><br></br><br></br><br></br><br></br>
 
 <ToastContainer/>
 <Box
@@ -722,14 +806,14 @@ function Home2() {
       <div style={{position:'fixed',bottom:'0',width:'100%'}}>
      
 
-      <div className="full-width-bar" style={{height:'3em'}} >
+      <div className="full-width-bar" style={{height:'3em',borderTop:'1px solid white'}} >
                 
                   
            
                    <div style={{color:'white'}} >
            
                    
-                   <Button variant="contained"><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><EventIcon fontSize='small'/> <l>Events</l></div></Button>
+                   <Button variant="contained" style={{borderRadius:'0'}}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><EventIcon fontSize='small'/> <l>Events</l></div></Button>
                    <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><LocalMoviesIcon fontSize='small'/> <l>Movies</l></div></Button>
                    <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><CelebrationIcon fontSize='small'/> <l>Concerts</l></div></Button>
                 
