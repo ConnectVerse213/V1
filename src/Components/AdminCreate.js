@@ -507,7 +507,7 @@ function AdminCreate() {
           listStyle: "none",
           margin: 0,
           padding: "5px",
-          background: "black",
+          background: "white",
           border: "1px solid #ccc",
           position: "absolute",
           width: "10em",
@@ -515,7 +515,7 @@ function AdminCreate() {
           
           maxHeight: "200px",
           overflowY: "auto",
-          color:'white'
+          color:'black'
         }}>
           {suggestions.map((place, index) => (
             <li 
