@@ -220,8 +220,9 @@ function AdminCreate() {
   return (
     <div>
       <br></br> 
-       <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
       <div id="up"></div>
+       <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
+      
          
                <hr style={{ 
   
@@ -366,11 +367,11 @@ function AdminCreate() {
 
 <div class="location2"><l style={{fontSize:'20px'}}>
   
-  {selectedAddress.length!=0 && <l>&nbsp;&nbsp;&nbsp;&nbsp;{selectedAddress.split(',')[0]}</l>}
+  {selectedAddress.length!=0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small' />{selectedAddress.split(',')[0]}</l>}
   {selectedAddress.length==0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small'/> Add Location</l>}
   
   </l>
-<l>&nbsp;&nbsp;&nbsp; &nbsp; Offline location</l>
+<l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Offline Location</i></l>
 
 
 </div>
@@ -480,37 +481,39 @@ function AdminCreate() {
         }}
       >
        
-        <DialogContent style={{width:'15em',minHeight:'20em'}}>
+        <DialogContent style={{width:'15em',minHeight:'20em',backgroundColor:'black',border:'1px solid #1876d1',borderRadius:'0'}}>
           <DialogContentText>
-          &nbsp;Enter Location
+            <br></br> <br></br>
+          &nbsp;<l style={{color:'white'}}>Search Location</l>
           </DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-        
-            fullWidth
-            variant="standard"
+          <br></br>
+         
+          <input
+            
+            style={{fontSize:'24px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
+            
+            
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
             }}
             placeholder=" Search Location"
           />
+         
           <br></br>
           {suggestions.length > 0 && (
         <ul style={{
           listStyle: "none",
           margin: 0,
           padding: "5px",
-          background: "#fff",
+          background: "black",
           border: "1px solid #ccc",
           position: "absolute",
           width: "10em",
           zIndex: 10,
           maxHeight: "200px",
-          overflowY: "auto"
+          overflowY: "auto",
+          color:'white'
         }}>
           {suggestions.map((place, index) => (
             <li
@@ -544,9 +547,9 @@ function AdminCreate() {
         </div>
       )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+        <DialogActions style={{backgroundColor:'black',borderLeft:'1px solid #1876d1',borderTop:'none',borderRight:'1px solid #1876d1',borderBottom:'1px solid #1876d1',color:'white'}}>
+          <Button style={{border:'1px solid red',color:'red'}}onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" type="submit">Add</Button>
         </DialogActions>
       </Dialog>
 
@@ -555,8 +558,9 @@ function AdminCreate() {
           width: '330px', 
           height: '700px',
           padding: '20px', 
-          backgroundColor: '#fff', 
-          border: '1px solid #ddd', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1', 
+          color:'white',
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           position: 'absolute', 
@@ -571,12 +575,12 @@ function AdminCreate() {
                 {/* Toolbar with buttons */}
                 <div>
                   <div class="editorIcons">
-                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
-                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
-                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
+                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
                  
-                  <Button variant="outlined" onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
-                  <Button variant="outlined"onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
+                  <Button variant="outlined"style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
                   </div>
                 </div>
           
@@ -586,8 +590,9 @@ function AdminCreate() {
                   style={{
                     height: '60vh',
                     overflowY: 'auto',
-                    border: '1px solid #ccc', // Optional: Add a border to the editor
-                    backgroundColor:'white',width:'20em',
+                    border: '1px solid #1876d1', // Optional: Add a border to the editor
+                    backgroundColor:'black',width:'20em',
+                    color:'white',
                     textAlign: 'left'
                   }}
                 >
@@ -617,7 +622,7 @@ function AdminCreate() {
               </div>
      
           <center>
-          <Button variant="contained"  onClick={()=>{
+          <Button variant="outlined" style={{border:'1px solid red',color:'red'}} onClick={()=>{
             
             setDescription(false)
            
@@ -638,8 +643,9 @@ function AdminCreate() {
           width: '360px', 
           height: '300px',
           padding: '20px', 
-          backgroundColor: '#fff', 
-          border: '1px solid #ddd', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           position: 'absolute', 
@@ -649,11 +655,11 @@ function AdminCreate() {
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
         }}>
-          <h2>Tickets</h2>
+          <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
           <center>
-          <input style={{fontSize:'28px'}}onChange={(e)=>{
+          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
           </center>
@@ -665,13 +671,13 @@ function AdminCreate() {
               </div>
      <br></br><br></br>
           <center>
-          <Button variant="contained"  onClick={()=>{
+          <Button variant="outlined" style={{color:'red',border:'0.5px solid red'}} onClick={()=>{
             
             setCapacity(50)
             setShowCapacity(false)
            
           }}>Cancel</Button>
-          &nbsp;  &nbsp;   &nbsp;  &nbsp;
+          &nbsp;  &nbsp;   &nbsp;  
           <Button variant="contained"  onClick={()=>{
             
             setShowCapacity(false)
