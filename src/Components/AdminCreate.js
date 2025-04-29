@@ -485,13 +485,13 @@ function AdminCreate() {
         <DialogContent style={{width:'15em',minHeight:'16em',backgroundColor:'black',border:'1px solid #1876d1',borderRadius:'0'}}>
           <DialogContentText>
             <br></br> <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<l style={{color:'white'}}>Enter Location</l>
+          &nbsp;&nbsp;<l style={{color:'white'}}>Enter Location</l>
           </DialogContentText>
           <br></br>
-         <center>
+        
           <input
             
-            style={{fontSize:'20px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
+            style={{maxWidth:'70%',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
             
             
             value={query}
@@ -500,7 +500,7 @@ function AdminCreate() {
             }}
             placeholder="&nbsp; 🔍 Search Location"
           />
-         </center>
+         
           <br></br>
           {suggestions.length > 0 && (
         <ul style={{
