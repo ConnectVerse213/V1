@@ -507,7 +507,7 @@ function AdminCreate() {
           listStyle: "none",
           margin: 0,
           padding: "5px",
-          background: "white",
+          background: "black",
           border: "1px solid #ccc",
           position: "absolute",
           width: "10em",
@@ -515,7 +515,7 @@ function AdminCreate() {
           
           maxHeight: "200px",
           overflowY: "auto",
-          color:'black'
+          color:'white'
         }}>
           {suggestions.map((place, index) => (
             <li 
@@ -550,7 +550,7 @@ function AdminCreate() {
       )}
         </DialogContent>
         <DialogActions style={{backgroundColor:'black',borderLeft:'1px solid #1876d1',borderTop:'none',borderRight:'1px solid #1876d1',borderBottom:'1px solid #1876d1',color:'white'}}>
-          <Button style={{border:'1px solid red',color:'red'}}onClick={handleClose}>Cancel</Button>
+          
           <Button variant="contained" type="submit">Add</Button>
         </DialogActions>
       </Dialog>
