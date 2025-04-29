@@ -48,7 +48,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
 
   return (
     <AppBar position="static" style={{backgroundColor:'black',color:'#1876d1'}}>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" style={{backgroundColor:'black'}}>
         <Toolbar disableGutters>
          
           <Typography
@@ -70,7 +70,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
            
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -78,10 +78,11 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
+
             >
               <MenuIcon />
             </IconButton>
-            <Menu
+            <Menu 
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -96,6 +97,12 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
+              PaperProps={{
+                sx: {
+                  backgroundColor: 'black', // Set background to black
+                  color: 'white',            // (optional) text color white so text is visible
+                },
+              }}
             >
              
                 <MenuItem  onClick={handleCloseNavMenu}>

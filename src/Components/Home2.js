@@ -51,7 +51,8 @@ import CountUp from 'react-countup';
 import coinAnimation from '../assets/images/coinBackground3.gif'
 import EventIcon from '@mui/icons-material/Event';
 import CelebrationIcon from '@mui/icons-material/Celebration';
-
+import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -110,6 +111,10 @@ function Home2() {
        
         });
     
+        const apiKey = "pk.55c533ac3f7777ffcef9fb76448b8fd2"; 
+
+  // Function to get the city
+  
     const downloadQRCode = () => {
       const qrCanvas = qrRef.current.querySelector('canvas');
       const originalSize = qrCanvas.width; // typically 200
@@ -160,8 +165,26 @@ function Home2() {
     const [showDiv,setShowDiv]=useState(localStorage.getItem('count')?false:true)
     const [buttonHight,setButtonHighlight]=useState(1)
     const [trendingEvents,setTrendingEvents]=useState([])
+    const [city,setCity]=useState('')
 
-
+    async function getCityFromAddress(address) {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(address)}`;
+  
+      const response = await fetch(url, {
+          headers: {
+              'User-Agent': 'YourAppName/1.0 (your@email.com)'
+          }
+      });
+  
+      const data = await response.json();
+  
+      if (data.length > 0) {
+          const address = data[0].address;
+          return address.city || address.town || address.village || address.county || null;
+      } else {
+          return null;
+      }
+  }
     const [open, setOpen] = useState(false);
 
     const toggleDrawer = (newOpen) => () => {
@@ -386,6 +409,7 @@ function Home2() {
 {/* <hr style={{ border: 'none', height: '0.1px', backgroundColor: '#1876d1', margin: '20px 0' }} /> */}
 <br></br> 
 <br></br>
+
 <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
 
   {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
@@ -421,9 +445,54 @@ function Home2() {
       }}>Category &nbsp;<CategoryIcon style={{color:'white'}} /></Button>}
 
 </div>
-
-    
 <br></br><br></br>
+<input style={{backgroundColor:'white',width:'18em',height:'2.5em',borderRadius:'1.5em',border:'none'}} onChange={(e)=>{
+  setCity(e.target.value)
+}} placeholder="&nbsp; &nbsp;🔍 Search by location"></input>
+
+<br></br>
+
+<br></br> <br></br>
+<div className="events">
+
+{allEvents.length!=0 && city.length!=0 && allEvents.map((x)=>{
+   const input=city.trim().toLowerCase().replace(/[^\w\s]/g, '')
+   if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/).includes(input))
+  return(
+
+    <Card sx={{ maxWidth: 345 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+      <CardActionArea>
+        <br></br>
+        <img style={{width:'20em'}} src={x.Image}></img>
+       
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+          {x.Name}
+          </Typography>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
+       
+        </Typography>
+
+          <br></br>
+          <Button variant="outlined" onClick={()=>{
+            window.location.href=`/manageevent/${x.id}`
+          }}>Manage  </Button>
+            
+          <Button variant="outlined" onClick={()=>{
+            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
+            notifyClipboard()
+          }}><ShareIcon/>  </Button>
+        
+        </CardContent>
+      </CardActionArea>
+    </Card>
+   
+  )
+})}
+
+</div>
+    
+
 {trendingEvents.length==0 && buttonHight==2 && <h2 style={{color:'white'}}>Trending</h2>}
 {trendingEvents.length!=0 && buttonHight==2 && <h2 style={{color:'white'}}>Trending</h2>}
 
@@ -463,7 +532,10 @@ function Home2() {
 })}
 </div>
 
-<br></br>
+
+
+
+
 {allEvents.length==0 && <h2 style={{color:'white'}}>All</h2>}
 {allEvents.length!=0 && <h2 style={{color:'white'}}>All</h2>}
 
@@ -481,8 +553,9 @@ function Home2() {
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
+
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'left'}}>
-       
+          
         </Typography>
 
           <br></br>
