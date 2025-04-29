@@ -491,7 +491,7 @@ function AdminCreate() {
         
           <input
             
-            style={{maxWidth:'70%',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
+            style={{fontSize:'16px',maxWidth:'70%',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}
             
             
             value={query}
