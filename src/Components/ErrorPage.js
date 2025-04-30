@@ -5,9 +5,9 @@ function ErrorPage() {
 
      const { error_message } = useParams();
   return (
-    <div>
+    <div >
       
-      <h1>{error_message}</h1>
+      <h1 style={{color:'white'}}>{error_message}</h1>
     </div>
   )
 }

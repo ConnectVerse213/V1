@@ -438,36 +438,9 @@ function Home2() {
         </Typography>
         </Typography>
           <br></br>
-          {userApprovedArray.includes(x.id) ? <div>{randomNumber && (
-              <>
- 
-      
-                <div ref={qrRef}>
-                  <QRCodeCanvas value={randomNumber+localStorage.getItem('email')} size={200}  
-            quietZone={30}  />
-                </div>
-      
-                {!showQR && (
-                  <button
-                    onClick={() => setShowQR(true)}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
-                  >
-                    Show QR Code
-                  </button>
-                )}
-      
-                {showQR && (
-                  <button
-                    onClick={downloadQRCode}
-                    className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition"
-                  >
-                    Download QR Code
-                  </button>
-                )}
-              </>
-            )}
+          {userApprovedArray.includes(x.id) ? <div>
           
-           {randomNumber=='' && <div> <Button variant='outlined' color="success"
+           <div> <Button variant='outlined' color="success"
         onClick={()=>{
 
          window.location.href=`/qr/${x.id}`
@@ -476,7 +449,7 @@ function Home2() {
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
        Get Ticket
-      </Button>}
+      </Button>
       
       <Button variant="outlined" onClick={()=>{
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
@@ -517,6 +490,9 @@ function Home2() {
     <AddIcon />
   </Fab>
 </Box>
+<br></br>
+<l style={{color:'white'}}>{randomNumber}</l>
+<br></br><br></br>
 
     </div>
   )

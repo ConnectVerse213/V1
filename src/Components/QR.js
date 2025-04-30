@@ -11,7 +11,8 @@ import {
 import { QRCodeCanvas } from 'qrcode.react';
 import { useParams } from 'react-router-dom';
 // import { signInWithGoogle } from "../firebase-config";
-const usersCollectionRef = collection(db, "user");
+const usersCollectionRef1 = collection(db, "user");
+
 const usersCollectionRef2 = collection(db, "ticket");
 
 function QR() {
@@ -20,22 +21,66 @@ function QR() {
     const [showQR, setShowQR] = useState(false);
     const qrRef = useRef();
     const { event_id } = useParams();
-  
-    const generateNumber = async() => {
-      const number = Math.floor(1000000000 + Math.random() * 9000000000).toString();
-      setRandomNumber(number);
-      const result=await addDoc(usersCollectionRef2, {TicketId:number+localStorage.getItem('email'),EventId:event_id});
-    
-      console.log(result.id)
-    
-     
+    const [isDownload,setIsDownload]=useState(false)
+    const [users, setUsers] = useState([]);
 
-      setShowQR(false);
+
+     const getUsers = async () => {
+            const data = await getDocs(usersCollectionRef1);
+           
+            let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
+            let filteredArray = usersTemp.filter(obj => 
+              obj.Email === localStorage.getItem('email') && 
+              obj.EventsApproved.includes(event_id)
+            );
+            
+            return filteredArray
+            // if(filteredArray.length==0)
+            // {
+            //   return false
+            // }
+            // else{
+            //   return true
+            // }
+
+
+     }
+  
+    const generateNumber = async(download) => {
+
+      if(randomNumber.length==0 )
+      {
+        const number = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+        setRandomNumber(number);
+        localStorage.setItem(`${event_id}TicketId`,number)
+        const result=await addDoc(usersCollectionRef2, {TicketId:number+localStorage.getItem('email'),EventId:event_id});
+      
+        console.log(result.id)
+        console.log(number)
+
+        if(download)
+        {
+          downloadQRCode()
+        }
+
+        return
+
+       
+      }
+      if(download)
+        {
+          downloadQRCode()
+        }
+     
+      
     };
   
 
     
     const downloadQRCode = () => {
+
+      try{
       const qrCanvas = qrRef.current.querySelector('canvas');
       const originalSize = qrCanvas.width; // typically 200
       const quietZone = 60; // padding around QR
@@ -61,16 +106,41 @@ function QR() {
       link.href = url;
       link.download = `QRCode_${randomNumber}.png`;
       link.click();
+      }
+      catch(err){
+        console.log(err)
+      }
     };
   
     // 🧠 Update canvas class after render
     useEffect(() => {
+
+     getUsers().then((data)=>{
+        console.log(data.length)
+        if(data.length==0)
+        {
+          window.location.href="/error/User Not Authorized"
+        }
+      })
+
+      
+      
+ 
       const canvas = qrRef.current?.querySelector('canvas');
       if (canvas) {
         canvas.style.transition = 'filter 0.5s ease';
         canvas.style.filter = showQR ? 'blur(0px)' : 'blur(8px)';
+      
+        if(randomNumber.length!=0 && isDownload)
+        {
+          downloadQRCode()
+        }
+
+
       }
-    }, [showQR, randomNumber]);
+    }, [showQR,randomNumber]);
+
+  
 
   
 
@@ -81,50 +151,156 @@ function QR() {
 
   
   return (
-    <div>
-     
-    <div style={{border:'2px solid black'}}>
+    <div  style={{backgroundColor:'white',color:'black',height:'200em'}} >
+     <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+    
       
 
- 
+            {!localStorage.getItem(`${event_id}TicketId`) &&   <div >
       
-                <div ref={qrRef}>
-                  <QRCodeCanvas value={randomNumber+localStorage.getItem('email')} size={200}  
-            quietZone={30}  />
-                </div>
-      
-                {!showQR && (
-                  <button
-                    onClick={() => setShowQR(true)}
-                    className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
-                  >
-                    Show QR Code
-                  </button>
-                )}
-      
-               
-                  <button
-                    onClick={downloadQRCode}
-                    className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition"
-                  >
-                    Download QR Code
-                  </button>
-               
-             
-             <button
-        onClick={()=>{
+      <div ref={qrRef}>
+        <QRCodeCanvas value={randomNumber+localStorage.getItem('email')} size={200}  
+  quietZone={30}  />
+      </div>
 
-          generateNumber()
 
-        }}
-        className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
-      >
-       Get Ticket
-      </button>
+      <br></br>  <br></br>  <br></br>  <br></br>  <br></br><br></br>  <br></br>  <br></br>  <br></br>  <br></br>
 
+      {!showQR && (
+        <button
+          onClick={() => {
+            
+            
+            setShowQR(true)
+
+            generateNumber(false)
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Show QR Code
+        </button>
+      )}
+
+    {showQR && (
+        <button
+          onClick={() => {
+            
+            
+            setShowQR(false)
+
+           
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Hide QR Code
+        </button>
+      )}
+
+  {!showQR && (
+        <button
+          onClick={() => {
+            
             
            
+
+            generateNumber(true)
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+         Download QR Code
+        </button>
+      )}
+
+  {showQR && (
+        <button
+          onClick={() => {
+            
+            
+           
+
+          generateNumber(true)
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+         Download QR Code
+        </button>
+      )}
+</div>}
+
+
+{localStorage.getItem(`${event_id}TicketId`) &&   <div >
+      
+      <div ref={qrRef}>
+        <QRCodeCanvas value={localStorage.getItem(`${event_id}TicketId`)+localStorage.getItem('email')} size={200}  
+  quietZone={30}  />
       </div>
+
+
+      <br></br>  <br></br>  <br></br>  <br></br>  <br></br><br></br>  <br></br>  <br></br>  <br></br>  <br></br>
+
+      {!showQR && (
+        <button
+          onClick={() => {
+            
+            
+            setShowQR(true)
+
+           
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Show QR Code
+        </button>
+      )}
+
+    {showQR && (
+        <button
+          onClick={() => {
+            
+            
+            setShowQR(false)
+
+           
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Hide QR Code
+        </button>
+      )}
+
+  
+        <button
+          onClick={() => {
+            
+            
+           
+
+            downloadQRCode()
+
+          }
+          }
+          className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+         Download QR Code
+        </button>
+  
+
+
+ 
+</div>}
+          
 
 
 
