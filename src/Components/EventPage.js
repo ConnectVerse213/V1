@@ -39,6 +39,11 @@ import LocationPinIcon from '@mui/icons-material/LocationPin';
 import NorthEastIcon from '@mui/icons-material/NorthEast';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import mapImage from '../assets/images/mapImage.svg'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import ResponsiveAppBar from './ResponsiveAppBar';
+import eventpageBackground from '../assets/images/coinBackground2.gif'
+import CloseIcon from '@mui/icons-material/Close';
+
 function EventPage() {
 
 
@@ -157,8 +162,14 @@ function EventPage() {
 
       
   return (
-    <div>
+    <div style={{
+     
+    }}>
       <div id="up"></div>
+      <br></br>
+      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="contained"/>
+      <hr></hr>
+      <br></br> <br></br>
   
         <div className="item" >
 
@@ -169,31 +180,75 @@ function EventPage() {
 <img class="poster" src={events.length!=0 && events[0].Image}></img>
 
 </div>
-<div class="item1b"> <l style={{color:'white'}}>Hosted by {events.length!=0 && events[0].Creator}</l>
 
+<div
+  className="item1b"
+  style={{
+    width: '300px',               // Set fixed width
+    wordWrap: 'break-word',       // Break long words
+    whiteSpace: 'normal',         // Allow text to wrap
+    overflowWrap: 'break-word',   // For better cross-browser wrapping
+    border: '1px solid gray',
+    padding: '10px',
+    color: 'white',
+    background: 'rgba(255, 255, 255, 0.25)',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+    borderRadius: '10px',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+  }}
+>
+  <p style={{
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+    whiteSpace: 'normal',
+    margin: 0,
+    textAlign:'left'
+  }}>
+    Hosted by {events.length!=0 && events[0].Creator}
+  </p>
 
-</div>
-
-<div class="item1c">
-  <l style={{color:'white'}}>Registrations: &nbsp;
-  {events.length!=0 && events[0].RegistrationsCount}</l>
-  
-  
-  
-
-  
+  <div
+    className="item1c"
+    style={{ marginTop: '10px' }}
+  >
+    <span style={{ color: 'white' }}>
+      Registrations:&nbsp;
+      {events.length !== 0 && events[0].RegistrationsCount}
+    </span>
   </div>
+</div>
+
 
 </div>
+
+
+
 
 
 <div className="item2">
-<div class="item2a">
+<div class="item2a" style={{border: '1px solid gray',
+    padding: '10px',
+    color: 'white',
+    background: 'rgba(255, 255, 255, 0.25)',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+    backdropFilter: 'blur(4px)',
+    WebkitBackdropFilter: 'blur(4px)',
+    borderRadius: '10px',
+    border: '1px solid rgba(255, 255, 255, 0.18)',
+    backgroundImage:`url(${eventpageBackground})`,
+    backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
+    backgroundPosition: 'center center', // Centers the image within the div
+    backgroundRepeat: 'no-repeat', // Prevents repeating of the image
+    
+    }}>
   
   <h1 style={{color:'white'}}>{events.length!=0 && events[0].Name}</h1>
-<l style={{color:'white'}}>{events.length!=0 && formatDate(events[0].StartDateTime)}</l>
+<div style={{color:'white',display:'flex',alignItems:'center',gap:'3px'}}><CalendarMonthIcon/><l>{events.length!=0 && formatDate(events[0].StartDateTime)}</l></div>
 
-<div style={{textAlign:'left'}}>
+<div style={{textAlign:'left',display:'flex',alignItems:'flex-start',gap:'3px'}}>
+<LocationPinIcon style={{color:'white'}}/> 
 {events.length!=0 && events[0].Address && <l style={{color:'white'}} >{events[0].Address}</l>}
 </div>
 
@@ -210,19 +265,19 @@ function EventPage() {
 
 </div>
 
-<div>
+<div style={{paddingLeft:'1.5em'}}>
 
-<a href="#up">
-      <Button variant="contained" type="submit" onClick={()=>{
+<a href="#up" >
+      <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
 
         setShowAcceptInvite(true)
-      }}>Accept Invitation</Button></a>
+      }}>Accept Invitation</button></a>
 </div>
 
 
 </div>
 
-<div class="item2b">
+<div class="item2b" >
  
 <h1 style={{color:'white'}}>About Event</h1>
 
@@ -261,7 +316,9 @@ function EventPage() {
           justifyContent:'center',
           alignItems:'center'
         }}>
-          
+          <div style={{position:"absolute" ,top:'20px',right:'40px'}} onClick={()=>{
+            setShowAcceptInvite(false)
+          }}><CloseIcon style={{color:'red'}}/></div>
          
           <br></br>
           <center>
@@ -275,7 +332,7 @@ function EventPage() {
           <input  
             type="text" 
             className='custom-input'
-            style={{fontSize:'36px',maxWidth:'70%',borderTop:'none',borderLeft:'none',borderRight:'none',backgroundColor:'black',color:'white'}}
+            style={{fontSize:'28px',maxWidth:'70%',borderTop:'none',borderLeft:'none',borderRight:'none',backgroundColor:'black',color:'white'}}
            placeholder={answers[index]}
            
             
@@ -293,11 +350,8 @@ function EventPage() {
      
        <br></br>
 
-       <Button variant="outlined" style={{border:'1px solid red',color:'red'}}onClick={()=>{
-        setShowAcceptInvite(false)
-      }}>cancel</Button>
-      &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button  type="submit" variant="contained">Register</Button>
+       
+      <button  type="submit" class="button-85" style={{height:'2em',width:'10em'}}>Register</button>
       
       </form>
 
@@ -311,6 +365,7 @@ function EventPage() {
          
        
         </div>}
+        <br></br> <br></br> <br></br> <br></br> <br></br>
     </div>
   )
 }
