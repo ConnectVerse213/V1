@@ -267,7 +267,7 @@ function EventPage() {
 
 <div style={{paddingLeft:'1.5em'}}>
 
-<a href="#up" >
+<a href="#up" style={{textDecoration:'none'}}>
       <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
 
         setShowAcceptInvite(true)
