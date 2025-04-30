@@ -44,6 +44,7 @@ import ResponsiveAppBar from './ResponsiveAppBar';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import CloseIcon from '@mui/icons-material/Close';
 
+
 function EventPage() {
 
 

@@ -36,6 +36,9 @@ import CountUp from 'react-countup';
 import coinAnimation from '../assets/images/coinBackground3.gif'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import LocationPinIcon from '@mui/icons-material/LocationPin';
+import LaunchIcon from '@mui/icons-material/Launch';
+import EditIcon from '@mui/icons-material/Edit';
+import CommentIcon from '@mui/icons-material/Comment';
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
@@ -381,13 +384,23 @@ function Home2() {
 
           <br></br>
           <Button variant="outlined" onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
-          }}>Manage  </Button>
-            
+            window.location.href=`/event/${x.id}`
+          }}><LaunchIcon/>  </Button>
+
+          <Button variant="outlined" onClick={()=>{
+            window.location.href=`/event/${x.id}`
+          }}><CommentIcon/>  </Button>
+
           <Button variant="outlined" onClick={()=>{
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
+
+          {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
+          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
+            window.location.href=`/manageevent/${x.id}`
+          }}><EditIcon/>  </Button>
+          }
         
         </CardContent>
       </CardActionArea>
