@@ -466,8 +466,8 @@ function Home2() {
                 )}
               </>
             )}
-            <br></br>
-           {randomNumber=='' &&  <Button variant='outlined' color="success"
+          
+           {randomNumber=='' && <div> <Button variant='outlined' color="success"
         onClick={()=>{
 
          window.location.href=`/qr/${x.id}`
@@ -476,14 +476,19 @@ function Home2() {
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
        Get Ticket
-      </Button>} 
-
-            
-            </div>:<Button variant="outlined">Approval Pending</Button>}
-            <Button variant="outlined" onClick={()=>{
+      </Button>}
+      
+      <Button variant="outlined" onClick={()=>{
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
-          }}><ShareIcon/>  </Button>
+          }}><ShareIcon/>  </Button></div> }
+
+            
+            </div>:<div><Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={()=>{
+            navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
+            notifyClipboard()
+          }}><ShareIcon/>  </Button></div>}
+            
         </CardContent>
       </CardActionArea>
     </Card>

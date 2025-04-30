@@ -70,10 +70,11 @@ function EventManageB() {
     
       const handleAddAttendee = (registration) => {
        
+        console.log(registration)
           setAttendees([...attendees, registration]);
           setAttendeesCount(attendeesCount+1)
           setNewAttendee(registration)
-          console.log('newAttendee',registration)
+          
 
       
       };
@@ -99,8 +100,11 @@ function EventManageB() {
             return
           }
 
-          if (newAttendee.delete === 'delete') {
-            
+          if (newAttendee.delete == 'delete') {
+            console.log("delete hai")
+
+            Object.entries(newAttendee).filter(([key]) => key !== 'delete')
+           
             const userDoc = doc(db, "events", event_id);
             const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:attendees,Registrations:events[0].Registrations,AttendeesCount:attendeesCount,RegistrationsCount:events[0].RegistrationsCount};
 
@@ -125,7 +129,7 @@ function EventManageB() {
             return
           }
         
-
+          console.log("delete nahi hai")
               const userDoc = doc(db, "events", event_id);
               const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:attendees,Registrations:events[0].Registrations,AttendeesCount:attendeesCount,RegistrationsCount:events[0].RegistrationsCount};
 
@@ -153,7 +157,7 @@ function EventManageB() {
       },[])
       
   return (
-    <div className="p-4 max-w-xl mx-auto">
+    <div className="p-4 max-w-xl mx-auto" style={{color:'white'}}>
 
         <h1>Manage Event</h1>
         {event_id}
@@ -203,7 +207,11 @@ function EventManageB() {
           <li key={index} className="flex justify-between items-center p-2 border rounded">
             <span>{registration.Email}</span>
             <button
-              onClick={() =>handleAddAttendee(registration)}
+              onClick={() =>{
+                
+                console.log(registration)
+                
+                handleAddAttendee(registration)}}
               className="text-red-500 hover:underline"
             >
               Approve
