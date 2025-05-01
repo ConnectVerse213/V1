@@ -162,7 +162,7 @@ function QR() {
     
      <ResponsiveAppBar style={{top:'0'}}/>
      <hr></hr>
-     <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+     <br></br><br></br><br></br><br></br><br></br>
     
       <center>
 
