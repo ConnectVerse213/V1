@@ -320,7 +320,7 @@ function QR() {
       <div ref={qrRef} style={{border: '2em solid white',
     display: 'inline-block',
     backgroundColor: 'white'}}>
-        <QRCodeCanvas value={localStorage.getItem(`${event_id}TicketId`)+localStorage.getItem('email')} size={200}  
+        <QRCodeCanvas value={localStorage.getItem(`${event_id}TicketId`)} size={200}  
   quietZone={30}  />
       </div>
 

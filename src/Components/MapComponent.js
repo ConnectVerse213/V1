@@ -123,14 +123,14 @@ const QrScanner = () => {
        
         let filteredArray=ticketTemp.filter(obj => obj.EventId==event_id && obj.TicketId==code)
 
-        let EventId=filteredArray[0].EventId
+       
 
        
         if(filteredArray.length!=0)
         {
          
 
-          
+          let EventId=filteredArray[0].EventId
 
           data = await getDocs(usersCollectionRef1);
        
@@ -161,6 +161,7 @@ const QrScanner = () => {
     const code = jsQR(imageData.data, canvas.width, canvas.height);
 
     if (code && code.data !== qrCode) {
+      alert(code.data)
       setQrCode(code.data);
       getTickets(code.data)
     }

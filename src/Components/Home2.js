@@ -286,6 +286,20 @@ function Home2() {
         });
       },[])
 
+
+      const isUserExist=async ()=>{
+
+        let data = await getDocs(usersCollectionRef1);
+
+        let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                  
+                                   
+        let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+
+        return filteredArray
+      }
+
+
       const getUserId=async ()=>{
 
         let data = await getDocs(usersCollectionRef1);
@@ -330,6 +344,26 @@ function Home2() {
       useEffect(()=>{
         getUserId()
       },[])
+
+      useEffect(()=>{
+
+        isUserExist().then((data)=>{
+
+          console.log("data",data)
+          if(data.length>0)
+          {
+            setShowDiv(false)
+            setShowConfetti(false)
+          }
+          else if(data.length==0)
+          {
+            setShowDiv(true)
+            setShowConfetti(true)
+          }
+        })
+      },[])
+
+
     
   return (
     <div>
@@ -362,8 +396,8 @@ function Home2() {
     height: '100px', 
     objectFit: 'cover' }}  src={coinImg}></img>
           <br></br>
-          <h1>100</h1>
-          <p>You just won 100 coins !</p>
+          <h1>{localStorage.getItem('coins')}</h1>
+          <p>You won {localStorage.getItem('coins')} coins !</p>
           <br></br>
           <center>
           <button class="button-85" onClick={()=>{
