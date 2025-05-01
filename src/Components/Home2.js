@@ -115,7 +115,7 @@ function Home2() {
      
       });
 
-      const notifyGift = () => toast(`${localStorage.getItem('coins')} coins claimed!`,{
+      const notifyGift = () => toast(`Balance updated to ${localStorage.getItem('coins')} coins`,{
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -189,8 +189,8 @@ function Home2() {
     const [allEvents,setAllEvents]=useState([])
     const [registeredEvents,setRegisteredEvents]=useState([])
     const [userApprovedArray,setUserApprovedArray]=useState([])
-    const [showConfetti,setShowConfetti]=useState(localStorage.getItem('count')?false:true)
-    const [showDiv,setShowDiv]=useState(localStorage.getItem('count')?false:true)
+    const [showConfetti,setShowConfetti]=useState(true)
+    const [showDiv,setShowDiv]=useState(true)
     const [buttonHight,setButtonHighlight]=useState(1)
     const [trendingEvents,setTrendingEvents]=useState([])
     const [city,setCity]=useState('')
@@ -349,16 +349,18 @@ function Home2() {
 
         isUserExist().then((data)=>{
 
-          console.log("data",data)
-          if(data.length>0)
+         
           {
-            setShowDiv(false)
-            setShowConfetti(false)
-          }
-          else if(data.length==0)
-          {
-            setShowDiv(true)
-            setShowConfetti(true)
+            
+
+            if(localStorage.getItem('coins') && localStorage.getItem('coins')<data[0].Coins)
+              {
+                setCoins(data[0].Coins)
+                localStorage.setItem('coins',data[0].Coins)
+               
+
+              }
+          
           }
         })
       },[])
@@ -397,7 +399,7 @@ function Home2() {
     objectFit: 'cover' }}  src={coinImg}></img>
           <br></br>
           <h1>{localStorage.getItem('coins')}</h1>
-          <p>You won {localStorage.getItem('coins')} coins !</p>
+          <p>You won a total of {localStorage.getItem('coins')} coins till now !</p>
           <br></br>
           <center>
           <button class="button-85" onClick={()=>{
