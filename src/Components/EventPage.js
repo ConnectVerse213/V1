@@ -42,6 +42,7 @@ import mapImage from '../assets/images/mapImage.svg'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
+import eventpageEntireBackground from '../assets/images/eventBackground5.gif'
 import CloseIcon from '@mui/icons-material/Close';
 
 
@@ -164,7 +165,7 @@ function EventPage() {
       
   return (
     <div style={{
-     
+      
     }}>
       <div id="up"></div>
       <br></br>

@@ -10,6 +10,13 @@ import {
 } from "firebase/firestore";
 import { QRCodeCanvas } from 'qrcode.react';
 import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import DownloadIcon from '@mui/icons-material/Download';
+import backgroundImage from '../assets/images/coinBackground2.gif'
+import ResponsiveAppBar from './ResponsiveAppBar';
+import { useOkto } from "okto-sdk-react";
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef1 = collection(db, "user");
 
@@ -151,23 +158,44 @@ function QR() {
 
   
   return (
-    <div  style={{backgroundColor:'white',color:'black',height:'200em'}} >
+    <div  
+    
+    style={{ backgroundImage:`url(${backgroundImage})`,color:'black',height:'50.5em', backgroundSize: 'fit-content', 
+    backgroundPosition: 'center center', 
+    backgroundRepeat: 'no-repeat'}}
+    
+   
+    >
+    
+     <ResponsiveAppBar style={{top:'0'}}/>
+     <hr></hr>
      <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
     
       
 
             {!localStorage.getItem(`${event_id}TicketId`) &&   <div >
+
+             
       
-      <div ref={qrRef}>
-        <QRCodeCanvas value={randomNumber+localStorage.getItem('email')} size={200}  
-  quietZone={30}  />
-      </div>
+            <div
+  ref={qrRef}
+  style={{
+    border: '2em solid white',
+    display: 'inline-block',
+    backgroundColor: 'white'
+  }}
+>
+  <QRCodeCanvas
+    value={randomNumber + localStorage.getItem('email')}
+    size={200}
+  />
+</div>
 
 
-      <br></br>  <br></br>  <br></br>  <br></br>  <br></br><br></br>  <br></br>  <br></br>  <br></br>  <br></br>
+      <br></br>  <br></br>  
 
       {!showQR && (
-        <button
+        <Button variant="outlined"
           onClick={() => {
             
             
@@ -179,12 +207,14 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-          Show QR Code
-        </button>
+         <VisibilityIcon/> &nbsp; Show 
+        </Button>
       )}
 
     {showQR && (
-        <button
+        <Button
+
+          variant="outlined"
           onClick={() => {
             
             
@@ -196,12 +226,14 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-          Hide QR Code
-        </button>
+          <VisibilityOffIcon/> &nbsp; Hide 
+        </Button>
       )}
 
   {!showQR && (
-        <button
+         <Button
+
+         variant="outlined"
           onClick={() => {
             
             
@@ -213,12 +245,14 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-         Download QR Code
-        </button>
+        <DownloadIcon/> &nbsp; Download 
+        </Button>
       )}
 
   {showQR && (
-        <button
+        <Button
+
+        variant="outlined"
           onClick={() => {
             
             
@@ -230,24 +264,28 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-         Download QR Code
-        </button>
+           <DownloadIcon/> &nbsp; Download 
+        </Button>
       )}
 </div>}
 
 
 {localStorage.getItem(`${event_id}TicketId`) &&   <div >
       
-      <div ref={qrRef}>
+      <div ref={qrRef} style={{border: '2em solid white',
+    display: 'inline-block',
+    backgroundColor: 'white'}}>
         <QRCodeCanvas value={localStorage.getItem(`${event_id}TicketId`)+localStorage.getItem('email')} size={200}  
   quietZone={30}  />
       </div>
 
 
-      <br></br>  <br></br>  <br></br>  <br></br>  <br></br><br></br>  <br></br>  <br></br>  <br></br>  <br></br>
+      <br></br>  <br></br>  
 
       {!showQR && (
-        <button
+       <Button
+
+       variant="outlined"
           onClick={() => {
             
             
@@ -259,12 +297,14 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-          Show QR Code
-        </button>
+            <VisibilityIcon/>  &nbsp;  Show 
+        </Button>
       )}
 
     {showQR && (
-        <button
+         <Button
+
+         variant="outlined"
           onClick={() => {
             
             
@@ -276,12 +316,14 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-          Hide QR Code
-        </button>
+          <VisibilityOffIcon/> &nbsp; Hide 
+        </Button>
       )}
 
   
-        <button
+<Button
+
+variant="outlined"
           onClick={() => {
             
             
@@ -293,8 +335,8 @@ function QR() {
           }
           className="bg-yellow-500 text-white px-4 py-2 rounded shadow hover:bg-yellow-600 transition"
         >
-         Download QR Code
-        </button>
+          <DownloadIcon/> &nbsp; Download
+        </Button>
   
 
 

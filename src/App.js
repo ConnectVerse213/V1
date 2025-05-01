@@ -51,7 +51,9 @@ function App() {
     </OktoProvider>} />
      
     <Route path="/map/:event_id" element={ <MapComponent/>} />
-    <Route path="/qr/:event_id" element={ <QR/>} />
+    <Route path="/qr/:event_id" element={   <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+       <QR/>
+    </OktoProvider>} />
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
       
