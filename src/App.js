@@ -16,6 +16,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 import Testing from './Components/Testing'
 import Testing2 from './Components/Testing2'
+
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -50,7 +51,11 @@ function App() {
         <Dashboard/>
     </OktoProvider>} />
      
-    <Route path="/map/:event_id" element={ <MapComponent/>} />
+    <Route path="/map/:event_id" element={<OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+       <MapComponent/>
+    </OktoProvider>} />
+
+   
     <Route path="/qr/:event_id" element={   <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
        <QR/>
     </OktoProvider>} />

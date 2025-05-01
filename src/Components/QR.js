@@ -166,9 +166,10 @@ function QR() {
     
       <center>
 
-            {!localStorage.getItem(`${event_id}TicketId`) &&   <div  style={{ border: '2px solid white',width:'25em',height:'25em', backgroundImage:`url(${backgroundImage})`,color:'black',height:'100%', backgroundSize: 'fit-content', 
-    backgroundPosition: 'center center', 
-    backgroundRepeat: 'no-repeat'}}>
+            {!localStorage.getItem(`${event_id}TicketId`) &&   <div  style={{ border: '1px solid white',borderRadius:'20px',width:'22em',height:'25em', backgroundImage:`url(${backgroundImage})`,
+    backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
+    backgroundPosition: 'center center', // Centers the image within the div
+    backgroundRepeat: 'no-repeat',}}>
 
             <br></br>  <br></br>     <br></br> 
       
