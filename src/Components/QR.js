@@ -60,7 +60,7 @@ function QR() {
       {
         const number = Math.floor(1000000000 + Math.random() * 9000000000).toString();
         setRandomNumber(number);
-        localStorage.setItem(`${event_id}TicketId`,number)
+        localStorage.setItem(`${event_id}TicketId`,number+localStorage.getItem('email'))
         const result=await addDoc(usersCollectionRef2, {TicketId:number+localStorage.getItem('email'),EventId:event_id});
       
         console.log(result.id)
