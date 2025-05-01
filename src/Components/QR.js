@@ -160,7 +160,7 @@ function QR() {
   return (
     <div >
     
-     <ResponsiveAppBar style={{top:'0'}}/>
+     <ResponsiveAppBar style={{top:'0'}} homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined" />
      <hr></hr>
      <br></br><br></br><br></br><br></br><br></br>
     
