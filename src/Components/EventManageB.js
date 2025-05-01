@@ -136,11 +136,16 @@ function EventManageB() {
               const data = await getDocs(usersCollectionRef1);
                              
               let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+              console.log("newAttendee",newAttendee)
             
+              console.log("eventsTemp",eventsTemp)
                              
               let filteredArray=eventsTemp.filter(obj => obj.Email === newAttendee.Email)
 
-              console.log(filteredArray)
+              console.log("filteredArray",filteredArray)
+
+              
               
               await updateDoc(userDoc, newFields);
               const userDoc1 = doc(db, "user", filteredArray[0].id);
