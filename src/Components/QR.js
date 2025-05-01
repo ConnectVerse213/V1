@@ -158,24 +158,19 @@ function QR() {
 
   
   return (
-    <div  
-    
-    style={{ backgroundImage:`url(${backgroundImage})`,color:'black',height:'100%', backgroundSize: 'fit-content', 
-    backgroundPosition: 'center center', 
-    backgroundRepeat: 'no-repeat'}}
-    
-   
-    >
+    <div >
     
      <ResponsiveAppBar style={{top:'0'}}/>
      <hr></hr>
-     <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+     <br></br><br></br><br></br><br></br><br></br><br></br><br></br>
     
-      
+      <center>
 
-            {!localStorage.getItem(`${event_id}TicketId`) &&   <div >
+            {!localStorage.getItem(`${event_id}TicketId`) &&   <div  style={{ border: '2px solid white',width:'25em',height:'25em', backgroundImage:`url(${backgroundImage})`,color:'black',height:'100%', backgroundSize: 'fit-content', 
+    backgroundPosition: 'center center', 
+    backgroundRepeat: 'no-repeat'}}>
 
-             
+            <br></br>  <br></br>     <br></br> 
       
             <div
   ref={qrRef}
@@ -185,6 +180,8 @@ function QR() {
     backgroundColor: 'white'
   }}
 >
+
+
   <QRCodeCanvas
     value={randomNumber + localStorage.getItem('email')}
     size={200}
@@ -270,8 +267,14 @@ function QR() {
 </div>}
 
 
-{localStorage.getItem(`${event_id}TicketId`) &&   <div >
-      
+{localStorage.getItem(`${event_id}TicketId`) &&   <div style={{ border: '1px solid white',borderRadius:'20px',width:'22em',height:'25em', backgroundImage:`url(${backgroundImage})`,
+    backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
+    backgroundPosition: 'center center', // Centers the image within the div
+    backgroundRepeat: 'no-repeat',}} // Prevents repeating of the image}}>
+      >
+
+<br></br>  <br></br>     <br></br> 
+
       <div ref={qrRef} style={{border: '2em solid white',
     display: 'inline-block',
     backgroundColor: 'white'}}>
@@ -338,13 +341,13 @@ variant="outlined"
           <DownloadIcon/> &nbsp; Download
         </Button>
   
-
+<br></br><br></br><br></br>
 
  
 </div>}
           
 
-
+</center>
 
 
     </div>
