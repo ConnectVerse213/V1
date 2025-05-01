@@ -115,7 +115,7 @@ function Home2() {
      
       });
 
-      const notifyGift = () => toast("100 coins claimed!",{
+      const notifyGift = () => toast(`${localStorage.getItem('coins')} coins claimed!`,{
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -367,7 +367,7 @@ function Home2() {
           <br></br>
           <center>
           <button class="button-85" onClick={()=>{
-            if(localStorage.getItem('coins') && localStorage.getItem('coins')==100 )
+            if(localStorage.getItem('coins') && localStorage.getItem('coins')>=1 )
             {
              setShowDiv(false)
              setShowConfetti(false)
