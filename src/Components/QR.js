@@ -160,7 +160,7 @@ function QR() {
   return (
     <div  
     
-    style={{ backgroundImage:`url(${backgroundImage})`,color:'black',height:'50.5em', backgroundSize: 'fit-content', 
+    style={{ backgroundImage:`url(${backgroundImage})`,color:'black',height:'100%', backgroundSize: 'fit-content', 
     backgroundPosition: 'center center', 
     backgroundRepeat: 'no-repeat'}}
     
@@ -345,7 +345,7 @@ variant="outlined"
           
 
 
-
+<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
 
     </div>
   )
