@@ -31,7 +31,7 @@ import Modal from '@mui/material/Modal';
 import Confetti from 'react-confetti'
 
 // import { signInWithGoogle } from "../firebase-config";
-const usersCollectionRef = collection(db, "user");
+const usersCollectionRef1 = collection(db, "user");
 
 function Home() {
 
@@ -73,57 +73,114 @@ function Home() {
       const handleClose = () => setOpen(false);
       const [showDiv, setShowDiv] = useState(false);
     
-    const createUser = async (email) => {
 
-            try{
-                await addDoc(usersCollectionRef, { Email:email, Coins: 100, EventsCreated: [], EventsRegistered: [], EventsAttended: []});
-            }
-            catch{
-                alert('Problem Creating User')
-            }
-          
-           
-          };
+      const getUsers=async ()=>{
+
+        let data = await getDocs(usersCollectionRef1);
+                                   
+                    let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                  
+                                   
+                    return usersTemp
+                   
+      }
 
 
-    useEffect(()=>{
-        getUserDetails()
-        .then((result) => {
-            if(!localStorage.getItem('email'))
-            {
-              localStorage.setItem('email',result.email)
+   
+
+
+  
+
+      // useEffect(()=>{
+
+
+
+      //   getUserDetails()
+      //   .then((result) => {
+
+      //     console.log(result)
+      //       if(!localStorage.getItem('email'))
+      //       {
+
+      //         getUsers().then((usersTemp)=>{
+      //           console.log("usersTemp",usersTemp)
+      //           let filteredArray=usersTemp.filter(obj=>obj.Email==result.email)
+      //           console.log("filteredArray",filteredArray)
+      //           if(filteredArray.length!=0)
+      //           {
+      //             localStorage.setItem('email',result.email)
+      //             localStorage.setItem('coins',filteredArray[0].Coins)
+      //             window.location.reload()
+      //           }
+
+      //         })
+      //         localStorage.setItem('email',result.email)
              
              
-              window.location.reload()
-            }
+      //         window.location.reload()
+      //       }
 
           
               
             
            
             
-        })
-        .catch((error) => {
-            console.error(`error:`, error);
-        });
+      //   })
+      //   .catch((error) => {
+      //       console.error(`error:`, error);
+      //   });
 
-        if(localStorage.getItem('coins'))
-        {
-          window.location.href = '/home2';
-        }
-        
-      },[])
+      //   if(localStorage.getItem('coins'))
+      //   {
+      //     window.location.href = '/home2';
+      //   }
+      //   if(localStorage.getItem('email'))
+      //   {
+      //   notify()
+
+      //   }
+      //   const timer = setTimeout(() => {
+      //     setShowDiv(true);
+      //   }, 1000); // 2 seconds
+    
+      //   return () => clearTimeout(timer);
+      // },[])
 
       useEffect(()=>{
-        if(localStorage.getItem('email'))
-        {
-        notify()
-        }
-        const timer = setTimeout(() => {
-          setShowDiv(true);
-        }, 1000); // 2 seconds
-    
-        return () => clearTimeout(timer);
+
+      if(localStorage.getItem('email') && localStorage.getItem('coins'))
+      {
+         window.location.href="/home2"
+      }
+
+
+        getUsers().then((usersTemp)=>{
+         getUserDetails().then((result)=>{
+
+
+          console.log("usersTemp",usersTemp)
+          let filteredArray=usersTemp.filter(obj=>obj.Email==result.email)
+                console.log("filteredArray",filteredArray)
+                if(filteredArray.length!=0)
+                {
+                  localStorage.setItem('email',result.email)
+                  localStorage.setItem('coins',filteredArray[0].Coins)
+                  window.location.href="/home2"
+                }
+                else{
+                  localStorage.setItem('email',result.email)
+                  localStorage.setItem('coins',100)
+                  
+                     const timer = setTimeout(() => {
+                      setShowDiv(true);
+                    }, 1000); // 2 seconds
+                
+                    return () => clearTimeout(timer);
+
+                }
+
+
+              })})
       },[])
   return (
     <div >
@@ -173,35 +230,22 @@ function Home() {
     {
 
        
-        const data = await getDocs(usersCollectionRef);
+        const data = await getDocs(usersCollectionRef1);
                       
         let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
                     
                        
-        const exists = users.some(obj => obj.Email === localStorage.getItem('email'));
+      
                     
-       if( !exists )
-       {
-        await addDoc(usersCollectionRef, { Email:localStorage.getItem('email'), Coins: 100, EventsCreated: [], EventsRegistered: [], EventsApproved:[],EventsAttended: []});
+      
+        await addDoc(usersCollectionRef1, { Email:localStorage.getItem('email'), Coins: 100, EventsCreated: [], EventsRegistered: [], EventsApproved:[],EventsAttended: []});
         setCoins(100)
 
-        localStorage.setItem('coins',100)
+        
         window.location.href = '/home2';
-       }
+       
 
-       else
-       {
-
-         const data = await getDocs(usersCollectionRef);
-               
-         let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-               
-         let filteredArray=eventsTemp.filter(obj => obj.Email === localStorage.getItem('email'))
-         console.log(filteredArray)
-         localStorage.setItem('coins',filteredArray[0].Coins)
-         alert('User already exists')
-         window.location.href = '/home2';
-       }
+      
        
 
        
