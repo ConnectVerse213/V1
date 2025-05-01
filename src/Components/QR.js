@@ -118,8 +118,30 @@ function QR() {
         console.log(err)
       }
     };
+
+
+   const getTickets=async ()=>{
+    const data = await getDocs(usersCollectionRef2);
+           
+      let ticketsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+      console.log(ticketsTemp[0].TicketId.slice(10))
+  
+      let filteredArray = ticketsTemp.filter(obj => 
+        obj.TicketId.slice(10) === localStorage.getItem('email') && 
+        obj.EventId==event_id
+      );
+
+      console.log("filtered",filteredArray)
+      
+      return filteredArray
+   }
+
+
   
     // 🧠 Update canvas class after render
+
+
     useEffect(() => {
 
      getUsers().then((data)=>{
@@ -129,6 +151,11 @@ function QR() {
           window.location.href="/error/User Not Authorized"
         }
       })
+
+      
+    
+
+
 
       
       
@@ -149,8 +176,22 @@ function QR() {
 
   
 
-  
+  useEffect(()=>{
+    getTickets().then((data)=>{
 
+      if(data.length!=0 && !localStorage.getItem(`${event_id}TicketId`))
+      {
+        
+            localStorage.setItem(`${event_id}TicketId`,data[0].TicketId)
+            console.log("data",data)
+
+            window.location.reload()
+          
+      }
+
+     })
+  },[])
+    
       
 
 
