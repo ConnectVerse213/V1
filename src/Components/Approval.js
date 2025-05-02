@@ -86,7 +86,7 @@ function EventManage() {
   const [userDialog,setUserDialog]=useState({})
 
 
-  const [filterOption, setFilterOption] = React.useState('');
+  const [filterOption, setFilterOption] = useState('All');
 
   const handleFilterChange = (event) => {
     setFilterOption(event.target.value);
@@ -419,20 +419,22 @@ function EventManage() {
 
     <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',borderLeft:'none',borderRight:'none',borderBottom:'0.08px solid white'}} placeholder='&nbsp;&nbsp;🔍 Search guests'/> 
     <div >
-    <Box sx={{ minWidth: 80 }} style={{backgroundColor:'black'}}>
+    <Box sx={{ minWidth: 80 }} style={{backgroundColor:'black',border:'1px solid #1876d1'}}>
    
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label"><div style={{display:'flex',alignItems:'center'}}><FilterAltIcon style={{color:'white'}}/> <l style={{color:'white'}}>All</l></div></InputLabel>
+        <InputLabel id="demo-simple-select-label"><div style={{display:'flex',alignItems:'center'}}><FilterAltIcon style={{color:'white'}}/> </div></InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={filterOption}
           label="Age"
           onChange={handleFilterChange}
+
+          style={{color:'white'}}
         >
-          <MenuItem value={10}>All</MenuItem>
-          <MenuItem value={20}>Approved</MenuItem>
-          <MenuItem value={30}>Unapproved</MenuItem>
+          <MenuItem value={"All"}>All</MenuItem>
+          <MenuItem value={"Unapproved"}>Unapproved</MenuItem>
+          <MenuItem value={"Approved"}>Approved</MenuItem>
         </Select>
       </FormControl>
     </Box>
@@ -444,7 +446,14 @@ function EventManage() {
 
 
  
-<h1 style={{color:'white'}}>Recent Registrations</h1>
+
+
+<br></br>
+
+{(filterOption.length == 0 || filterOption==="All") && <div>
+    
+   
+
 
 <div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
@@ -514,7 +523,166 @@ updateUser(x)
 })}
 
 </div>
-         
+</div>
+         }
+
+
+
+
+
+{/* filterOption=Unapproved */}
+
+
+
+{filterOption.length!=0 && filterOption=="Unapproved" && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+
+{events.length!=0 && events[0].Registrations.map((x,index)=>{
+
+  if(index==0 && !approvedUsers.includes(x.Email)) return(
+  <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}} onClick={()=>{
+
+    setUserDialog(x)
+    console.log(x)
+    handleClickOpen()
+  }}
+  
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  
+{approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+  updateUser(x)
+}} >Approve</Button>}
+
+
+  </div>
+  )
+
+  else if (index==events[0].Registrations.length-1 && !approvedUsers.includes(x.Email)) return(
+    <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}} onClick={()=>{
+
+      setUserDialog(x)
+      handleClickOpen()
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
+    
+    
+    </div>
+    )
+
+    else if ( !approvedUsers.includes(x.Email)) return(
+      <div class="registrationsDiv" onClick={()=>{
+
+        setUserDialog(x)
+        handleClickOpen()
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      
+      
+      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
+      
+      </div>
+      )
+
+
+})}
+
+</div>
+</div>
+         }
+
+
+
+{/* filterOption=Approved */}
+
+
+{filterOption.length!=0 && filterOption=="Approved" && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+
+{events.length!=0 && events[0].Registrations.map((x,index)=>{
+
+  if(index==0 && approvedUsers.includes(x.Email)) return(
+  <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}} onClick={()=>{
+
+    setUserDialog(x)
+    console.log(x)
+    handleClickOpen()
+  }}
+  
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  
+{approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+  updateUser(x)
+}} >Approve</Button>}
+
+
+  </div>
+  )
+
+  else if (index==events[0].Registrations.length-1 && approvedUsers.includes(x.Email)) return(
+    <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}} onClick={()=>{
+
+      setUserDialog(x)
+      handleClickOpen()
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
+    
+    
+    </div>
+    )
+
+    else if ( approvedUsers.includes(x.Email))return(
+      <div class="registrationsDiv" onClick={()=>{
+
+        setUserDialog(x)
+        handleClickOpen()
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      
+      
+      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
+      
+      </div>
+      )
+
+
+})}
+
+</div>
+</div>
+         }
+
+
+
               </div>
               </div>
     
