@@ -115,7 +115,7 @@ function Home2() {
      
       });
 
-      const notifyGift = () => toast(`Balance updated to ${localStorage.getItem('coins')} coins`,{
+      const notifyGift = (value) => toast(`You just claimed ${value} coins`,{
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -171,26 +171,20 @@ function Home2() {
       link.click();
     };
   
-    // 🧠 Update canvas class after render
-    useEffect(() => {
-      const canvas = qrRef.current?.querySelector('canvas');
-      if (canvas) {
-        canvas.style.transition = 'filter 0.5s ease';
-        canvas.style.filter = showQR ? 'blur(0px)' : 'blur(8px)';
-      }
-    }, [showQR, randomNumber]);
+  
 
     const usersCollectionRef = collection(db, "events");
         const usersCollectionRef1 = collection(db, "user");
     const [coins,setCoins]=useState(localStorage.getItem('coins')?localStorage.getItem('coins'):0)
+    const [prevCoins,setPrevCoins]=useState(0)
     const { showWidgetModal, closeModal } = useOkto();
     const { createWallet, getUserDetails, getPortfolio } = useOkto();
     const [createdEvents,setCreatedEvents]=useState([])
     const [allEvents,setAllEvents]=useState([])
     const [registeredEvents,setRegisteredEvents]=useState([])
     const [userApprovedArray,setUserApprovedArray]=useState([])
-    const [showConfetti,setShowConfetti]=useState(true)
-    const [showDiv,setShowDiv]=useState(true)
+    const [showConfetti,setShowConfetti]=useState(false)
+    const [showDiv,setShowDiv]=useState(false)
     const [buttonHight,setButtonHighlight]=useState(1)
     const [trendingEvents,setTrendingEvents]=useState([])
     const [city,setCity]=useState('')
@@ -268,24 +262,7 @@ function Home2() {
             </Box>
           );
 
-    useEffect(()=>{
-        getUserDetails()
-        .then((result) => {
-            if(!localStorage.getItem('email'))
-            {
-              localStorage.setItem('email',result.email)
-             
-             
-              window.location.reload()
-            }
-           
-            
-        })
-        .catch((error) => {
-            console.error(`error:`, error);
-        });
-      },[])
-
+   
 
       const isUserExist=async ()=>{
 
@@ -341,21 +318,37 @@ function Home2() {
                    
 
       }
+   
       useEffect(()=>{
-        getUserId()
-      },[])
 
-      useEffect(()=>{
+        if(!localStorage.getItem('email'))
+           {
+
+            window.location.href="/oktologin"
+            
+        }
+
+       
+       
 
         isUserExist().then((data)=>{
 
          
           {
             
+            getUserId()
 
             if(localStorage.getItem('coins') && localStorage.getItem('coins')<data[0].Coins)
               {
-                setCoins(data[0].Coins)
+                
+               
+                console.log("prevCoins",prevCoins)
+                console.log("coins",coins)
+                
+               
+                setShowConfetti(true)
+                setShowDiv(true)
+                
                 localStorage.setItem('coins',data[0].Coins)
                
 
@@ -399,7 +392,7 @@ function Home2() {
     objectFit: 'cover' }}  src={coinImg}></img>
           <br></br>
           <h1>{localStorage.getItem('coins')}</h1>
-          <p>You won a total of {localStorage.getItem('coins')} coins till now !</p>
+          <p>You just won {parseInt(localStorage.getItem('coins'))-parseInt(coins)} coins !</p>
           <br></br>
           <center>
           <button class="button-85" onClick={()=>{
@@ -408,7 +401,8 @@ function Home2() {
              setShowDiv(false)
              setShowConfetti(false)
              localStorage.setItem('count',1)
-             notifyGift()
+             notifyGift(parseInt(localStorage.getItem('coins'))-coins)
+             setCoins(parseInt(localStorage.getItem('coins')))
             }
             
            

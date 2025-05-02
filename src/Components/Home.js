@@ -91,60 +91,7 @@ function Home() {
 
   
 
-      // useEffect(()=>{
 
-
-
-      //   getUserDetails()
-      //   .then((result) => {
-
-      //     console.log(result)
-      //       if(!localStorage.getItem('email'))
-      //       {
-
-      //         getUsers().then((usersTemp)=>{
-      //           console.log("usersTemp",usersTemp)
-      //           let filteredArray=usersTemp.filter(obj=>obj.Email==result.email)
-      //           console.log("filteredArray",filteredArray)
-      //           if(filteredArray.length!=0)
-      //           {
-      //             localStorage.setItem('email',result.email)
-      //             localStorage.setItem('coins',filteredArray[0].Coins)
-      //             window.location.reload()
-      //           }
-
-      //         })
-      //         localStorage.setItem('email',result.email)
-             
-             
-      //         window.location.reload()
-      //       }
-
-          
-              
-            
-           
-            
-      //   })
-      //   .catch((error) => {
-      //       console.error(`error:`, error);
-      //   });
-
-      //   if(localStorage.getItem('coins'))
-      //   {
-      //     window.location.href = '/home2';
-      //   }
-      //   if(localStorage.getItem('email'))
-      //   {
-      //   notify()
-
-      //   }
-      //   const timer = setTimeout(() => {
-      //     setShowDiv(true);
-      //   }, 1000); // 2 seconds
-    
-      //   return () => clearTimeout(timer);
-      // },[])
 
       useEffect(()=>{
 
@@ -153,8 +100,17 @@ function Home() {
          window.location.href="/home2"
       }
 
+      getUserDetails().then((result)=>{
+
+      }).catch(()=>{
+
+        window.location.href="/oktologin"
+      })
+
 
         getUsers().then((usersTemp)=>{
+
+          
          getUserDetails().then((result)=>{
 
 
