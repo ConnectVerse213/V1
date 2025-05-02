@@ -261,7 +261,7 @@ function EventManage() {
     }}>
       <div id="up"></div>
       <br></br>
-      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="contained"/>
+      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
       <hr></hr>
       <br></br> 
 
@@ -275,9 +275,7 @@ function EventManage() {
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>Approve </Button>
-<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
-     window.location.href = '/manage';
-}}>Edit </Button>
+
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = `/map/${event_id}`;
 }} >Scan</Button>
