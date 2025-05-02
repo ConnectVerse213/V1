@@ -69,7 +69,7 @@ function EventManage() {
 
     // Store answers as an array
   const [answers, setAnswers] = useState([]);
-
+  const [approvedUsers,setApprovedUsers] = useState([])
 
   const getUsers=async ()=>{
   
@@ -139,6 +139,10 @@ function EventManage() {
         let filteredArray=eventsTemp.filter(obj => obj.id === event_id)
         console.log(filteredArray)
         setEvents(filteredArray);
+
+        let approvedUsersTemp=filteredArray[0].Attendees.map(item=>item.Email)
+        setApprovedUsers(approvedUsersTemp)
+        console.log(approvedUsers)
        
       
       };
@@ -325,20 +329,41 @@ function EventManage() {
  
 <h1 style={{color:'white'}}>Recent Registrations</h1>
 
-<div style={{width:'90%',border:'1px solid blue',borderRadius:'20px'}}>
+<div style={{width:'90%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
   if(index==0 ) return(
-  <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderTopLeftRadius: '1em', borderTopRightRadius: '1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
+  <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  
+{approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+
+
+  </div>
   )
 
   else if (index==events[0].Registrations.length-1) return(
-    <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderBottomLeftRadius: '1em', borderBottomRightRadius: '1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
+    <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+    
+    
+    </div>
     )
 
     else return(
-      <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
+      <div class="registrationsDiv" ><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      
+      
+      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+      
+      </div>
       )
 
 

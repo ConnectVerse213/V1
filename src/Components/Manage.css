@@ -216,6 +216,31 @@
         align-items: flex-start;
         gap:1em
       }
+
+      .registrationsDiv{
+
+        border: 0.07px solid black;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        padding: 1em;
+        
+        justify-content: space-between;
+      }
+
+      .registrationsDiv:hover{
+
+        border: 0.07px solid black;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        padding: 1em;
+        background-color: grey;
+        justify-content: space-between;
+        cursor: pointer;
+      }
    
 
 
@@ -287,4 +312,6 @@
         top: 0;
         border-radius: 10px;
       }
+      
+
       
