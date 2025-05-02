@@ -53,6 +53,9 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -261,7 +264,7 @@ function EventManage() {
     }}>
       <div id="up"></div>
       <br></br>
-      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
+      <ResponsiveAppBar  homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
       <hr></hr>
       <br></br> 
 
@@ -269,11 +272,11 @@ function EventManage() {
 
 
       <div style={{display:'flex',justifyContent:'center'}}>
-      <Button variant="contained" style={{borderRadius:'0'}}  onClick={()=>{
-     window.location.reload();
+      <Button variant="outlined" style={{borderRadius:'0'}}  onClick={()=>{
+     window.location.href = `/manage/${event_id}`;
 }}>Overview </Button>
-<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
-     window.location.href = `/approve/${event_id}`;
+<Button variant="contained" style={{borderRadius:'0'}} onClick={()=>{
+     window.location.href = '/manage';
 }}>Approve </Button>
 
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
@@ -296,6 +299,8 @@ function EventManage() {
 
 <div class="item1a">
 
+   
+
 <img class="poster" src={events.length!=0 && events[0].Image}></img>
 
 </div>
@@ -303,7 +308,7 @@ function EventManage() {
 <div
   className="item1b"
   style={{
-    width: '300px',               // Set fixed width
+    width: '270px',               // Set fixed width
     wordWrap: 'break-word',       // Break long words
     whiteSpace: 'normal',         // Allow text to wrap
     overflowWrap: 'break-word',   // For better cross-browser wrapping
@@ -316,25 +321,26 @@ function EventManage() {
     WebkitBackdropFilter: 'blur(4px)',
     borderRadius: '10px',
     border: '1px solid rgba(255, 255, 255, 0.18)',
+    justifyContent:'center',
+    alignItems:'center'
   }}
 >
-  <p style={{
-    wordBreak: 'break-word',
-    overflowWrap: 'break-word',
-    whiteSpace: 'normal',
-    margin: 0,
-    textAlign:'left'
-  }}>
-    Hosted by {events.length!=0 && events[0].Creator}
-  </p>
+
+   
+    
+
+  
 
   <div
     className="item1c"
-    style={{ marginTop: '10px' }}
+    
   >
     <span style={{ color: 'white' }}>
       Registrations:&nbsp;
       {events.length !== 0 && events[0].RegistrationsCount}
+     &nbsp; &nbsp;
+      Approvals:&nbsp;
+      {events.length !== 0 && events[0].AttendeesCount}
     </span>
   </div>
 </div>
@@ -362,28 +368,35 @@ function EventManage() {
     backgroundRepeat: 'no-repeat', // Prevents repeating of the image
     
     }}>
+
+        
+  <div style={{width:'100%',display:'flex',justifyContent:'space-evenly'}}>
+
+
+  <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around'}}><h1 style={{color:'white'}}>{events.length!=0 && events[0].Name}</h1><Button variant="contained" style={{backgroundColor:'white',color:'black'}}>Cap {events.length!=0 && events[0].Capacity}</Button></div>
+
+  <div style={{width:'7em'}}>
+
+    {events.length!=0 &&  <CircularProgressbar value={approvedUsers.length*100/events[0].Capacity} text={approvedUsers.length*100/events[0].Capacity+"%"} /> }
+    
+    
+    
+    
+   
+    
+    
+    </div>
+
+    </div>
+    
+    
+   
+    
+    
   
-  <h1 style={{color:'white'}}>{events.length!=0 && events[0].Name}</h1>
-<div style={{color:'white',display:'flex',alignItems:'center',gap:'3px'}}><CalendarMonthIcon/><l>{events.length!=0 && formatDate(events[0].StartDateTime)}</l></div>
 
-<div style={{textAlign:'left',display:'flex',alignItems:'flex-start',gap:'3px'}}>
-<LocationPinIcon style={{color:'white'}}/> 
-{events.length!=0 && events[0].Address && <l style={{color:'white'}} >{events[0].Address}</l>}
-</div>
 
-<div>
-
-{events.length!=0 && events[0].Address && <iframe
-            title="Google Map"
-            src={`https://www.google.com/maps?q=${events[0].Address}&output=embed`}
-           class="map"
-           
-            allowFullScreen=""
-            loading="lazy"
-          ></iframe>}
-
-</div>
-
+  
 
 
 
@@ -393,7 +406,7 @@ function EventManage() {
  
 <h1 style={{color:'white'}}>Recent Registrations</h1>
 
-<div style={{width:'90%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+<div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
