@@ -28,7 +28,7 @@ function App() {
     
       <Route path="/creator" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><AdminCreate/></OktoProvider>} />
       <Route path="/event/:event_id" element={<OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><EventPage /></OktoProvider>} />
-      <Route path="/manage/" element={<EventManage />} />
+      <Route path="/manage/:event_id" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><EventManage/></OktoProvider>} />
       <Route path="/editevent/:event_id" element={<EditEvent />} />
       <Route path="/manageevent/:event_id" element={<EventManageB />} />
       <Route path="/error/:error_message" element={<ErrorPage />} />
