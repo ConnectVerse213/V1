@@ -32,7 +32,7 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import ShareIcon from '@mui/icons-material/Share';
-import './EventPage.css'
+import './Manage.css'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import EventIcon from '@mui/icons-material/Event';
 import LocationPinIcon from '@mui/icons-material/LocationPin';
@@ -49,13 +49,39 @@ import CloseIcon from '@mui/icons-material/Close';
 function EventManage() {
 
 
+  const { event_id } = useParams();
 
+  const usersCollectionRef = collection(db, "events");
+  const usersCollectionRef1 = collection(db, "user");
+ 
+
+ const [events, setEvents] = useState([]);
+ const [users,setUsers]=useState([])
+
+ const [showAcceptInvite, setShowAcceptInvite] = useState(false);
   const { showWidgetModal, closeModal } = useOkto();
   const { createWallet, getUserDetails, getPortfolio } = useOkto();
+
+
+   
+  
   
 
     // Store answers as an array
   const [answers, setAnswers] = useState([]);
+
+
+  const getUsers=async ()=>{
+  
+    let data = await getDocs(usersCollectionRef1);
+                               
+                let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                let filteredArray=usersTemp.filter(obj=>obj.EventsRegistered.includes(event_id))
+              
+                               
+                setUsers(filteredArray)
+               
+  }
 
   // Handle input change
   const handleChange = (index, value) => {
@@ -82,13 +108,7 @@ function EventManage() {
   };
 
 
-    const usersCollectionRef = collection(db, "events");
-    const usersCollectionRef1 = collection(db, "user");
-    const { event_id } = useParams();
-
-   const [events, setEvents] = useState([]);
-
-   const [showAcceptInvite, setShowAcceptInvite] = useState(false);
+    
 
    function formatDate(dateStr) {
     const date = new Date(dateStr);
@@ -157,6 +177,8 @@ function EventManage() {
       }
       else
       {
+
+        getUsers()
         getEvents();
       }
          
@@ -177,39 +199,23 @@ function EventManage() {
 
 
       <div style={{display:'flex',justifyContent:'center'}}>
-      <Button variant="contained"  onClick={()=>{
+      <Button variant="contained" style={{borderRadius:'0'}}  onClick={()=>{
      window.location.href = '/creator';
 }}>Overview </Button>
-<Button variant="outlined"  onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>Approve </Button>
-<Button variant="outlined"  onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>Edit </Button>
-<Button variant="outlined"  onClick={()=>{
-     window.location.href = '/manage';
-}}>Blast</Button>
-<Button variant="outlined"  onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>Scan</Button>
+<Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
+     window.location.href = '/manage';
+}}>More</Button>
 
 </div>
-
-      {/* <div style={{display:'flex',backgroundColor:'#1876d1',justifyContent:'center'}}>
-      <Button variant="outlined" style={{borderRadius:'0',border:'1px solid white', color:'white',backgroundColor:'green'}} onClick={()=>{
-     window.location.href = '/creator';
-}}>Overview </Button>
-<Button variant="outlined" style={{borderRadius:'0',border:'1px solid white', color:'white'}} onClick={()=>{
-     window.location.href = '/manage';
-}}>Approve </Button>
-<Button variant="outlined" style={{borderRadius:'0',border:'1px solid white', color:'white'}} onClick={()=>{
-     window.location.href = '/manage';
-}}>Edit </Button>
-<Button variant="outlined" style={{borderRadius:'0',border:'1px solid white', color:'white'}} onClick={()=>{
-     window.location.href = '/manage';
-}}>Scan</Button>
-
-</div> */}
 
 
 </center>
@@ -310,106 +316,42 @@ function EventManage() {
 
 </div>
 
-<div style={{paddingLeft:'1.5em'}}>
 
-<a href="#up" style={{textDecoration:'none'}}>
-      <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
-
-        setShowAcceptInvite(true)
-      }}>Accept Invitation</button></a>
-</div>
 
 
 </div>
 
 <div class="item2b" >
  
-<h1 style={{color:'white'}}>About Event</h1>
+<h1 style={{color:'white'}}>Recent Registrations</h1>
+
+<div style={{width:'100%',border:'1px solid blue',borderRadius:'20px'}}>
+
+{events.length!=0 && events[0].Registrations.map((x,index)=>{
+
+  if(index==0 ) return(
+  <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderTopLeftRadius: '1em', borderTopRightRadius: '1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+  )
+
+  else if (index==events[0].Registrations.length-1) return(
+    <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderBottomLeftRadius: '1em', borderBottomRightRadius: '1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+    )
+
+    else return(
+      <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+      )
 
 
-<div style={{textAlign:'left'}}>
+})}
 
-
-
-{events.length!=0 && <div style={{textAlign:'left',color:'white'}} dangerouslySetInnerHTML={{ __html: events[0].Description }} />}
 </div>
-
-
-</div>
-    </div>
-    
-    </div>
-
-    {showAcceptInvite &&  <div style={{
-          width: '100%', 
-          height:'100%',
-         position:'sticky',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '0%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-          display:'flex',
-          flexDirection:'column',
-          justifyContent:'center',
-          alignItems:'center'
-        }}>
-          <div style={{position:"absolute" ,top:'20px',right:'40px'}} onClick={()=>{
-            setShowAcceptInvite(false)
-          }}><CloseIcon style={{color:'red'}}/></div>
-         
-          <br></br>
-          <center>
-          <form onSubmit={handleSubmit} style={{backgroundColor:'black',color:'white'}}>
-      {events.length!=0 && events[0].Questions.map((question, index) => (
-        <div key={index} style={{ marginBottom: '15px',color:'white'}}>
-          <label >{question}</label>
-          <br /><br></br>
-
-        
-          <input  
-            type="text" 
-            className='custom-input'
-            style={{fontSize:'28px',maxWidth:'70%',borderTop:'none',borderLeft:'none',borderRight:'none',backgroundColor:'black',color:'white'}}
-           placeholder={answers[index]}
-           
-            
-            onChange={(e) => handleChange(index, e.target.value)}
-            
-            
-          />
-
-
-
-
-        </div>
-      ))}
-       <br></br>
-     
-       <br></br>
-
-       
-      <button  type="submit" class="button-85" style={{height:'2em',width:'10em'}}>Register</button>
-      
-      </form>
-
-      
-          </center>
-          
-          <div >
          
               </div>
-     <br></br><br></br>
+              </div>
+    
          
        
-        </div>}
+       </div>
         <br></br> <br></br> <br></br> <br></br> <br></br>
     </div>
   )
