@@ -237,7 +237,7 @@
         gap: 10px;
         align-items: center;
         padding: 1em;
-        background-color: grey;
+        background-color: rgb(188, 185, 185);
         justify-content: space-between;
         cursor: pointer;
       }

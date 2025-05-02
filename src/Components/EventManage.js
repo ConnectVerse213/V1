@@ -44,6 +44,19 @@ import ResponsiveAppBar from './ResponsiveAppBar';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import eventpageEntireBackground from '../assets/images/eventBackground5.gif'
 import CloseIcon from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 function EventManage() {
@@ -62,9 +75,22 @@ function EventManage() {
   const { showWidgetModal, closeModal } = useOkto();
   const { createWallet, getUserDetails, getPortfolio } = useOkto();
 
+  const [userDialog,setUserDialog]=useState({})
+
 
    
-  
+ 
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   
 
     // Store answers as an array
@@ -140,16 +166,28 @@ function EventManage() {
         console.log(filteredArray)
         setEvents(filteredArray);
 
-        let approvedUsersTemp=filteredArray[0].Attendees.map(item=>item.Email)
-        setApprovedUsers(approvedUsersTemp)
-        console.log(approvedUsers)
+        if(filteredArray.length!=0)
+        {
+          let approvedUsersTemp=filteredArray[0].Attendees.map(item=>item.Email)
+          setApprovedUsers(approvedUsersTemp)
+          console.log(approvedUsers)
+        }
+        
        
       
       };
 
       const updateUser = async (result) => {
-        const userDoc = doc(db, "events", event_id);
-        const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:events[0].Attendees,Registrations:[...events[0].Registrations,result],AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount+1};
+
+        if(result.delete && result.delete==="delete")
+        {
+
+          result.delete="nodelete"
+          const userDoc = doc(db, "events", event_id);
+
+          let newApprovedArray=events[0].Attendees.filter(obj=>obj.Email!=result.Email)
+
+        const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:newApprovedArray,Registrations:events[0].Registrations,AttendeesCount:events[0].AttendeesCount-1,RegistrationsCount:events[0].RegistrationsCount};
         await updateDoc(userDoc, newFields);
      
 
@@ -158,16 +196,44 @@ function EventManage() {
         let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
                     
                                      
-        let filteredArray=eventsTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+        let filteredArray=eventsTemp.filter(obj => obj.Email === result.Email)
         
         console.log(filteredArray)
                       
-        await updateDoc(userDoc, newFields);
+       
+        newApprovedArray=filteredArray[0].EventsApproved.filter(item=>item!=event_id)
+        
         const userDoc1 = doc(db, "user", filteredArray[0].id);
-        const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered,event_id], EventsApproved:[...filteredArray[0].EventsApproved],EventsAttended:filteredArray[0].EventsAttended};
+        const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:newApprovedArray,EventsAttended:filteredArray[0].EventsAttended};
         await updateDoc(userDoc1, newFields1);
         window.location.reload();
 
+        return ;
+
+
+        }
+
+        const userDoc = doc(db, "events", event_id);
+        const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:[...events[0].Attendees,result],Registrations:events[0].Registrations,AttendeesCount:events[0].AttendeesCount+1,RegistrationsCount:events[0].RegistrationsCount};
+        await updateDoc(userDoc, newFields);
+     
+
+        const data = await getDocs(usersCollectionRef1);
+                                     
+        let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                    
+                                     
+        let filteredArray=eventsTemp.filter(obj => obj.Email === result.Email)
+        
+        console.log("filteredArray",filteredArray)
+                      
+       
+        
+        const userDoc1 = doc(db, "user", filteredArray[0].id);
+        const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:[...filteredArray[0].EventsApproved,event_id],EventsAttended:filteredArray[0].EventsAttended};
+        await updateDoc(userDoc1, newFields1);
+       
+        window.location.reload();
 
       };
 
@@ -213,8 +279,8 @@ function EventManage() {
      window.location.href = '/manage';
 }}>Edit </Button>
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
-     window.location.href = '/manage';
-}}>Scan</Button>
+     window.location.href = `/map/${event_id}`;
+}} >Scan</Button>
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>More</Button>
@@ -334,34 +400,61 @@ function EventManage() {
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
   if(index==0 ) return(
-  <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
-  
-{approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+  <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}} onClick={()=>{
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+    setUserDialog(x)
+    console.log(x)
+    handleClickOpen()
+  }}
+  
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  
+{approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+  updateUser(x)
+}} >Approve</Button>}
 
 
   </div>
   )
 
   else if (index==events[0].Registrations.length-1) return(
-    <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}} onClick={()=>{
+
+      setUserDialog(x)
+      handleClickOpen()
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
     
     {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
     
     
     </div>
     )
 
     else return(
-      <div class="registrationsDiv" ><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      <div class="registrationsDiv" onClick={()=>{
+
+        setUserDialog(x)
+        handleClickOpen()
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
       
       
       {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}}>Approve</Button>}
+{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+
+e.stopPropagation();
+updateUser(x)
+}}>Approve</Button>}
       
       </div>
       )
@@ -377,6 +470,65 @@ function EventManage() {
          
        
        </div>
+
+       
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              {userDialog.Name}
+            </Typography>
+
+            {approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
+
+              userDialog.delete="delete"
+              updateUser(userDialog)
+
+
+            }}>
+              Unapprove
+            </Button>}
+
+            {!approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
+
+              console.log("updateUser",userDialog)
+              updateUser(userDialog)
+              
+            }}>
+              Approve
+            </Button>}
+
+            
+          </Toolbar>
+        </AppBar>
+        <h3>&nbsp;&nbsp;&nbsp;Registration Questions</h3>
+        <List>
+          {Object.entries(userDialog).map(([key, value])=>{
+            return(<>
+              <ListItemButton>
+            <ListItemText primary={key} secondary={value} />
+          </ListItemButton>
+          <Divider />
+            </>
+          )})}
+          
+         
+          
+        </List>
+      </Dialog>
         <br></br> <br></br> <br></br> <br></br> <br></br>
     </div>
   )
