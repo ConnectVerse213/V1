@@ -325,20 +325,20 @@ function EventManage() {
  
 <h1 style={{color:'white'}}>Recent Registrations</h1>
 
-<div style={{width:'100%',border:'1px solid blue',borderRadius:'20px'}}>
+<div style={{width:'90%',border:'1px solid blue',borderRadius:'20px'}}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
   if(index==0 ) return(
-  <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderTopLeftRadius: '1em', borderTopRightRadius: '1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+  <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderTopLeftRadius: '1em', borderTopRightRadius: '1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
   )
 
   else if (index==events[0].Registrations.length-1) return(
-    <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderBottomLeftRadius: '1em', borderBottomRightRadius: '1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+    <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em', borderBottomLeftRadius: '1em', borderBottomRightRadius: '1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
     )
 
     else return(
-      <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em',justifyContent:'space-between'}}><div><l>{x.Name}</l>&nbsp;&nbsp;&nbsp;<l>{x.Email}</l></div><button>approve</button></div>
+      <div style={{backgroundColor:'yellow',width:'100%',border:'1px solid blue',display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center',padding:'1em',justifyContent:'space-between'}}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l>{x.Name}</l><l>{x.Email}</l></div><button>approve</button></div>
       )
 
 
