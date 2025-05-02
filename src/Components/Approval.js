@@ -54,6 +54,11 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import 'react-circular-progressbar/dist/styles.css';
 
 
@@ -80,6 +85,12 @@ function EventManage() {
 
   const [userDialog,setUserDialog]=useState({})
 
+
+  const [filterOption, setFilterOption] = React.useState('');
+
+  const handleFilterChange = (event) => {
+    setFilterOption(event.target.value);
+  };
 
    
  
@@ -377,7 +388,7 @@ function EventManage() {
 
   <div style={{width:'7em'}}>
 
-    {events.length!=0 &&  <CircularProgressbar value={approvedUsers.length*100/events[0].Capacity} text={approvedUsers.length*100/events[0].Capacity+"%"} /> }
+    {events.length!=0 &&  <CircularProgressbar value={approvedUsers.length*100/events[0].Capacity} text={approvedUsers.length+"/"+events[0].Capacity} /> }
     
     
     
@@ -391,7 +402,7 @@ function EventManage() {
     
     
    
-    
+   
     
   
 
@@ -403,6 +414,35 @@ function EventManage() {
 </div>
 
 <div class="item2b" >
+
+    <div style={{width:'100%'}}>
+
+    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',borderLeft:'none',borderRight:'none',borderBottom:'0.08px solid white'}} placeholder='&nbsp;&nbsp;🔍 Search guests'/> 
+    <div >
+    <Box sx={{ minWidth: 80 }} style={{backgroundColor:'black'}}>
+   
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label"><div style={{display:'flex',alignItems:'center'}}><FilterAltIcon style={{color:'white'}}/> <l style={{color:'white'}}>All</l></div></InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={filterOption}
+          label="Age"
+          onChange={handleFilterChange}
+        >
+          <MenuItem value={10}>All</MenuItem>
+          <MenuItem value={20}>Approved</MenuItem>
+          <MenuItem value={30}>Unapproved</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+    </div>
+    </div>
+
+
+    </div>
+
+
  
 <h1 style={{color:'white'}}>Recent Registrations</h1>
 
