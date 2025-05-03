@@ -793,63 +793,63 @@ updateUser(x)
        </div>
 
        
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-      >
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {userDialog.Name}
-            </Typography>
-
-            {approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
-
-              userDialog.delete="delete"
-              updateUser(userDialog)
-
-
-            }}>
-              Unapprove
-            </Button>}
-
-            {!approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
-
-              console.log("updateUser",userDialog)
-              updateUser(userDialog)
+     <Dialog
+             fullScreen
+             open={open}
+             onClose={handleClose}
+             TransitionComponent={Transition}
+           >
+             <AppBar sx={{ position: 'relative' }}>
+               <Toolbar style={{backgroundColor:'black'}}>
+                 <IconButton
+                   edge="start"
+                   color="inherit"
+                   onClick={handleClose}
+                   aria-label="close"
+                 >
+                   <CloseIcon />
+                 </IconButton>
+                 <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                   {userDialog.Name}
+                 </Typography>
+     
+                 {approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
+     
+                   userDialog.delete="delete"
+                   updateUser(userDialog)
+     
+     
+                 }}>
+                   Unapprove
+                 </Button>}
+     
+                 {!approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
+     
+                   console.log("updateUser",userDialog)
+                   updateUser(userDialog)
+                   
+                 }}>
+                   Approve
+                 </Button>}
+     
+                 
+               </Toolbar>
+             </AppBar>
+             <h3>&nbsp;&nbsp;&nbsp;Registration Questions</h3>
+             <List>
+               {Object.entries(userDialog).map(([key, value])=>{ if(key!="delete")
+                 return(<>
+                   <ListItemButton>
+                 <ListItemText primary={key} secondary={value} />
+               </ListItemButton>
+               <Divider />
+                 </>
+               )})}
+               
               
-            }}>
-              Approve
-            </Button>}
-
-            
-          </Toolbar>
-        </AppBar>
-        <h3>&nbsp;&nbsp;&nbsp;Registration Questions</h3>
-        <List>
-          {Object.entries(userDialog).map(([key, value])=>{
-            return(<>
-              <ListItemButton>
-            <ListItemText primary={key} secondary={value} />
-          </ListItemButton>
-          <Divider />
-            </>
-          )})}
-          
-         
-          
-        </List>
-      </Dialog>
+               
+             </List>
+           </Dialog>
         <br></br> 
         
        

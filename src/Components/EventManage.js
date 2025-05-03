@@ -487,7 +487,7 @@ updateUser(x)
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
+          <Toolbar style={{backgroundColor:'black'}}>
             <IconButton
               edge="start"
               color="inherit"
@@ -524,7 +524,7 @@ updateUser(x)
         </AppBar>
         <h3>&nbsp;&nbsp;&nbsp;Registration Questions</h3>
         <List>
-          {Object.entries(userDialog).map(([key, value])=>{
+          {Object.entries(userDialog).map(([key, value])=>{ if(key!="delete")
             return(<>
               <ListItemButton>
             <ListItemText primary={key} secondary={value} />
