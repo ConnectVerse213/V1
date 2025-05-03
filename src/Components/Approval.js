@@ -288,11 +288,11 @@ function EventManage() {
 }}>Overview </Button>
 <Button variant="contained" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
-}}>Approve </Button>
+}}>Guests </Button>
 
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = `/map/${event_id}`;
-}} >Scan</Button>
+}} >Check In</Button>
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>More</Button>
@@ -312,7 +312,7 @@ function EventManage() {
 
    
 
-<img class="poster" src={events.length!=0 && events[0].Image}></img>
+<img class="poster" style={{border:'1px solid white'}} src={events.length!=0 && events[0].Image}></img>
 
 </div>
 
@@ -377,6 +377,7 @@ function EventManage() {
     backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
     backgroundPosition: 'center center', // Centers the image within the div
     backgroundRepeat: 'no-repeat', // Prevents repeating of the image
+    border:'0.5px solid white'
     
     }}>
 
@@ -417,9 +418,20 @@ function EventManage() {
 
     <div style={{width:'100%'}}>
 
-    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',borderLeft:'none',borderRight:'none',borderBottom:'0.08px solid white'}} placeholder='&nbsp;&nbsp;🔍 Search guests'/> 
+    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',border:'0.08px solid white',borderTopLeftRadius:'0.5em',borderBottomLeftRadius:'0.5em',borderRight:'none'}} placeholder='&nbsp;&nbsp;🔍 Search guests'/> 
     <div >
-    <Box sx={{ minWidth: 80 }} style={{backgroundColor:'black',border:'1px solid #1876d1'}}>
+
+    <select style={{fontSize:'16px',height:'3em',backgroundColor:'black',border:'0.08px solid white',borderTopRightRadius:'0.7em',borderBottomRightRadius:'0.7em',color:'white',width:'7em',textAlign:'center'}}
+        id="fruits"
+        value={filterOption}
+        onChange={(e) => setFilterOption(e.target.value)}
+      >
+        <option value="All">All</option>
+        <option value="Unapproved">Unapproved</option>
+        <option value="Approved">Approved</option>
+      
+      </select>
+    {/* <Box sx={{ minWidth: 80 }} style={{backgroundColor:'black',border:'0.08px solid white',borderTopRightRadius:'1em',borderBottomRightRadius:'1em'}}>
    
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label"><div style={{display:'flex',alignItems:'center'}}><FilterAltIcon style={{color:'white'}}/> </div></InputLabel>
@@ -437,7 +449,7 @@ function EventManage() {
           <MenuItem value={"Approved"}>Approved</MenuItem>
         </Select>
       </FormControl>
-    </Box>
+    </Box> */}
     </div>
     </div>
 

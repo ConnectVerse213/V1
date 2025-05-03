@@ -274,11 +274,11 @@ function EventManage() {
 }}>Overview </Button>
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = `/approve/${event_id}`;
-}}>Approve </Button>
+}}>Guests </Button>
 
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = `/map/${event_id}`;
-}} >Scan</Button>
+}} >Check In</Button>
 <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
      window.location.href = '/manage';
 }}>More</Button>
@@ -296,7 +296,7 @@ function EventManage() {
 
 <div class="item1a">
 
-<img class="poster" src={events.length!=0 && events[0].Image}></img>
+<img class="poster" style={{border:'1px solid white'}}src={events.length!=0 && events[0].Image}></img>
 
 </div>
 
@@ -360,6 +360,7 @@ function EventManage() {
     backgroundSize: 'cover', // Ensures the image covers the entire area without distortion
     backgroundPosition: 'center center', // Centers the image within the div
     backgroundRepeat: 'no-repeat', // Prevents repeating of the image
+    border:'0.2px solid white '
     
     }}>
   
@@ -391,9 +392,14 @@ function EventManage() {
 
 <div class="item2b" >
  
-<h1 style={{color:'white'}}>Recent Registrations</h1>
 
-<div style={{width:'90%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+
+
+{events.length!=0 && events[0].RegistrationsCount!=0 && <h1 style={{color:'white'}}>Recent Registrations</h1>}
+
+{events.length!=0 && events[0].RegistrationsCount==0 && <h1 style={{color:'white'}}>No Registrations</h1>}
+
+{events.length!=0 && events[0].RegistrationsCount!=0 && <div style={{width:'90%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -460,7 +466,9 @@ updateUser(x)
 
 })}
 
-</div>
+</div>}
+
+
          
               </div>
               </div>
