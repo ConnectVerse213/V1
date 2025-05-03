@@ -375,6 +375,8 @@ function EventManage() {
 <div>
 
 {events.length!=0 && events[0].Address && <iframe
+
+style={{backgroundColor:'white',borderRadius:'0.5em'}}
             title="Google Map"
             src={`https://www.google.com/maps?q=${events[0].Address}&output=embed`}
            class="map"

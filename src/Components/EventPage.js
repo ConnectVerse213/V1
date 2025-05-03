@@ -254,10 +254,12 @@ function EventPage() {
 {events.length!=0 && events[0].Address && <l style={{color:'white'}} >{events[0].Address}</l>}
 </div>
 
-<div>
+<div   >
 
 {events.length!=0 && events[0].Address && <iframe
             title="Google Map"
+            style={{backgroundColor:'white',borderRadius:'0.5em'}}
+          
             src={`https://www.google.com/maps?q=${events[0].Address}&output=embed`}
            class="map"
            

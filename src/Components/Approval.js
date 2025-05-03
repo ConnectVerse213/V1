@@ -110,6 +110,7 @@ function EventManage() {
     // Store answers as an array
   const [answers, setAnswers] = useState([]);
   const [approvedUsers,setApprovedUsers] = useState([])
+  const [search,setSearch] = useState("")
 
   const getUsers=async ()=>{
   
@@ -418,7 +419,7 @@ function EventManage() {
 
     <div style={{width:'100%'}}>
 
-    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',border:'0.08px solid white',borderTopLeftRadius:'0.5em',borderBottomLeftRadius:'0.5em',borderRight:'none'}} placeholder='&nbsp;&nbsp;🔍 Search guests'/> 
+    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',border:'0.08px solid white',borderTopLeftRadius:'0.5em',borderBottomLeftRadius:'0.5em',borderRight:'none'}} placeholder='&nbsp;&nbsp;🔍 Search guests' onChange={(e) => setSearch(e.target.value)}/> 
     <div >
 
     <select style={{fontSize:'16px',height:'3em',backgroundColor:'black',border:'0.08px solid white',borderTopRightRadius:'0.7em',borderBottomRightRadius:'0.7em',color:'white',width:'7em',textAlign:'center'}}
@@ -462,7 +463,93 @@ function EventManage() {
 
 <br></br>
 
-{(filterOption.length == 0 || filterOption==="All") && <div>
+
+{events.length!=0 && search.length!=0 && <div> <div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+        {events[0].Registrations
+          .filter(person => {
+            const query = search.toLowerCase().replace(/\s/g, '');
+            const name = person.Name.toLowerCase().replace(/\s/g, '');
+            const email = person.Email.toLowerCase().replace(/\s/g, '');
+            return name.includes(query) || email.includes(query);
+          })
+          .map((x, index) =>{ if(index==0 ) return (
+            <div class="registrationsDiv" style={{borderTopRightRadius:'1em',borderTopLeftRadius:'1em'}} onClick={()=>{
+
+              setUserDialog(x)
+              console.log(x)
+              handleClickOpen()
+            }}
+            
+            ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+            
+          {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+          
+          { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+          
+          e.stopPropagation();
+            updateUser(x)
+          }} >Approve</Button>}
+          
+          
+            </div>
+          )
+          else if (index==events[0].Registrations.length-1) return(
+            <div class="registrationsDiv" style={{borderBottomRightRadius:'1em',borderBottomLeftRadius:'1em'}} onClick={()=>{
+        
+              setUserDialog(x)
+              handleClickOpen()
+            }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+            
+            {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+        
+        { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+        
+        e.stopPropagation();
+        updateUser(x)
+        }}>Approve</Button>}
+            
+            
+            </div>
+            )
+        
+            else return(
+              <div class="registrationsDiv" onClick={()=>{
+        
+                setUserDialog(x)
+                handleClickOpen()
+              }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+              
+              
+              {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+        
+        { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+        
+        e.stopPropagation();
+        updateUser(x)
+        }}>Approve</Button>}
+              
+              </div>
+              )
+        
+        
+        
+        
+        
+        
+        })
+        }
+      </div>
+      
+      
+      </div>
+      }
+
+
+{/* All */}
+
+<br></br>
+
+{(filterOption.length == 0 || filterOption==="All" && search.length==0) && <div>
     
    
 
@@ -542,11 +629,14 @@ updateUser(x)
 
 
 
+
+
+
 {/* filterOption=Unapproved */}
 
 
 
-{filterOption.length!=0 && filterOption=="Unapproved" && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+{filterOption.length!=0 && filterOption=="Unapproved" && search.length==0 &&  <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -622,7 +712,7 @@ updateUser(x)
 {/* filterOption=Approved */}
 
 
-{filterOption.length!=0 && filterOption=="Approved" && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+{filterOption.length!=0 && filterOption=="Approved" && search.length==0 && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -760,7 +850,14 @@ updateUser(x)
           
         </List>
       </Dialog>
-        <br></br> <br></br> <br></br> <br></br> <br></br>
+        <br></br> 
+        
+       
+       
+        
+        
+        
+        <br></br> <br></br> <br></br> <br></br>
     </div>
   )
 }
