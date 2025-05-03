@@ -649,7 +649,7 @@ function Home2() {
 
           {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
           <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
+            window.location.href=`/manage/${x.id}`
           }}><EditIcon/>  </Button>
         }
         </CardContent>
@@ -709,7 +709,7 @@ function Home2() {
 
           {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
           <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
+            window.location.href=`/manage/${x.id}`
           }}><EditIcon/>  </Button>
         }
         
@@ -767,7 +767,7 @@ function Home2() {
 
           {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
           <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manageevent/${x.id}`
+            window.location.href=`/manage/${x.id}`
           }}><EditIcon/>  </Button>
         }
         

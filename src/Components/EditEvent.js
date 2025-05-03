@@ -12,6 +12,7 @@ import {
 import { signInWithGoogle } from "../firebase-config";
 import { BrowserRouter as Router, Routes, Route,Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { setOptions } from 'leaflet';
 
 function EditEvent() {
 
@@ -22,6 +23,14 @@ function EditEvent() {
        const [events, setEvents] = useState([]);
        const [eventName,setEventName]=useState("")
        const [eventDescription,setEventDescription]=useState("")
+       const [showDiv , setShowDiv]=useState(false)
+       const [showTextOption , setShowTextOption]=useState(false)
+       const [showOptionOption , setShowOptionOption]=useState(false)
+       const [optionsInOptionOption, setOptionsInOptionOption]=useState("")
+
+
+
+
 
          const [query, setQuery] = useState("");
            const [suggestions, setSuggestions] = useState([]);
@@ -89,10 +98,27 @@ function EditEvent() {
        
       const [newQuestion, setNewQuestion] = useState('');
     
-      const handleAddQuestion = () => {
+      const handleAddQuestion = (isOption) => {
+
+        
         if (newQuestion.trim() !== '') {
-          setQuestions([...questions, newQuestion]);
-          setNewQuestion('');
+
+          if(isOption==="options")
+          {
+            setQuestions([...questions, `options{${optionsInOptionOption}}${newQuestion}`]);
+            setNewQuestion('');
+            setOptionsInOptionOption('')
+
+          }
+
+          else
+          {
+            setQuestions([...questions, newQuestion]);
+            setNewQuestion('');
+          }
+          
+          console.log("questions",questions)
+          console.log("new question",newQuestion)
         }
       };
     
@@ -132,7 +158,7 @@ function EditEvent() {
                       }, [query]);
                     
   return (
-    <div className="p-4 max-w-xl mx-auto">
+    <div className="p-4 max-w-xl mx-auto" style={{color:'white'}}>
 
         <h1>Edit Event</h1>
         {event_id}
@@ -166,9 +192,15 @@ function EditEvent() {
         <button
           onClick={handleAddQuestion}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
+      >
           Add
         </button>
+        
+<br></br>
+       
+
+
+        
       </div>
     {events.length!=0 &&  <ul className="space-y-2">
         {questions.map((question, index) => (
@@ -278,6 +310,152 @@ function EditEvent() {
         <l style={{color:'white'}}>{endDateTime}</l>
         <br></br>
       <button onClick={updateUser}>Update</button>
+
+      <br></br>
+
+      <button onClick ={()=>{
+           
+            setShowDiv(true)
+           }}
+          
+        >
+          Add2
+        </button>
+      {showDiv &&  <div style={{
+          width: '360px', 
+          height: '300px',
+          padding: '20px', 
+          backgroundColor: 'white', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+        }}>
+          <h1>Questions</h1>
+
+          <br></br>
+         
+          <br></br>
+
+          {/* No Options */}
+         
+
+          {!showTextOption && !showOptionOption && <div> 
+            
+            <button onClick={()=>{
+              setShowTextOption(true)
+            }}> Text </button> 
+
+
+          <button onClick={()=>{
+            setShowOptionOption(true)
+          }}>Options</button>
+
+
+          <button>Social Media</button>
+          <button>Website Link</button>
+            
+            </div>}
+
+
+          {/* Text Option */}
+
+
+            {
+              showTextOption &&
+
+              <div>
+                 <input
+          type="text"
+          value={newQuestion}
+          onChange={(e) => setNewQuestion(e.target.value)}
+          placeholder="Add a new question"
+          className="flex-grow p-2 border rounded"
+        />
+      <br></br>
+        <button>Short</button><button>Multiline</button>
+        <br></br>
+
+        <button onClick={()=>{
+          setShowTextOption(false)
+        }}>Cancel</button>
+        <button
+          onClick={()=>{
+
+              handleAddQuestion()
+
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+          Add
+        </button>
+
+
+              </div>
+   }
+
+
+        {/* Option Option*/}
+
+
+        {
+              showOptionOption &&
+
+              <div>
+                 <input
+          type="text"
+          value={newQuestion}
+          onChange={(e) => setNewQuestion(e.target.value)}
+          placeholder="Add a new question"
+          className="flex-grow p-2 border rounded"
+        />
+      <br></br>
+      <l>Add Options separated by </l>
+      <br></br>
+
+        <input placeholder="option1,option2" onChange={(e)=>{
+
+            setOptionsInOptionOption(e.target.value)
+
+        }}/>
+
+       
+
+
+        <br></br>
+
+        <button onClick={()=>{
+          setShowOptionOption(false)
+        }}>Cancel</button>
+        <button
+          onClick={()=>{
+
+            
+             handleAddQuestion("options")
+
+          }}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+          Add
+        </button>
+
+
+              </div>
+   }
+
+
+
+          
+          
+         
+          
+        </div>}
     </div>
   )
 }
