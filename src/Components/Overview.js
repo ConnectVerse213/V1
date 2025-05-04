@@ -58,7 +58,20 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import LinkIcon from '@mui/icons-material/Link';
 import './AdminCreate.css'
 import ResponsiveAppBar from './ResponsiveAppBar';
+import Slide from '@mui/material/Slide';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
 import { useParams } from 'react-router-dom';
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 // import { signInWithGoogle } from "../firebase-config";
@@ -98,6 +111,16 @@ function AdminCreate() {
     const [questions, setQuestions] = useState([]);
     
        const { createWallet, getUserDetails, getPortfolio } = useOkto();
+
+       const [open, setOpen] = React.useState(false);
+
+       const handleClickOpen = () => {
+         setOpen(true);
+       };
+     
+       const handleClose = () => {
+         setOpen(false);
+       };
 
       
        const [newQuestion, setNewQuestion] = useState('');
@@ -173,15 +196,7 @@ function AdminCreate() {
 
         
 
-       const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const [open_description, setOpen_description] = useState(false);
 
@@ -240,7 +255,7 @@ function AdminCreate() {
         const userDoc = doc(db, "events", event_id);
         
                     
-        const newFields = { Name: eventName, Description: text, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:events[0].Attendees,Registrations:events[0].Registrations,AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Address:selectedAddress,Image:imageUrl};
+        const newFields = { Name: eventName, Description: text, Creator:events[0].Creator ,Questions:questions,Attendees:events[0].Attendees,Registrations:events[0].Registrations,AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Address:selectedAddress,Image:imageUrl};
 
         await updateDoc(userDoc, newFields);
 
@@ -251,6 +266,9 @@ function AdminCreate() {
       }, 3000); 
        
       };
+
+
+    
 
       
 
@@ -292,13 +310,7 @@ function AdminCreate() {
       
               },[])
 
-              useEffect(()=>{
-
-
-                console.log("options",optionsInSocialsOption)
-
-                setNewQuestion(`What is your ${optionsInSocialsOption} Handle ?`)
-              },[optionsInOptionOption])
+           
 
               let editor = useEditor({
                 extensions: [StarterKit], 
@@ -335,16 +347,42 @@ function AdminCreate() {
   return (
     <div>
       <br></br> 
-      <div id="up"></div>
-       <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
       
-         
-               <hr style={{ 
+      <div id="up"></div>
+       <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
+       <hr style={{ 
   
   border: '0.05px solid white', // A bit thicker for visibility
   margin: '10px 0' ,
   color:'white'
 }} />
+       <br></br>
+
+       <center>
+       
+       
+             <div style={{display:'flex',justifyContent:'center'}}>
+             <Button variant="contained" style={{borderRadius:'0'}}  onClick={()=>{
+            window.location.reload();
+       }}>Overview </Button>
+       <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
+            window.location.href = `/approve/${event_id}`;
+       }}>Guests </Button>
+       
+       <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
+            window.location.href = `/map/${event_id}`;
+       }} >Check In</Button>
+       <Button variant="outlined" style={{borderRadius:'0'}} onClick={()=>{
+            window.location.href = '/manage';
+       }}>More</Button>
+       
+       </div>
+       
+       
+       </center>
+      
+         
+
       <br></br>
       
 {events.length!=0 && <div><div class="main">
@@ -386,7 +424,7 @@ function AdminCreate() {
 </center>}
 {imageUrl && (
         <div style={{ marginTop: "10px" }}>
-          <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
+          <img src={imageUrl} alt="Uploaded" style={{border:'1px solid white',maxWidth: "300px",borderRadius:'1em'}}  />
         
         </div>
       )}
@@ -564,72 +602,16 @@ function AdminCreate() {
 
         <l style={{color:'#1876d1'}}>Event Questions</l>
 
-<div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center', width:'100%',textAlign:'left', display:'flex',flexDirection:'column', padding:'10px'}}>
+<div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center', width:'100%',textAlign:'left', display:'flex',flexDirection:'column', padding:'10px',width:'19em', alignItems:'flex-start'}}>
 
 
 {questions.map((x,index)=>{
 
-    if(x.length>=12 && x.slice(x.indexOf("=")+1, x.indexOf("{"))==="options" )
-        
-        return (
+  if(x==="Name" || x==="Email") return (
      
-        <div style={{display:'flex',justifyContent:'space-around'}}>
+        <div style={{display:'flex',justifyContent:'center',flexWrap:'wrap',gap:'12em'}}>
 
-        <div style={{color:'white',width:'100%'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x.slice(x.indexOf("}")+1)}</div>
-
-        <l style={{color:'green'}}>Options</l>
-
-
-        </div>
-    )
-
-    else if (x.length>=13 && x.slice(x.indexOf("=")+1, x.indexOf("{"))==="checkbox" )
-        
-        return (
-     
-        <div style={{display:'flex',justifyContent:'space-around'}}>
-
-        <div style={{color:'white',width:'100%'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x.slice(x.indexOf("}")+1)}</div>
-
-        <l style={{color:'green'}}>Checkbox</l>
-
-
-        </div>
-    )
-
-    else if (x.length>=13 && x.slice(x.indexOf("=")+1, x.indexOf("{"))==="website" )
-        
-        return (
-     
-        <div style={{display:'flex',justifyContent:'space-around'}}>
-
-        <div style={{color:'white',width:'100%'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x.slice(x.indexOf("}")+1)}</div>
-
-        <l style={{color:'green'}}>Website</l>
-
-
-        </div>
-    )
-
-    else if (x.length>=13 && x.slice(x.indexOf("=")+1, x.indexOf("{"))==="socials" )
-        
-        return (
-     
-        <div style={{display:'flex',justifyContent:'space-around'}}>
-
-        <div style={{color:'white',width:'100%'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x.slice(x.indexOf("}")+1)}</div>
-
-        <l style={{color:'green'}}>Socials</l>
-
-
-        </div>
-    )
-
-    else return (
-     
-        <div style={{display:'flex',justifyContent:'space-around'}}>
-
-        <div style={{color:'white',width:'100%'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x}</div>
+        <div style={{color:'white'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x}</div>
 
         <l style={{color:'green'}}>Text</l>
 
@@ -649,11 +631,18 @@ function AdminCreate() {
 
   
 </div>
+{
+    questions.length>2 && <Button variant="outlined" style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}} onClick={()=>{
+        handleClickOpen()
+    }} >View All questions</Button>
+}
+
+
 
 < a href="#up">
 <Button variant="outlined" onClick={()=>{
     setShowDiv(true)
-}} style={{width:'23.5em'}}>Add</Button>
+}} style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}}>Add new question</Button>
 </a>
       
       
@@ -965,24 +954,30 @@ function AdminCreate() {
             <br></br>
             
             <Button variant="outlined" onClick={()=>{
+                 setNewQuestion("")
               setShowTextOption(true)
             }}> <TextFormatIcon/> Text </Button> 
 
 
           <Button variant="outlined" onClick={()=>{
+             setNewQuestion("")
             setShowOptionOption(true)
           }}><ListIcon/> Options</Button>
 
 
           <Button variant="outlined" onClick={()=>{
+
+            setNewQuestion("Twitter")
             setShowSocialsOption(true)
-            setNewQuestion("What is your Twitter handle?")
+            
           }}><AccountCircleIcon/> Socials</Button>
           <Button variant="outlined" onClick={()=>{
+            setNewQuestion("")
             setShowWebsiteOption(true)
-            setNewQuestion("Enter Website URL")
+           
           }}><LinkIcon/> Website</Button>
           <Button variant="outlined" onClick={()=>{
+             setNewQuestion("")
             setShowCheckboxOption(true)
           }}><CheckBoxIcon/>Checkbox</Button>
         
@@ -1031,8 +1026,21 @@ function AdminCreate() {
      
         <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
           onClick={()=>{
+            
 
-              handleAddQuestion()
+
+            handleAddQuestion()
+            setShowTextOption(false)
+
+            setShowDiv(false)
+             notify("Question added!","light","top-center","success")
+
+            
+
+             
+
+             
+              
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -1066,7 +1074,7 @@ function AdminCreate() {
     
       <br></br>
 
-        <input placeholder="option1,option2"  style={{fontSize:'18px',width:'15em',height:'2em'}} onChange={(e)=>{
+        <input placeholder="option1,option2"  style={{fontSize:'18px',width:'15em',height:'2em'}} value={optionsInOptionOption} onChange={(e)=>{
 
             setOptionsInOptionOption(e.target.value)
 
@@ -1087,6 +1095,14 @@ function AdminCreate() {
 
             
              handleAddQuestion("type=options")
+             setShowOptionOption(false)
+ 
+             setShowDiv(false)
+             notify("Question added!","light","top-center","success")
+
+           
+            
+             
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -1128,6 +1144,10 @@ function AdminCreate() {
           onClick={()=>{
 
               handleAddQuestion("type=checkbox")
+              setShowCheckboxOption(false)
+ 
+             setShowDiv(false)
+              notify("Question added!","light","top-center","success")
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -1169,6 +1189,11 @@ function AdminCreate() {
 
               handleAddQuestion("type=website")
 
+              setShowWebsiteOption(false)
+ 
+             setShowDiv(false)
+              notify("Question added!","light","top-center","success")
+
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
@@ -1190,27 +1215,29 @@ function AdminCreate() {
               <div>
                 <h3>Social Profile</h3>
              
-                
-        <select id="dropdown" value={optionsInSocialsOption} onChange={(e)=>{
-            setOptionsInSocialsOption(e.target.value)
+                <input
+          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
+          value={`What is your ${newQuestion} handle ?`}
+          
+          placeholder="Write a new question"
+          className="flex-grow p-2 border rounded"
+        />
+        <br></br>
+        <br></br>
+        <select id="dropdown"  onChange={(e)=>{
+            setNewQuestion(e.target.value)
            
-        }} style={{width:'17.5em',fontSize:'16px'}}>
+        }} style={{width:'17.5em',fontSize:'16px',height:'2.5em'}}>
             <option value="Twitter">Twitter</option>
             <option value="Linkedin">Linkedin</option>
             <option value="Instagram">Instagram</option>
+
           
         </select>
               <br></br>
               <br></br>
-                 <input
-          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
-          value={newQuestion}
-          onChange={(e) => setNewQuestion(e.target.value)}
-          placeholder="Write a new question"
-          className="flex-grow p-2 border rounded"
-        />
-      <br></br>
-      <br></br>
+             
+     
              
 
         <button style={{width:'10.5em',height:'2em',border:'1px solid red',backgroundColor:'white',color:'red'}} onClick={()=>{
@@ -1223,7 +1250,16 @@ function AdminCreate() {
         <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
           onClick={()=>{
 
+           
               handleAddQuestion("type=socials")
+
+              setShowSocialsOption(false)
+ 
+             setShowDiv(false)
+
+             
+             notify("Question added!","light","top-center","success")
+             
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -1240,8 +1276,101 @@ function AdminCreate() {
          
           
         </div>}
+        <Dialog
+  fullScreen
+  open={open}
+  onClose={handleClose}
+  TransitionComponent={Transition}
+>
+  <AppBar sx={{ position: 'relative' }}>
+    <Toolbar style={{ backgroundColor: 'black' }}>
+      <IconButton
+        edge="start"
+        color="inherit"
+        onClick={handleClose}
+        aria-label="close"
+      >
+        <CloseIcon />
+      </IconButton>
+      <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+        Questions
+      </Typography>
+    </Toolbar>
+  </AppBar>
+  <h3>&nbsp;&nbsp;&nbsp; Questions</h3>
+  <List>
+    {questions.map((x, index) => {
+      if (x === "Email" || x === "Name") {
+        return (
+          <>
+            <ListItemButton key={index}>
+              <ListItemText
+                primary={
+                  <div style={{ display: 'flex',flexDirection:'column', justifyContent: 'flex-startr', padding: '1em',gap:'3px' }}>
+                    <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+                      <l style={{fontSize:'28px'}}><b>{x}</b></l>
+                      <l style={{color:'green'}}>Text</l>
+                    </div>
+                   
+                  </div>
+                }
+              />
+            </ListItemButton>
+            <Divider />
+          </>
+        );
+      } else if (x.slice(0, 4) === "type") {
+        return <>
+
+
+<ListItemButton key={index}>
+              <ListItemText
+                primary={
+                  <div style={{ display: 'flex',flexDirection:'column', justifyContent: 'flex-startr', padding: '1em',gap:'3px' }}>
+                    <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+                      <l style={{fontSize:'28px'}}><b>{x.slice(x.indexOf("}")+1)}</b></l>
+                     
+                      <l style={{color:'green'}}>{x.slice(x.indexOf("=")+1,x.indexOf("{"))}</l>
+                    </div>
+
+                    <Button variant='contained' onClick={()=>{
+                        handleDeleteQuestion(index)
+                    }}>Delete</Button>
+                    
+                    
+                  </div>
+                }
+              />
+            </ListItemButton>
+            <Divider />
+
+
+        </>;
+      } else {
+        return <>
         
- 
+        <ListItemButton key={index}>
+              <ListItemText
+                primary={
+                  <div style={{ display: 'flex',flexDirection:'column', justifyContent: 'flex-startr', padding: '1em',gap:'3px' }}>
+                    <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+                      <l style={{fontSize:'28px'}}><b>{x}</b></l>
+                      <l style={{color:'green'}}>Text</l>
+                    </div>
+                    <Button variant='contained' onClick={()=>{
+                        handleDeleteQuestion(index)
+                    }}>Delete</Button>
+                  </div>
+                }
+              />
+            </ListItemButton>
+            <Divider />
+        
+        </>;
+      }
+    })}
+  </List>
+</Dialog>
 
     </div>
   )
