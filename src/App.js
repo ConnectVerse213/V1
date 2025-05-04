@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { OktoProvider, BuildType } from 'okto-sdk-react';
 import Testing from './Components/Testing'
 import Testing2 from './Components/Testing2'
+import Overview from './Components/Overview'
 
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
@@ -29,6 +30,7 @@ function App() {
     
       <Route path="/creator" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><AdminCreate/></OktoProvider>} />
       <Route path="/event/:event_id" element={<OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><EventPage /></OktoProvider>} />
+      <Route path="/overview/:event_id" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><Overview/></OktoProvider>} />
       <Route path="/manage/:event_id" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><EventManage/></OktoProvider>} />
       <Route path="/approve/:event_id" element={ <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}><Approval/></OktoProvider>} />
       <Route path="/editevent/:event_id" element={<EditEvent />} />
