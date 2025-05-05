@@ -178,7 +178,7 @@ function EventPage() {
         const userDoc1 = doc(db, "user", filteredArray[0].id);
         const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered,event_id], EventsApproved:[...filteredArray[0].EventsApproved],EventsAttended:filteredArray[0].EventsAttended};
 
-          
+          // update
 
 
         await updateDoc(userDoc1, newFields1);
