@@ -57,6 +57,7 @@ import LocationPinIcon from '@mui/icons-material/LocationPin';
 import LaunchIcon from '@mui/icons-material/Launch';
 import EditIcon from '@mui/icons-material/Edit';
 import CommentIcon from '@mui/icons-material/Comment';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
 import axios from 'axios';
 import { getCode } from 'country-list';
 // import { signInWithGoogle } from "../firebase-config";
@@ -542,7 +543,7 @@ function Home2() {
    const input=city.toLowerCase().replace(/[^\w\s]/g, '').trim();
 
    
-   if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').includes(input))
+   if (x.Address.toLowerCase().replace(/[^\w\s]/g, '').includes(input) && x.Type!="online")
   return(
 
     <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }} >
@@ -626,10 +627,18 @@ function Home2() {
 
           
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+
+
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+
+            {!x.Type && <> <LocationPinIcon fontSize='small'/>
+              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+
+
+              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+                <l>Online</l> </>}
+        
         </Typography>
         </Typography>
         
@@ -686,10 +695,12 @@ function Home2() {
 
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
-        </Typography>
+          {!x.Type && <> <LocationPinIcon fontSize='small'/>
+              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+
+
+              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+                <l>Online</l> </>}
         </Typography>
 
           <br></br>
@@ -744,10 +755,12 @@ function Home2() {
           </Typography>
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
-        </Typography>
+          {!x.Type && <> <LocationPinIcon fontSize='small'/>
+              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+
+
+              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+                <l>Online</l> </>}
         </Typography>
 
           <br></br>
@@ -805,17 +818,21 @@ function Home2() {
 
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
-        </Typography>
+          {!x.Type && <> <LocationPinIcon fontSize='small'/>
+              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+
+
+              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+                <l>Online</l> </>}
         </Typography>
 
         
 
           <br></br>
           {userApprovedArray.includes(x.id) ? <div>
-          <div> <Button variant='outlined' color="success"
+          <div> 
+            
+           {!x.Type && <Button variant='outlined' color="success"
         onClick={()=>{
 
          window.location.href=`/qr/${x.id}`
@@ -823,8 +840,25 @@ function Home2() {
         }}
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
+
+        
        Get Ticket
-      </Button>
+      </Button>} 
+
+      {x.Type=="online" && <Button variant='outlined' color="success"
+        onClick={()=>{
+
+         alert("Go to dashboard to join")
+
+         window.location.href="/onlinedashboard"
+
+        }}
+        className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
+      >
+
+        
+       Join
+      </Button>} 
       
       <Button variant="outlined" onClick={()=>{
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)

@@ -18,7 +18,8 @@ import { OktoProvider, BuildType } from 'okto-sdk-react';
 import Testing from './Components/Testing'
 import Testing2 from './Components/Testing2'
 import Overview from './Components/Overview'
-
+import Meet from './Components/Meet'
+import OnlineDashboard from './Components/OnlineDashboard'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -54,6 +55,12 @@ function App() {
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
         <Dashboard/>
     </OktoProvider>} />
+
+    <Route path="/onlinedashboard" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+        <OnlineDashboard/>
+    </OktoProvider>} />
      
     <Route path="/map/:event_id" element={<OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
        <MapComponent/>
@@ -65,6 +72,7 @@ function App() {
     </OktoProvider>} />
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
+    <Route path="/meet" element={ <Meet/>} />
       
    
     </Routes>

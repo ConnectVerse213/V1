@@ -44,6 +44,8 @@ import ResponsiveAppBar from './ResponsiveAppBar';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import eventpageEntireBackground from '../assets/images/eventBackground5.gif'
 import CloseIcon from '@mui/icons-material/Close';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+
 
 
 function EventPage() {
@@ -56,6 +58,7 @@ function EventPage() {
 
     // Store answers as an array
   const [answers, setAnswers] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('');
 
   // Handle input change
   const handleChange = (index, value) => {
@@ -63,6 +66,20 @@ function EventPage() {
     updatedAnswers[index] = value;
     setAnswers(updatedAnswers);
   };
+
+ const notify = (text,type) => toast(text,{
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type:type
+     
+      });
+
 
   // Handle submit
   const handleSubmit = (e) => {
@@ -119,11 +136,30 @@ function EventPage() {
         let filteredArray=eventsTemp.filter(obj => obj.id === event_id)
         console.log(filteredArray)
         setEvents(filteredArray);
+
+        filteredArray[0].Questions.map((x,index)=>{
+          if(x.startsWith('type') && x.slice(x.indexOf("=")+1,x.indexOf("{"))==="options")
+            {
+              handleChange(index,x.slice(x.indexOf("{")+1,x.indexOf(",")))
+              console.log(index,x.slice(x.indexOf("{")+1,x.indexOf(",")))
+            }
+  
+            if(x.startsWith('type') && x.slice(x.indexOf("=")+1,x.indexOf("{"))==="checkbox")
+              {
+                handleChange(index,"false")
+                console.log(index,"false")
+              }
+
+        })
+
+        
        
       
       };
 
       const updateUser = async (result) => {
+
+        try{
         const userDoc = doc(db, "events", event_id);
         const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:events[0].Attendees,Registrations:[...events[0].Registrations,result],AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount+1};
         await updateDoc(userDoc, newFields);
@@ -141,9 +177,24 @@ function EventPage() {
        
         const userDoc1 = doc(db, "user", filteredArray[0].id);
         const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered,event_id], EventsApproved:[...filteredArray[0].EventsApproved],EventsAttended:filteredArray[0].EventsAttended};
-        await updateDoc(userDoc1, newFields1);
-        window.location.reload();
 
+          
+
+
+        await updateDoc(userDoc1, newFields1);
+
+        notify("Registration complete!","success")
+
+        setInterval(()=>{
+          window.location.reload();
+        },3000)
+
+        
+        }
+        catch{
+          
+          notify("Fill all the fields before submitting the form","error")
+        }
 
       };
 
@@ -250,13 +301,20 @@ function EventPage() {
 <div style={{color:'white',display:'flex',alignItems:'center',gap:'3px'}}><CalendarMonthIcon/><l>{events.length!=0 && formatDate(events[0].StartDateTime)}</l></div>
 
 <div style={{textAlign:'left',display:'flex',alignItems:'flex-start',gap:'3px'}}>
-<LocationPinIcon style={{color:'white'}}/> 
-{events.length!=0 && events[0].Address && <l style={{color:'white'}} >{events[0].Address}</l>}
+
+  { events.length!=0 && events[0].Address && events[0].Type!="online" && <LocationPinIcon style={{color:'white'}}/> }
+
+{events.length!=0 && events[0].Address && events[0].Type!="online" && <l style={{color:'white'}} >{events[0].Address}</l>}
+
+{ events.length!=0 && events[0].Address && events[0].Type=="online" && <VideoCallIcon style={{color:'white'}}/> }
+
+{events.length!=0 && events[0].Address && events[0].Type=="online" && <l style={{color:'white'}} >Online</l>}
+
 </div>
 
 <div   >
 
-{events.length!=0 && events[0].Address && <iframe
+{events.length!=0 && events[0].Address && events[0].Type!="online" && <iframe
             title="Google Map"
             style={{backgroundColor:'white',borderRadius:'0.5em'}}
           
@@ -269,14 +327,32 @@ function EventPage() {
 
 </div>
 
-<div style={{paddingLeft:'1.5em'}}>
 
+{
+  events.length!=0 && events[0].Type!="online" && <div style={{paddingLeft:'1.5em'}}>
 <a href="#up" style={{textDecoration:'none'}}>
-      <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
+    <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
 
-        setShowAcceptInvite(true)
-      }}>Accept Invitation</button></a>
-</div>
+      setShowAcceptInvite(true)
+    }}>Accept Invitation</button></a>
+
+
+  </div>
+}
+
+{
+  events.length!=0 && events[0].Type=="online" && <div>
+<a href="#up" style={{textDecoration:'none'}}>
+    <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
+
+      setShowAcceptInvite(true)
+    }}>Accept Invitation</button></a>
+
+
+  </div>
+}
+
+
 
 
 </div>
@@ -299,76 +375,198 @@ function EventPage() {
     
     </div>
 
-    {showAcceptInvite &&  <div style={{
-          width: '100%', 
-          height:'100%',
-         position:'sticky',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '0%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-          display:'flex',
-          flexDirection:'column',
-          justifyContent:'center',
-          alignItems:'center'
-        }}>
-          <div style={{position:"absolute" ,top:'20px',right:'40px'}} onClick={()=>{
-            setShowAcceptInvite(false)
-          }}><CloseIcon style={{color:'red'}}/></div>
-         
-          <br></br>
-          <center>
-          <form onSubmit={handleSubmit} style={{backgroundColor:'black',color:'white'}}>
-      {events.length!=0 && events[0].Questions.map((question, index) => (
-        <div key={index} style={{ marginBottom: '15px',color:'white'}}>
-          <label >{question}</label>
-          <br /><br></br>
-
-        
-          <input  
-            type="text" 
-            className='custom-input'
-            style={{fontSize:'28px',maxWidth:'70%',borderTop:'none',borderLeft:'none',borderRight:'none',backgroundColor:'black',color:'white'}}
-           placeholder={answers[index]}
-           
-            
-            onChange={(e) => handleChange(index, e.target.value)}
-            
-            
-          />
-
-
-
-
-        </div>
-      ))}
+  
        <br></br>
      
        <br></br>
+       {showAcceptInvite && (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      padding: '20px',
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      textAlign: 'center',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      position: 'absolute',
+      top: '0%',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      zIndex: 9999,
+      animation: 'popupAnimation 0.5s ease',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundImage: `url(${eventpageBackground})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
+  >
+    <div style={{ position: 'absolute', top: '20px', right: '40px' }} onClick={() => setShowAcceptInvite(false)}>
+      <CloseIcon style={{ color: 'red' }} />
+    </div>
 
-       
-      <button  type="submit" class="button-85" style={{height:'2em',width:'10em'}}>Register</button>
-      
-      </form>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '2em',
+        border: '1px solid white',
+        borderRadius: '5px',
+      }}
+    >
+      {events.length !== 0 &&
+        events[0].Questions.map((question, index) => {
+          const type = question.startsWith('type') ? question.slice(question.indexOf('=') + 1, question.indexOf('{')) : null;
+          const label = question.slice(question.indexOf('}') + 1);
+          const options = type === 'options' ? question.slice(question.indexOf('{') + 1, question.indexOf('}')).split(',') : [];
 
-      
-          </center>
-          
-          <div >
          
-              </div>
-     <br></br><br></br>
          
-       
-        </div>}
+
+          return (
+            <div key={index} style={{ marginBottom: '15px', color: 'white' ,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center'}}>
+
+
+              <div >
+              {type !== null && type!=="checkbox" && type!=="options" && <label>{label}</label>}
+
+              {type==null && <label >{question}</label>}
+              
+          <br></br>
+
+              {/* Text input (default or empty type) */}
+              {(type === null || type === '') && (
+                <input
+                  type="text"
+                  className="custom-input"
+                  style={{
+                    fontSize: '28px',
+                    maxWidth: '70%',
+                    borderTop: 'none',
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
+                  placeholder={answers[index]}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+              )}
+
+              {/* Socials input */}
+              {type === 'socials' && (
+                <input
+                  type="text"
+                  className="custom-input"
+                  style={{
+                    fontSize: '28px',
+                    maxWidth: '70%',
+                    borderTop: 'none',
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
+                  placeholder={answers[index]}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+              )}
+
+              {/* Website input */}
+              {type === 'website' && (
+                <input
+                  type="text"
+                  className="custom-input"
+                  style={{
+                    fontSize: '28px',
+                    maxWidth: '70%',
+                    borderTop: 'none',
+                    borderLeft: 'none',
+                    borderRight: 'none',
+                    backgroundColor: 'black',
+                    color: 'white',
+                  }}
+                  placeholder={answers[index]}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+              )}
+
+              {/* Checkbox */}
+              {type === 'checkbox' && (
+                <div style={{display:'flex',alignItems:'flex-start',textAlign:'center'}}>
+
+                  <l>{label}</l>
+                  <input type="checkbox" value="yes"  onChange={(e) =>handleChange(index, e.target.value.toString())}/>
+                </div>
+              )}
+
+              {/* Options select */}
+
+
+            
+              
+              
+              {type === 'options' && (
+
+               
+
+               <div>
+                {label}
+                <br></br>
+                <select
+                  id="myDropdown"
+                  value={selectedOption}
+                  onChange={(event)=>{
+
+
+                    console.log(event.target.value)
+                    setSelectedOption(event.target.value)
+                    handleChange(index,event.target.value)
+
+
+
+                  }}
+                  style={{ fontSize: '18px', marginTop: '10px'}}
+                >
+                  <option  value="Select Option">
+                    Select Option
+                    </option>
+
+                  {options.map((opt, idx) => (
+                    <option key={idx} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+                <br></br>  <br></br>
+
+                </div>
+            
+              
+              )}
+
+</div>
+            </div>
+          );
+        })}
+<br></br>
+<center>
+      <button type="submit" className="button-85" style={{ height: '2em', width: '10em' }}>
+        Register
+      </button>
+
+      </center>
+    </form>
+  </div>
+)}
+
+       <ToastContainer/>
+    
         <br></br> <br></br> <br></br> <br></br> <br></br>
     </div>
   )

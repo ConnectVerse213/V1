@@ -225,10 +225,10 @@ function Home2() {
                                    
                     let eventsTemp=await data1.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
-                    eventsTemp=eventsTemp.filter(obj=>obj.Type!="online")
+                    eventsTemp=eventsTemp.filter(obj=>obj.Type=="online")
                     
 
-                    let eventsCreatedFound=eventsTemp.filter(obj =>  userCreationsFound.includes(obj.id))
+                    let eventsCreatedFound=eventsTemp.filter(obj =>  userCreationsFound.includes(obj.id) )
                     let eventsRegistrationsFound=eventsTemp.filter(obj =>  userRegistrationsFound.includes(obj.id))
                     
                     console.log("eventsCreatedFound",eventsCreatedFound)
@@ -239,6 +239,24 @@ function Home2() {
                   
         
                    
+
+      }
+
+
+      const handleOnlineEvent=async(x)=>{
+
+        let data = await getDocs(usersCollectionRef1);
+                                   
+        let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                  
+                                   
+        let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+
+       const userDoc = doc(db, "user", filteredArray[0].id);
+               const newFields = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins+1000, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:filteredArray[0].EventsApproved,EventsAttended:[...filteredArray[0].EventsAttended,x.id]};
+               await updateDoc(userDoc, newFields);
+
+               window.location.href=`${x.Address.slice(x.Address.indexOf("}")+1)}`
 
       }
       useEffect(()=>{
@@ -294,8 +312,10 @@ function Home2() {
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+       &nbsp; &nbsp;
+        <div style={{display:'flex',alignItems:'center',backgroundColor:'#1876d1',padding:'2px',borderRadius:'5px'}} onClick={()=>{
+          window.location.href=`${x.Address.slice(0,x.Address.indexOf("{"))}`
+        }}>  <VideoCallIcon fontSize='medium'/> <l>Join</l></div>
         </Typography>
         </Typography>
 
@@ -350,8 +370,8 @@ function Home2() {
          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
+        <VideoCallIcon fontSize='small'/>
+        <l>Online</l>
         </Typography>
         </Typography>
           <br></br>
@@ -360,12 +380,13 @@ function Home2() {
            <div> <Button variant='outlined' color="success"
         onClick={()=>{
 
-         window.location.href=`/qr/${x.id}`
+          handleOnlineEvent(x)
 
+       
         }}
         className="bg-blue-600 text-white px-5 py-2 rounded shadow hover:bg-blue-700 transition"
       >
-       Get Ticket
+       Join
       </Button>
       
       <Button variant="outlined" onClick={()=>{
@@ -421,10 +442,10 @@ function Home2() {
                    <div style={{color:'white'}} >
            
                    
-                   <Button variant="contained" style={{borderRadius:'0'}}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><LocationPinIcon fontSize='small'/> <l>Offline Events</l></div></Button>
-                   <Button onClick={()=>{
-                    window.location.href="onlinedashboard"
-                   }}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><VideoCallIcon   fontSize='small'/> <l>Online Events</l></div></Button>
+                   <Button  style={{borderRadius:'0'}}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}} onClick={()=>{
+                    window.location.href="/dashboard"
+                   }}><LocationPinIcon fontSize='small'/> <l>Offline Events</l></div></Button>
+                   <Button variant="contained"><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><VideoCallIcon   fontSize='small'/> <l>Online Events</l></div></Button>
                   
                 
            

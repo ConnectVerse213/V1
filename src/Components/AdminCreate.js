@@ -51,6 +51,9 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import './AdminCreate.css'
 import ResponsiveAppBar from './ResponsiveAppBar';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import eventpageBackground from '../assets/images/coinBackground2.gif'
+
 
 
 // import { signInWithGoogle } from "../firebase-config";
@@ -71,6 +74,9 @@ function AdminCreate() {
     const [startDateTime, setStartDateTime] = useState('2025-04-30T08:00');
     const [endDateTime, setEndDateTime] = useState('2025-05-01T14:00');
     const [capacity,setCapacity]=useState(50)
+    const [isOnline,setIsOnline]=useState(false)
+    const [moderatorLink,setModeratorLink]=useState("")
+    const [guestLink,setGuestLink]=useState("")
     const { showWidgetModal, closeModal } = useOkto();
 
     const [description,setDescription]=useState(false)
@@ -145,6 +151,10 @@ function AdminCreate() {
     const [user,setUser]=useState([])
 
     const createUser = async () => {
+
+
+      if(!isOnline)
+      {
         const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
 
         console.log(result.id)
@@ -153,6 +163,19 @@ function AdminCreate() {
         {
           updateUser(result.id)
         }
+      }
+      else
+      {
+        const result=await addDoc(usersCollectionRef, { Name: eventName,Type:"online", Image:imageUrl,Address:moderatorLink+"{}"+guestLink,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+
+        console.log(result.id)
+
+        if(user.length!=0)
+        {
+          updateUser(result.id)
+        }
+      }
+        
        
       };
 
@@ -362,7 +385,7 @@ function AdminCreate() {
 
    </div>
    </div>
-  <div class="location" onClick={handleClickOpen} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+  {!isOnline && <div class="location" onClick={handleClickOpen} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
 
 <div class="location2"><l style={{fontSize:'20px'}}>
@@ -371,12 +394,51 @@ function AdminCreate() {
   {selectedAddress.length==0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small'/> Add Location</l>}
   
   </l>
-<l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Offline Location</i></l>
+<l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Offline Location <l style={{color:'#1876d1'}} onClick={(event)=>{
+  event.stopPropagation(); 
+  setIsOnline(true)
+}}>&nbsp;<i>or Online Event</i></l></l>
+
 
 
 </div>
 
   </div>
+}
+
+{
+
+isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+ 
+
+<div class="location2" style={{cursor:'pointer'}}>
+
+  <center>
+
+    <div style={{display:'flex',alignItems:'center',gap:'5px',paddingLeft:'10px'}} >
+      <VideoCallIcon/>
+<div >
+  <input placeholder="Moderator Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
+    setModeratorLink(e.target.value)
+  }}></input>
+  <br></br>   
+  <input placeholder="Guest Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
+    setGuestLink(e.target.value)
+  }}></input>
+<br></br>
+</div>
+
+<l style={{color:'#1876d1'}} onClick={()=>{
+  setIsOnline(false)
+}}><i>or <br></br> Offline Event </i></l>
+
+</div>
+  </center>
+</div>
+
+  </div>
+
+}
 
 
 
@@ -463,7 +525,10 @@ function AdminCreate() {
        
 <ToastContainer/>
 
-<Dialog
+<Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',}}
         open={open}
         onClose={handleClose}
         
@@ -571,6 +636,10 @@ function AdminCreate() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+       backgroundImage:`url(${eventpageBackground})`,
+                backgroundSize: 'cover', 
+                backgroundPosition: 'center center',
+                backgroundRepeat: 'no-repeat',
         }}>
           <h2>Description</h2>
           <div >
@@ -656,6 +725,10 @@ function AdminCreate() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+           backgroundImage:`url(${eventpageBackground})`,
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
         }}>
           <h2 style={{color:'white'}}>Tickets</h2>
          

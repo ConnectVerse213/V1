@@ -66,6 +66,8 @@ import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import eventpageBackground from '../assets/images/coinBackground2.gif'
 import { useParams } from 'react-router-dom';
 
 
@@ -109,17 +111,30 @@ function AdminCreate() {
     const [description,setDescription]=useState(false)
     const [showCapacity,setShowCapacity]=useState(false)
     const [questions, setQuestions] = useState([]);
+    const [type, setType] = useState("");
+    const [moderatorLink,setModeratorLink]=useState("")
+    const [guestLink,setGuestLink]=useState("")
     
        const { createWallet, getUserDetails, getPortfolio } = useOkto();
 
        const [open, setOpen] = React.useState(false);
 
+       const [openQuestions, setOpenQuestions] = React.useState(false);
+
        const handleClickOpen = () => {
          setOpen(true);
        };
-     
+
+       const handleClickOpenQuestions = () => {
+        setOpenQuestions(true);
+      };
+
        const handleClose = () => {
-         setOpen(false);
+        setOpen(false);
+      };
+     
+       const handleCloseQuestions = () => {
+         setOpenQuestions(false);
        };
 
       
@@ -250,8 +265,28 @@ function AdminCreate() {
     const updateEvent = async () => {
 
 
+        if(type=="online")
+
+            {
 
 
+                const userDoc = doc(db, "events", event_id);
+        
+                    
+        const newFields = { Name: eventName, Type:"online",Description: text, Creator:events[0].Creator ,Questions:questions,Attendees:events[0].Attendees,Registrations:events[0].Registrations,AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Address:moderatorLink+"{}"+guestLink,Image:imageUrl};
+
+        await updateDoc(userDoc, newFields);
+
+       notify("Event Updated!","light","top-right","success")
+
+       setInterval(() => {
+        window.location.reload();
+      }, 3000); 
+            }
+
+            else
+
+            {
         const userDoc = doc(db, "events", event_id);
         
                     
@@ -264,6 +299,10 @@ function AdminCreate() {
        setInterval(() => {
         window.location.reload();
       }, 3000); 
+
+
+    }
+
        
       };
 
@@ -291,6 +330,9 @@ function AdminCreate() {
               setEndDateTime(filteredArray[0].EndDateTime)
               setCapacity(filteredArray[0].Capacity)
               setQuestions(filteredArray[0].Questions)
+              setType(filteredArray[0].Type)
+              setModeratorLink(filteredArray[0].Address.slice(0,filteredArray[0].Address.indexOf("{")))
+              setGuestLink(filteredArray[0].Address.slice(filteredArray[0].Address.indexOf("}")+1))
 
               
 
@@ -518,21 +560,55 @@ function AdminCreate() {
 
    </div>
    </div>
-  <div class="location" onClick={handleClickOpen} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+
+
+  { selectedAddress.length!=0 && type!="online" && <div class="location" onClick={()=>{
+    handleClickOpen()
+  }} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
 
-<div class="location2"><l style={{fontSize:'20px'}}>
-  
-  {selectedAddress.length!=0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small' />{selectedAddress.split(',')[0]}</l>}
-  {selectedAddress.length==0 && <l>&nbsp;&nbsp;<LocationPinIcon fontSize='small'/> Add Location</l>}
-  
+<div class="location2"><l style={{fontSize:'20px',gap:'2px'}}>
+  &nbsp;&nbsp;
+ <LocationPinIcon fontSize='small' />
+  {selectedAddress.slice(0,selectedAddress.indexOf(","))}....
+  &nbsp; <EditIcon fontSize="small" />
   </l>
 <l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Offline Location</i></l>
 
 
 </div>
 
-  </div>
+  </div>}
+
+
+  { selectedAddress.length!=0 && type=="online" && <div class="location" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+ 
+
+<div class="location2">
+
+<center>
+
+    <div style={{display:'flex',alignItems:'center',gap:'5px',paddingLeft:'10px'}} >
+      <VideoCallIcon/>
+<div >
+  <input placeholder="Moderator Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} value={moderatorLink} onChange={(e)=>{
+    setModeratorLink(e.target.value)
+  }}></input>
+  <br></br>   
+  <input placeholder="Guest Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
+    setGuestLink(e.target.value)
+  }} value={guestLink} ></input>
+<br></br>
+</div>
+
+
+
+</div>
+  </center>
+
+</div>
+
+  </div>}
 
 
 
@@ -633,7 +709,7 @@ function AdminCreate() {
 </div>
 {
     questions.length>2 && <Button variant="outlined" style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}} onClick={()=>{
-        handleClickOpen()
+        handleClickOpenQuestions()
     }} >View All questions</Button>
 }
 
@@ -680,7 +756,10 @@ function AdminCreate() {
        
 <ToastContainer/>
 
-<Dialog
+<Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',}}
         open={open}
         onClose={handleClose}
         
@@ -788,6 +867,10 @@ function AdminCreate() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+          backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
         }}>
           <h2>Description</h2>
           <div >
@@ -874,6 +957,10 @@ function AdminCreate() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+          backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
         }}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
@@ -913,7 +1000,7 @@ function AdminCreate() {
           width: '360px', 
           height: '350px',
           padding: '20px', 
-          backgroundColor: 'white', 
+          backgroundColor: 'black', 
           border: '2px solid #1876d1',
           blur:'50px', 
           textAlign: 'center', 
@@ -924,6 +1011,10 @@ function AdminCreate() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+          backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
         }}>
 
 
@@ -935,7 +1026,7 @@ function AdminCreate() {
 
         <br></br>
         
-        <QuizIcon style={{marginLeft:'2px',color:'red'}} fontSize='large'/>
+        <QuizIcon style={{marginLeft:'2px',color:'white'}} fontSize='large'/>
 
          
        
@@ -950,7 +1041,7 @@ function AdminCreate() {
 
           {!showTextOption && !showOptionOption && !showCheckboxOption && !showWebsiteOption && !showSocialsOption && <div> 
 
-            <h3>Questions</h3>
+            <h3 style={{color:'white'}}>Questions</h3>
             <br></br>
             
             <Button variant="outlined" onClick={()=>{
@@ -991,7 +1082,7 @@ function AdminCreate() {
               showTextOption &&
 
               <div>
-                <h3>Text</h3>
+                <h3 style={{color:'white'}}>Text</h3>
              
               
                  <input
@@ -1005,13 +1096,13 @@ function AdminCreate() {
 
       {textOptionType==="short" && <div> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
         setTextOptionType("short")
-      }}>SHORT</button> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'white',color:'#1876d1'}}onClick={()=>{
+      }}>SHORT</button> <button style={{width:'10.3em',height:'2em',border:'1px solid #1876d1',backgroundColor:'white',color:'#1876d1'}}onClick={()=>{
         setTextOptionType("multiline")
       }}>MULTILINE</button> </div>}
 
         {textOptionType==="multiline" && <div> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'white',color:'#1876d1'}} onClick={()=>{
         setTextOptionType("short")
-      }}>SHORT</button> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
+      }}>SHORT</button> <button style={{width:'10.3em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
         setTextOptionType("multiline")
       }}>MULTILINE</button> </div>}
      
@@ -1060,7 +1151,7 @@ function AdminCreate() {
               showOptionOption &&
 
               <div>
-                 <h3>Options</h3>
+                 <h3 style={{color:'white'}}>Options</h3>
                  <br></br>
                  <input
           type="text"
@@ -1122,7 +1213,7 @@ function AdminCreate() {
               showCheckboxOption &&
 
               <div>
-                <h3>Checkbox</h3>
+                <h3 style={{color:'white'}}>Checkbox</h3>
              
               
                  <input
@@ -1167,7 +1258,7 @@ function AdminCreate() {
               showWebsiteOption &&
 
               <div>
-                <h3>Website</h3>
+                <h3 style={{color:'white'}}>Website</h3>
              
               
                  <input
@@ -1213,7 +1304,7 @@ function AdminCreate() {
               showSocialsOption &&
 
               <div>
-                <h3>Social Profile</h3>
+                <h3 style={{color:'white'}}>Social Profile</h3>
              
                 <input
           type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
@@ -1278,7 +1369,7 @@ function AdminCreate() {
         </div>}
         <Dialog
   fullScreen
-  open={open}
+  open={openQuestions}
   onClose={handleClose}
   TransitionComponent={Transition}
 >
@@ -1287,7 +1378,7 @@ function AdminCreate() {
       <IconButton
         edge="start"
         color="inherit"
-        onClick={handleClose}
+        onClick={handleCloseQuestions}
         aria-label="close"
       >
         <CloseIcon />
