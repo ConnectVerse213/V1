@@ -89,7 +89,17 @@ function EventPage() {
 
     const result = {};
     events.length!=0 && events[0].Questions.forEach((question, index) => {
-    result[question] = answers[index];
+
+      if(question==="Email")
+      {
+        result[question] = localStorage.getItem('email');
+      }
+      
+      else
+      {
+        result[question] = answers[index];
+      }
+    
     });
 
   console.log(result);
@@ -160,17 +170,33 @@ function EventPage() {
       const updateUser = async (result) => {
 
         try{
+
+          const data = await getDocs(usersCollectionRef1);
+                                     
+          let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+          let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+
+          if(filteredArray[0].EventsRegistered.includes(event_id))
+          {
+            notify("Already Registered","error")
+
+            return
+          }
+
+
+          
+
+
         const userDoc = doc(db, "events", event_id);
         const newFields = { Name: events[0].Name, Description: events[0].Description, Creator:events[0].Creator ,Questions:events[0].Questions,Attendees:events[0].Attendees,Registrations:[...events[0].Registrations,result],AttendeesCount:events[0].AttendeesCount,RegistrationsCount:events[0].RegistrationsCount+1};
         await updateDoc(userDoc, newFields);
      
 
-        const data = await getDocs(usersCollectionRef1);
-                                     
-        let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
                     
                                      
-        let filteredArray=eventsTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+        
         
         console.log(filteredArray)
                       
@@ -220,7 +246,7 @@ function EventPage() {
     }}>
       <div id="up"></div>
       <br></br>
-      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="contained"/>
+      <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
       <hr></hr>
       <br></br> <br></br>
   
@@ -397,12 +423,18 @@ function EventPage() {
       blur:'50px', 
    
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-      position: 'absolute', 
-      top: '1%', 
-      left: '50%', 
+     
       transform: 'translateX(-50%)',
-      zIndex: 9999,
+   
       animation: 'popupAnimation 0.5s ease',
+      
+      position: 'fixed',
+      top: '0',
+      left: '50%',
+      width: '100vw',
+      height: '100vh',
+    
+      zIndex: 9999,
       
        backgroundImage:`url(${eventpageBackground})`,
                           backgroundSize: 'cover', 
@@ -442,7 +474,22 @@ function EventPage() {
           <br></br>
 
               {/* Text input (default or empty type) */}
-              {(type === null || type === '') && (
+
+              {(type === null && question.slice(0,5)==='Email') && (
+                <input
+                  type="text"
+                  class="textInput"
+
+                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
+
+                  value={`${localStorage.getItem('email')}`}
+                  
+                  placeholder={answers[index]}
+                  onChange={(e) => handleChange(index, e.target.value)}
+                />
+              )}
+
+              {(type === null && question.slice(0,5)!=='Email' || type === '') && (
                 <input
                   type="text"
                   class="textInput"
@@ -547,7 +594,7 @@ function EventPage() {
   <br></br>  <br></br>
 
 
-  <button type="submit" class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} >
+  <button  class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} onClick={handleSubmit} >
         Register
       </button>
     

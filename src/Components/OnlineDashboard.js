@@ -299,10 +299,12 @@ function Home2() {
 {createdEvents.length!=0 && createdEvents.map((x)=>{
   return(
 
-    <Card sx={{ maxWidth: 345,minWidth:300 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    <Card sx={{ maxWidth: 345,minWidth:300 }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }} onClick={()=>{
+      window.location.href=`/event/${x.id}`
+    }}>
       <CardActionArea>
         <br></br>
-        <img style={{width:'20em'}} src={x.Image}></img>
+        <img style={{width:'20em' ,height:'20em'}} src={x.Image}></img>
        
         <CardContent>
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -357,10 +359,12 @@ function Home2() {
   return(
     <div style={{border:'2px solid black',color:'white'}}>
       
-      <Card sx={{ maxWidth: 345,minWidth:300 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+      <Card sx={{ maxWidth: 345,minWidth:300 }} style={{marginTop:'10%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }} onClick={()=>{
+          window.location.href=`/event/${x.id}`
+        }}>
       <CardActionArea>
         <br></br>
-        <img style={{width:'20em'}} src={x.Image}></img>
+        <img style={{width:'20em' ,height:'20em'}} src={x.Image}></img>
        
         <CardContent>
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
