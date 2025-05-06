@@ -380,7 +380,7 @@ function EventPage() {
      
        <br></br>
 
-      <div style={{backgroundColor:'white',textAlign:'left'}}><div><input></input></div></div>
+      
 
 
        {showAcceptInvite && 
@@ -389,13 +389,13 @@ function EventPage() {
     <div
      
     style={{
-      width: '100%', 
+      width: '96%', 
       height: '100%',
       padding: '20px', 
      
-      border: '2px solid #1876d1',
+     
       blur:'50px', 
-      textAlign: 'center', 
+   
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
       position: 'absolute', 
       top: '1%', 
@@ -403,7 +403,7 @@ function EventPage() {
       transform: 'translateX(-50%)',
       zIndex: 9999,
       animation: 'popupAnimation 0.5s ease',
-      textAlign:'left',
+      
        backgroundImage:`url(${eventpageBackground})`,
                           backgroundSize: 'cover', 
                           backgroundPosition: 'center center',
@@ -445,9 +445,9 @@ function EventPage() {
               {(type === null || type === '') && (
                 <input
                   type="text"
-                  className="custom-input"
+                  class="textInput"
 
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
                   
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
@@ -458,8 +458,8 @@ function EventPage() {
               {type === 'socials' && (
                 <input
                   type="text"
-                  className="custom-input"
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  className="textInput"
+                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -469,8 +469,8 @@ function EventPage() {
               {type === 'website' && (
                 <input
                   type="text"
-                  className="custom-input"
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  className="textInput"
+                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -499,9 +499,9 @@ function EventPage() {
                <l style={{height:'2em',margin:'2em',color:'white'}}> {label}</l>
                 <br></br>
                 <select
-                  id="myDropdown"
+                  class="textInput"
                   value={selectedOption}
-                  style={{fontSize:'16px',width:'80%',height:'2.5em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2.5em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   onChange={(event)=>{
                     
 
@@ -536,12 +536,14 @@ function EventPage() {
           );
         })}
 
+<center>
+  <br></br>
 
-      <button type="submit" className="button-85" style={{width:'84%',height:'2em',margin:'1.4em'}}>
+      <button type="submit" class="buttonInput"  style={{height:'3em',borderRadius:'1em'}}>
         Register
       </button>
      
-   
+      </center>
       <br></br><br></br>
     </div>
    

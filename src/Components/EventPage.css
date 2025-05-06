@@ -167,6 +167,21 @@
       
       }
 
+      .textInput{
+
+        width:27em
+      }
+
+      .buttonInput{
+
+        width:33.5em
+      }
+
+
+     
+
+    
+
       @media (max-width: 1023px) {
         .item2 {
           width: 30em
@@ -177,6 +192,16 @@
         }
         .map{
           width:26em
+        }
+
+        .textInput{
+
+          width:15em
+        }
+
+        .buttonInput{
+
+          width:19em
         }
       }
   
@@ -192,6 +217,13 @@
         .map{
           width:19em
         }
+
+        .buttonInput{
+
+          width:19em
+        }
+
+      
       }
 
       .item1b{
@@ -219,7 +251,7 @@
 
 
       .button-85 {
-        width: 250px; /* Increased width */
+       
         height: 20px; /* Increased height */
         font-size: 1.2rem; /* Bigger text */
         border: none;
@@ -287,3 +319,5 @@
         border-radius: 10px;
       }
       
+
+     
