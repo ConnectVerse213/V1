@@ -379,49 +379,43 @@ function EventPage() {
        <br></br>
      
        <br></br>
-       {showAcceptInvite && (
-  <div
+
+      <div style={{backgroundColor:'white',textAlign:'left'}}><div><input></input></div></div>
+
+
+       {showAcceptInvite && 
+
+
+    <div
+     
     style={{
-      width: '100%',
+      width: '100%', 
       height: '100%',
-      padding: '20px',
-      backgroundColor: 'transparent',
+      padding: '20px', 
+      backgroundColor: 'white', 
       border: '2px solid #1876d1',
-      textAlign: 'center',
-      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-      position: 'absolute',
-      top: '0%',
-      left: '50%',
+      blur:'50px', 
+      textAlign: 'center', 
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+      position: 'absolute', 
+      top: '5%', 
+      left: '50%', 
       transform: 'translateX(-50%)',
       zIndex: 9999,
       animation: 'popupAnimation 0.5s ease',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    
+      textAlign:'left'
+     
     }}
-  >
-    
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        backgroundColor: 'black',
-        color: 'white',
-        padding: '2em',
-        border: '1px solid white',
-        borderRadius: '5px',
-        width:'70%',
-        backgroundImage: `url(${eventpageBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
     >
 
-<div style={{ position:'absolute', top: '170px', right: '50px' }} onClick={() => setShowAcceptInvite(false)}>
-     <CloseIcon style={{ color: 'red' }} />
-    </div>
+<div style={{backgroundColor:'yellow',textAlign:'right'}}>
+     <CloseIcon style={{ color: 'red' }} onClick={()=>{
+      setShowAcceptInvite(false)
+     }} />
+
+     </div>
+     <br></br>
+  
 
       {events.length !== 0 &&
         events[0].Questions.map((question, index) => {
@@ -433,13 +427,13 @@ function EventPage() {
          
 
           return (
-            <div key={index} style={{ marginBottom: '15px', color: 'white' ,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center'}}>
+            <div key={index} >
 
 
               <div >
-              {type !== null && type!=="checkbox" && type!=="options" && <label>{label}</label>}
+              {type !== null && type!=="checkbox" && type!=="options" && <label style={{margin:'2em'}}>{label}</label>}
 
-              {type==null && <label >{question}</label>}
+              {type==null && <label style={{margin:'2em'}}>{question}</label>}
               
           <br></br>
 
@@ -448,15 +442,9 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{
-                    fontSize: '28px',
-                    maxWidth: '70%',
-                    borderTop: 'none',
-                    borderLeft: 'none',
-                    borderRight: 'none',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                  }}
+
+                  style={{width:'80%',height:'2em',margin:'2em'}}
+                  
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -467,15 +455,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{
-                    fontSize: '28px',
-                    maxWidth: '70%',
-                    borderTop: 'none',
-                    borderLeft: 'none',
-                    borderRight: 'none',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                  }}
+                  style={{width:'80%',height:'2em',margin:'2em'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -486,15 +466,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{
-                    fontSize: '28px',
-                    maxWidth: '70%',
-                    borderTop: 'none',
-                    borderLeft: 'none',
-                    borderRight: 'none',
-                    backgroundColor: 'transparent',
-                    color: 'white',
-                  }}
+                  style={{width:'80%',height:'2em',margin:'2em'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -502,9 +474,9 @@ function EventPage() {
 
               {/* Checkbox */}
               {type === 'checkbox' && (
-                <div style={{display:'flex',alignItems:'flex-start',textAlign:'center'}}>
+                <div >
 
-                  <l>{label}</l>
+                  <l style={{marginLeft:'2em',marginBottom:'2em'}}>{label}</l>
                   <input type="checkbox" value="yes"  onChange={(e) =>handleChange(index, e.target.value.toString())}/>
                 </div>
               )}
@@ -520,13 +492,14 @@ function EventPage() {
                
 
                <div>
-                {label}
+               <l style={{height:'2em',margin:'2em'}}> {label}</l>
                 <br></br>
                 <select
                   id="myDropdown"
                   value={selectedOption}
+                  style={{width:'80%',height:'2.5em',margin:'2em'}}
                   onChange={(event)=>{
-
+                    
 
                     console.log(event.target.value)
                     setSelectedOption(event.target.value)
@@ -535,10 +508,7 @@ function EventPage() {
 
 
                   }}
-                  style={{ fontSize: '18px', marginTop: '10px',backgroundImage: `url(${eventpageBackground})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',color:'white',border:'1px solid white'}}
+                  
                 >
                   <option  value="Select Option">
                     Select Option
@@ -561,16 +531,17 @@ function EventPage() {
             </div>
           );
         })}
-<br></br>
-<center>
-      <button type="submit" className="button-85" style={{ height: '2em', width: '10em' }}>
+
+
+      <button type="submit" className="button-85" style={{width:'84%',height:'2em',margin:'1.4em'}}>
         Register
       </button>
-
-      </center>
-    </form>
-  </div>
-)}
+     
+   
+      <br></br><br></br>
+    </div>
+   
+}
 
        <ToastContainer/>
     
