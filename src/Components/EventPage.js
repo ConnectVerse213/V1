@@ -389,10 +389,10 @@ function EventPage() {
     <div
      
     style={{
-      width: '96%', 
-      height: '100%',
-      padding: '20px', 
+      width: '90%', 
      
+      padding: '20px', 
+     border:'1px solid  #1876d1',
      
       blur:'50px', 
    
@@ -526,22 +526,32 @@ function EventPage() {
                 </select>
                 <br></br>  <br></br>
 
-                </div>
-            
-              
-              )}
+         
+
+                </div>)}
+
+
 
 </div>
             </div>
           );
-        })}
+
+         
+        })
+        
+       
+        
+        }
 
 <center>
-  <br></br>
+  <br></br>  <br></br>
 
-      <button type="submit" class="buttonInput"  style={{height:'3em',borderRadius:'1em'}}>
+
+  <button type="submit" class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} >
         Register
       </button>
+    
+      
      
       </center>
       <br></br><br></br>
