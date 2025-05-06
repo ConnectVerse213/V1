@@ -433,6 +433,7 @@ function EventPage() {
       left: '50%',
       width: '100vw',
       height: '100vh',
+      overflowY: 'auto',
     
       zIndex: 9999,
       
@@ -601,7 +602,7 @@ function EventPage() {
       
      
       </center>
-      <br></br><br></br>
+      <br></br><br></br> <br></br><br></br> <br></br><br></br> <br></br><br></br> <br></br><br></br>
     </div>
    
 }
