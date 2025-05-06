@@ -163,7 +163,8 @@
       .map{
         width:35em;
         border: none;
-        padding-left:1.5em
+        padding-left:1.5em;
+      
       }
 
       @media (max-width: 1023px) {

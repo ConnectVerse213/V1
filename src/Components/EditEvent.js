@@ -336,6 +336,7 @@ function EditEvent() {
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
+          
         }}>
           <h1>Questions</h1>
 

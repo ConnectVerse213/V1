@@ -392,23 +392,27 @@ function EventPage() {
       width: '100%', 
       height: '100%',
       padding: '20px', 
-      backgroundColor: 'white', 
+     
       border: '2px solid #1876d1',
       blur:'50px', 
       textAlign: 'center', 
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
       position: 'absolute', 
-      top: '5%', 
+      top: '1%', 
       left: '50%', 
       transform: 'translateX(-50%)',
       zIndex: 9999,
       animation: 'popupAnimation 0.5s ease',
-      textAlign:'left'
+      textAlign:'left',
+       backgroundImage:`url(${eventpageBackground})`,
+                          backgroundSize: 'cover', 
+                          backgroundPosition: 'center center',
+                          backgroundRepeat: 'no-repeat',
      
     }}
     >
 
-<div style={{backgroundColor:'yellow',textAlign:'right',marginRight:'1em'}}>
+<div style={{textAlign:'right',marginRight:'1em'}}>
      <CloseIcon style={{ color: 'red' }} onClick={()=>{
       setShowAcceptInvite(false)
      }} />
@@ -431,9 +435,9 @@ function EventPage() {
 
 
               <div >
-              {type !== null && type!=="checkbox" && type!=="options" && <label style={{margin:'2em'}}>{label}</label>}
+              {type !== null && type!=="checkbox" && type!=="options" && <label style={{margin:'2em',color:'white'}}>{label}</label>}
 
-              {type==null && <label style={{margin:'2em'}}>{question}</label>}
+              {type==null && <label style={{margin:'2em',color:'white'}}>{question}</label>}
               
           <br></br>
 
@@ -443,7 +447,7 @@ function EventPage() {
                   type="text"
                   className="custom-input"
 
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
@@ -455,7 +459,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -466,7 +470,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -476,7 +480,7 @@ function EventPage() {
               {type === 'checkbox' && (
                 <div >
 
-                  <l style={{marginLeft:'2em',marginBottom:'2em'}}>{label}</l>
+                  <l style={{marginLeft:'2em',marginBottom:'2em',color:'white'}}>{label}</l>
                   <input type="checkbox" value="yes"  onChange={(e) =>handleChange(index, e.target.value.toString())}/>
                 </div>
               )}
@@ -492,12 +496,12 @@ function EventPage() {
                
 
                <div>
-               <l style={{height:'2em',margin:'2em'}}> {label}</l>
+               <l style={{height:'2em',margin:'2em',color:'white'}}> {label}</l>
                 <br></br>
                 <select
                   id="myDropdown"
                   value={selectedOption}
-                  style={{fontSize:'16px',width:'80%',height:'2.5em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2.5em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
                   onChange={(event)=>{
                     
 
