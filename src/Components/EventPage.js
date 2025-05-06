@@ -385,7 +385,7 @@ function EventPage() {
       width: '100%',
       height: '100%',
       padding: '20px',
-      backgroundColor: 'black',
+      backgroundColor: 'transparent',
       border: '2px solid #1876d1',
       textAlign: 'center',
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -399,16 +399,10 @@ function EventPage() {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundImage: `url(${eventpageBackground})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
+    
     }}
   >
-    <div style={{ position: 'absolute', top: '20px', right: '40px' }} onClick={() => setShowAcceptInvite(false)}>
-      <CloseIcon style={{ color: 'red' }} />
-    </div>
-
+    
     <form
       onSubmit={handleSubmit}
       style={{
@@ -417,8 +411,18 @@ function EventPage() {
         padding: '2em',
         border: '1px solid white',
         borderRadius: '5px',
+        width:'70%',
+        backgroundImage: `url(${eventpageBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
+
+<div style={{ position:'absolute', top: '170px', right: '50px' }} onClick={() => setShowAcceptInvite(false)}>
+     <CloseIcon style={{ color: 'red' }} />
+    </div>
+
       {events.length !== 0 &&
         events[0].Questions.map((question, index) => {
           const type = question.startsWith('type') ? question.slice(question.indexOf('=') + 1, question.indexOf('{')) : null;
@@ -450,7 +454,7 @@ function EventPage() {
                     borderTop: 'none',
                     borderLeft: 'none',
                     borderRight: 'none',
-                    backgroundColor: 'black',
+                    backgroundColor: 'transparent',
                     color: 'white',
                   }}
                   placeholder={answers[index]}
@@ -469,7 +473,7 @@ function EventPage() {
                     borderTop: 'none',
                     borderLeft: 'none',
                     borderRight: 'none',
-                    backgroundColor: 'black',
+                    backgroundColor: 'transparent',
                     color: 'white',
                   }}
                   placeholder={answers[index]}
@@ -488,7 +492,7 @@ function EventPage() {
                     borderTop: 'none',
                     borderLeft: 'none',
                     borderRight: 'none',
-                    backgroundColor: 'black',
+                    backgroundColor: 'transparent',
                     color: 'white',
                   }}
                   placeholder={answers[index]}
@@ -531,7 +535,10 @@ function EventPage() {
 
 
                   }}
-                  style={{ fontSize: '18px', marginTop: '10px'}}
+                  style={{ fontSize: '18px', marginTop: '10px',backgroundImage: `url(${eventpageBackground})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',color:'white',border:'1px solid white'}}
                 >
                   <option  value="Select Option">
                     Select Option
