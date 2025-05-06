@@ -756,7 +756,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
          
           <br></br>
           <center>
-          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}onChange={(e)=>{
+          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white',width:'80%'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
           </center>
