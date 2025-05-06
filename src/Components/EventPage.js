@@ -408,7 +408,7 @@ function EventPage() {
     }}
     >
 
-<div style={{backgroundColor:'yellow',textAlign:'right'}}>
+<div style={{backgroundColor:'yellow',textAlign:'right',marginRight:'1em'}}>
      <CloseIcon style={{ color: 'red' }} onClick={()=>{
       setShowAcceptInvite(false)
      }} />
