@@ -583,15 +583,19 @@ function Home2() {
     const emoji = code ? getEmojiFlag(code) : '🏳️' */}
           <br></br>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+
+            e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -654,15 +658,18 @@ function Home2() {
         </Typography>
         
           <br></br>
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -720,15 +727,18 @@ function Home2() {
         </Typography>
         
           <br></br>
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -781,15 +791,18 @@ function Home2() {
 
           <br></br>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -841,15 +854,18 @@ function Home2() {
 
           <br></br>
           
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -922,7 +938,8 @@ function Home2() {
       </Button>} 
 
       {x.Type=="online" && <Button variant='outlined' color="success"
-        onClick={()=>{
+        onClick={(e)=>{
+          e.stopPropagation()
 
          alert("Go to dashboard to join")
 
@@ -936,7 +953,8 @@ function Home2() {
        Join
       </Button>} 
       
-      <Button variant="outlined" onClick={()=>{
+      <Button variant="outlined" onClick={(e)=>{
+         e.stopPropagation()
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button></div> }

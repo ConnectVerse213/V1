@@ -78,6 +78,19 @@ function Home2() {
      
       });
 
+      const notifyCustom = (text,type) => toast(text,{
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        type:type
+       
+        });
+
       const notifyGift = () => toast("100 coins claimed!",{
         position: "top-center",
         autoClose: 5000,
@@ -251,6 +264,14 @@ function Home2() {
                   
                                    
         let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
+        console.log(filteredArray)
+
+        if(filteredArray[0].EventsAttended.includes(x.id))
+        {
+          notifyCustom("Already Attended","error")
+
+          return
+        }
 
        const userDoc = doc(db, "user", filteredArray[0].id);
                const newFields = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins+1000, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:filteredArray[0].EventsApproved,EventsAttended:[...filteredArray[0].EventsAttended,x.id]};
@@ -315,22 +336,26 @@ function Home2() {
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
        &nbsp; &nbsp;
-        <div style={{display:'flex',alignItems:'center',backgroundColor:'#1876d1',padding:'2px',borderRadius:'5px'}} onClick={()=>{
+        <div style={{display:'flex',alignItems:'center',backgroundColor:'#1876d1',padding:'2px',borderRadius:'5px'}} onClick={(e)=>{
+          e.stopPropagation()
           window.location.href=`${x.Address.slice(0,x.Address.indexOf("{"))}`
         }}>  <VideoCallIcon fontSize='medium'/> <l>Join</l></div>
         </Typography>
         </Typography>
 
           <br></br>
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+            e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
@@ -382,7 +407,9 @@ function Home2() {
           {userApprovedArray.includes(x.id) ? <div>
           
            <div> <Button variant='outlined' color="success"
-        onClick={()=>{
+        onClick={(e)=>{
+
+          e.stopPropagation()
 
           handleOnlineEvent(x)
 
@@ -393,7 +420,8 @@ function Home2() {
        Join
       </Button>
       
-      <Button variant="outlined" onClick={()=>{
+      <Button variant="outlined" onClick={(e)=>{
+         e.stopPropagation()
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button></div> }
