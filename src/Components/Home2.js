@@ -116,6 +116,19 @@ function Home2() {
      
       });
 
+       const notifyCustom = (text,type) => toast(text,{
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              type:type
+             
+              });
+
       const notifyGift = (value) => toast(`You just claimed ${value} coins`,{
         position: "top-center",
         autoClose: 5000,
@@ -1011,8 +1024,12 @@ function Home2() {
            
                    
                    <Button variant="contained" style={{borderRadius:'0'}}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><EventIcon fontSize='small'/> <l>Events</l></div></Button>
-                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><LocalMoviesIcon fontSize='small'/> <l>Movies</l></div></Button>
-                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><CelebrationIcon fontSize='small'/> <l>Concerts</l></div></Button>
+                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}} onClick={()=>{
+                    notifyCustom("Coming Soon!","default")
+                   }}><LocalMoviesIcon fontSize='small'/> <l>Movies</l></div></Button>
+                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}} onClick={()=>{
+                    notifyCustom("Coming Soon!","default")
+                   }}><CelebrationIcon fontSize='small'/> <l>Concerts</l></div></Button>
                 
            
            
