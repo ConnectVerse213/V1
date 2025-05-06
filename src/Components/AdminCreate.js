@@ -733,7 +733,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
  
 
         {showCapacity &&  <div style={{
-          width: '360px', 
+          width: '300px', 
           height: '300px',
           padding: '20px', 
           backgroundColor: 'black', 
@@ -761,7 +761,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           }} placeholder='Enter Capacity'></input>
           </center>
           <br></br>
-          <br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
+          <br></br><div class="subscribe" style={{display:'flex',alignItems:'flex-start'}}><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
           <br></br><l></l>
           <div >
          
@@ -784,7 +784,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         </div>}
  
         {showShowCategory &&  <div style={{
-          width: '360px', 
+          width: '300px', 
           
           padding: '20px', 
           backgroundColor: 'black', 
