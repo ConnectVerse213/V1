@@ -443,7 +443,7 @@ function EventPage() {
                   type="text"
                   className="custom-input"
 
-                  style={{width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
                   
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
@@ -455,7 +455,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -466,7 +466,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="custom-input"
-                  style={{width:'80%',height:'2em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2em',margin:'2em'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -497,7 +497,7 @@ function EventPage() {
                 <select
                   id="myDropdown"
                   value={selectedOption}
-                  style={{width:'80%',height:'2.5em',margin:'2em'}}
+                  style={{fontSize:'16px',width:'80%',height:'2.5em',margin:'2em'}}
                   onChange={(event)=>{
                     
 
