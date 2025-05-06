@@ -53,6 +53,8 @@ import './AdminCreate.css'
 import ResponsiveAppBar from './ResponsiveAppBar';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
+import CategoryIcon from '@mui/icons-material/Category';
+
 
 
 
@@ -81,6 +83,9 @@ function AdminCreate() {
 
     const [description,setDescription]=useState(false)
     const [showCapacity,setShowCapacity]=useState(false)
+    const [category,setCategory]=useState("")
+    const [showShowCategory,setShowCategory]=useState(false)
+    const [categoryColor,setCategoryColor]=useState(["white,white,white,white,white,white,white,white,white,white"])
        const { createWallet, getUserDetails, getPortfolio } = useOkto();
 
         const editor = useEditor({
@@ -143,6 +148,8 @@ function AdminCreate() {
     setImageUrl(data.secure_url); // ✅ Final image URL
   };
 
+  
+
     const [eventName,setEventName]=useState('')
     const [eventDescription,setEventDescription]=useState('')
     const [questionsArray,setQuestionsArray]=useState(["Name","Email"])
@@ -155,7 +162,7 @@ function AdminCreate() {
 
       if(!isOnline)
       {
-        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category});
 
         console.log(result.id)
 
@@ -166,7 +173,7 @@ function AdminCreate() {
       }
       else
       {
-        const result=await addDoc(usersCollectionRef, { Name: eventName,Type:"online", Image:imageUrl,Address:moderatorLink+"{}"+guestLink,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0});
+        const result=await addDoc(usersCollectionRef, { Name: eventName,Type:"online", Image:imageUrl,Address:moderatorLink+"{}"+guestLink,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category});
 
         console.log(result.id)
 
@@ -468,7 +475,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
        
        
         <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center'}}>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em'}}>
 
 
 
@@ -490,6 +497,21 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           <div style={{display:'flex',alignItems:'center'}}>{capacity} &nbsp;
           <EditIcon fontSize='small'/></div>
                       </div>
+
+        
+
+
+          <div class="capacity" style={{display:'flex',alignItems:'center'}} onClick={()=>{
+            
+            setShowCategory(true)
+       
+        
+         
+        }}><div  style={{display:'flex',alignItems:'center'}} ><CategoryIcon fontSize='small'/>
+        &nbsp;<l>Category</l></div>
+        <div style={{display:'flex',alignItems:'center'}}>{category.slice(0,2)+"..."} &nbsp;
+        <EditIcon fontSize='small'/></div>
+                    </div>
                       </a>
       
           
@@ -756,6 +778,222 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           <Button variant="contained"  onClick={()=>{
             
             setShowCapacity(false)
+           
+          }}>Save</Button>
+          </center>
+        </div>}
+ 
+        {showShowCategory &&  <div style={{
+          width: '360px', 
+          
+          padding: '20px', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           backgroundImage:`url(${eventpageBackground})`,
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center center',
+                    backgroundRepeat: 'no-repeat',
+        }}>
+          <h2 style={{color:'white'}}>Category</h2>
+         
+          <br></br>
+          <center>
+          <p style={{color:'white'}}
+          
+          onChange={(e)=>{
+            setCapacity(parseInt(e.target.value))
+          }} placeholder='Layer1,Defi'>{category}</p>
+          
+          <br></br> <br></br>
+          <button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Defi".toLowerCase())) {
+    setCategory(category.length === 0 ? "Defi" : category + ",Defi");
+    categoryColor[0]="#1876d1"
+    setCategoryColor(categoryColor)
+  } else {
+    categoryColor[0]="white"
+    setCategoryColor(categoryColor)
+    if(category.startsWith("Defi,")) {
+      setCategory(category.slice("Defi,".length));
+    } else if(category === "Defi") {
+      setCategory("");
+    } else if(category.startsWith("Defi")) {
+      setCategory(category.slice("Defi".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Defi"))+category.slice(category.indexOf(",Defi")+5));
+    }
+  }
+}}>Defi</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("GameFi".toLowerCase())) {
+    setCategory(category.length === 0 ? "GameFi" : category + ",GameFi");
+    categoryColor[1]="#1876d1"
+    setCategoryColor(categoryColor)
+  } else {
+    categoryColor[1]="white"
+    setCategoryColor(categoryColor)
+    if(category.startsWith("GameFi,")) {
+      setCategory(category.slice("GameFi,".length));
+    } else if(category === "GameFi") {
+      setCategory("");
+    } else if(category.startsWith("GameFi")) {
+      setCategory(category.slice("GameFi".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",GameFi"))+category.slice(category.indexOf(",GameFi")+7));
+    }
+  }
+}}>GameFi</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("AI Agents".toLowerCase())) {
+    setCategory(category.length === 0 ? "AI Agents" : category + ",AI Agents");
+    categoryColor[2]="#1876d1"
+    setCategoryColor(categoryColor)
+  } else {
+    categoryColor[2]="white"
+    setCategoryColor(categoryColor)
+    if(category.startsWith("AI Agents,")) {
+      setCategory(category.slice("AI Agents,".length));
+    } else if(category === "AI Agents") {
+      setCategory("");
+    } else if(category.startsWith("AI Agents")) {
+      setCategory(category.slice("AI Agents".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",AI Agents"))+category.slice(category.indexOf(",AI Agents")+11));
+    }
+  }
+}}>AI Agents</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Layer 1".toLowerCase())) {
+    setCategory(category.length === 0 ? "Layer 1" : category + ",Layer 1");
+    categoryColor[3]="#1876d1"
+    setCategoryColor(categoryColor)
+  } else {
+    categoryColor[3]="white"
+    setCategoryColor(categoryColor)
+    if(category.startsWith("Layer 1,")) {
+      setCategory(category.slice("Layer 1,".length));
+    } else if(category === "Layer 1") {
+      setCategory("");
+    } else if(category.startsWith("Layer 1")) {
+      setCategory(category.slice("Layer 1".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Layer 1"))+category.slice(category.indexOf(",Layer 1")+8));
+    }
+  }
+}}>Layer 1</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Layer 2".toLowerCase())) {
+    setCategory(category.length === 0 ? "Layer 2" : category + ",Layer 2");
+  } else {
+    if(category.startsWith("Layer 2,")) {
+      setCategory(category.slice("Layer 2,".length));
+    } else if(category === "Layer 2") {
+      setCategory("");
+    } else if(category.startsWith("Layer 2")) {
+      setCategory(category.slice("Layer 2".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Layer 2"))+category.slice(category.indexOf(",Layer 2")+8));
+    }
+  }
+}}>Layer 2</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Layer 3".toLowerCase())) {
+    setCategory(category.length === 0 ? "Layer 3" : category + ",Layer 3");
+  } else {
+    if(category.startsWith("Layer 3,")) {
+      setCategory(category.slice("Layer 3,".length));
+    } else if(category === "Layer 3") {
+      setCategory("");
+    } else if(category.startsWith("Layer 3")) {
+      setCategory(category.slice("Layer 3".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Layer 3"))+category.slice(category.indexOf(",Layer 3")+8));
+    }
+  }
+}}>Layer 3</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("LLM".toLowerCase())) {
+    setCategory(category.length === 0 ? "LLM" : category + ",LLM");
+  } else {
+    if(category.startsWith("LLM,")) {
+      setCategory(category.slice("LLM,".length));
+    } else if(category === "LLM") {
+      setCategory("");
+    } else if(category.startsWith("LLM")) {
+      setCategory(category.slice("LLM".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",LLM"))+category.slice(category.indexOf(",LLM")+4));
+    }
+  }
+}}>LLM</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Other Technologies".toLowerCase())) {
+    setCategory(category.length === 0 ? "Other Technologies" : category + ",Other Technologies");
+  } else {
+    if(category.startsWith("Other Technologies,")) {
+      setCategory(category.slice("Other Technologies,".length));
+    } else if(category === "Other Technologies") {
+      setCategory("");
+    } else if(category.startsWith("Other Technologies")) {
+      setCategory(category.slice("Other Technologies".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Other Technologies"))+category.slice(category.indexOf(",Other Technologies")+19));
+    }
+  }
+}}>Other Technologies</button>
+
+<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+  if(!category.toLowerCase().includes("Non Tech".toLowerCase())) {
+    setCategory(category.length === 0 ? "Non Tech" : category + ",Non Tech");
+  } else {
+    if(category.startsWith("Non Tech,")) {
+      setCategory(category.slice("Non Tech,".length));
+    } else if(category === "Non Tech") {
+      setCategory("");
+    } else if(category.startsWith("Non Tech")) {
+      setCategory(category.slice("Non Tech".length));
+    } else {
+      setCategory(category.slice(0,category.indexOf(",Non Tech"))+category.slice(category.indexOf(",Non Tech")+9));
+    }
+  }
+}}>Non Tech</button>
+
+          
+          </center>
+       
+          <br></br><l></l>
+          <div >
+         
+              </div>
+     <br></br><br></br>
+          <center>
+          <Button variant="outlined" style={{color:'red',border:'0.5px solid red'}} onClick={()=>{
+            
+            setCategory("")
+            setShowCategory(false)
+           
+          }}>Cancel</Button>
+          &nbsp;  &nbsp;   &nbsp;  
+          <Button variant="contained"  onClick={()=>{
+            
+            setShowCategory(false)
+
            
           }}>Save</Button>
           </center>

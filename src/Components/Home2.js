@@ -189,6 +189,7 @@ function Home2() {
     const [buttonHight,setButtonHighlight]=useState(1)
     const [trendingEvents,setTrendingEvents]=useState([])
     const [city,setCity]=useState('')
+    const [category,setCategory]=useState('')
 
     async function getCityFromAddress(address) {
       const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(address)}`;
@@ -212,6 +213,8 @@ function Home2() {
 
     const toggleDrawer = (newOpen) => () => {
       setOpen(newOpen);
+     
+     
     };
 
     function formatDate(dateStr) {
@@ -249,8 +252,13 @@ function Home2() {
           const DrawerList = (
             <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
               <List>
-                {['DeFi', 'GameFi',"SocialFi", 'AI Agents', 'L1',"L2","L3","LLM","Other Technologies","Non Tech"].map((text, index) => (
-                  <ListItem key={text} disablePadding>
+                {['DeFi', 'GameFi',"SocialFi", 'AI Agents', 'Layer 1',"Layer 2","Layer 3","LLM","Other Technologies","Non Tech"].map((text, index) => (
+                  <ListItem key={text} disablePadding onClick={()=>{
+                    setCategory(text)
+                    toggleDrawer(false)
+                    
+                  
+                  }}>
                     <ListItemButton>
                      
                       <ListItemText primary={text} />
@@ -497,12 +505,14 @@ function Home2() {
 }}>All </Button>}
  {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
      setButtonHighlight(1)
+     setCategory("")
 }}>All </Button>}
 {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
     
 }}>Trending &nbsp;<WhatshotIcon style={{color:'red'}}/></Button>}
 {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
       setButtonHighlight(2)
+      setCategory("")
       
 }}>Trending &nbsp;<WhatshotIcon style={{color:'red'}}/></Button>}
 
@@ -522,7 +532,8 @@ function Home2() {
        
        setButtonHighlight(3)
       
-      }}>Category &nbsp;<CategoryIcon style={{color:'white'}} /></Button>}
+      }
+      }>Category &nbsp;<CategoryIcon style={{color:'white'}} /></Button>}
 
 </div>
 <br></br><br></br>
@@ -671,6 +682,69 @@ function Home2() {
 
 
 
+<div className="events">
+
+{allEvents.length!=0 &&  allEvents.map((x)=>{
+  if( allEvents.length!=0  && x.Category!=null && category.length!=0 && x.Category.toLowerCase().includes(category.toLowerCase()) )
+    
+    return(
+
+    <Card sx={{ maxWidth: 345,minWidth:300  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }} >
+      <CardActionArea>
+        <br></br>
+        <img style={{width:'20em' ,height:'20em'}} src={x.Image} onClick={()=>{
+          window.location.href=`/event/${x.id}`
+        }}></img>
+       
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+          {x.Name}
+          </Typography>
+
+
+          
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+
+
+          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+
+            {!x.Type && <> <LocationPinIcon fontSize='small'/>
+              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+
+
+              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+                <l>Online</l> </>}
+        
+        </Typography>
+        </Typography>
+        
+          <br></br>
+          <Button variant="outlined" onClick={()=>{
+            window.location.href=`/event/${x.id}`
+          }}><LaunchIcon/>  </Button>
+
+          <Button variant="outlined" onClick={()=>{
+            window.location.href=`/event/${x.id}`
+          }}><CommentIcon/>  </Button>
+
+          <Button variant="outlined" onClick={()=>{
+            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
+            notifyClipboard()
+          }}><ShareIcon/>  </Button>
+
+          {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
+          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
+            window.location.href=`/manage/${x.id}`
+          }}><EditIcon/>  </Button>
+        }
+        </CardContent>
+      </CardActionArea>
+    </Card>
+   
+  )
+})}
+</div>
 
 
 {allEvents.length==0 && <h2 style={{color:'white'}}>All</h2>}
@@ -689,6 +763,8 @@ function Home2() {
         }}></img>
        
         <CardContent>
+
+       
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
           {x.Name}
           </Typography>
