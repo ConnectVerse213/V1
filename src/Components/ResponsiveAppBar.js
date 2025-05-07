@@ -220,9 +220,14 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
             window.location.href="/dashboard"
           }}><DashboardIcon/> <l>Dashboard</l></div>
           <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu"><SettingsIcon/> Profile Setting</div>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/profilesettings"
+          }}><SettingsIcon/> Profile Setting</div>
           <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu"><SettingsIcon/> Logout</div>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            localStorage.clear();
+            window.location.href="/oktologin"
+        }}><SettingsIcon/> Logout</div>
       
         </div>}
 

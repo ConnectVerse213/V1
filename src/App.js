@@ -20,6 +20,7 @@ import Testing2 from './Components/Testing2'
 import Overview from './Components/Overview'
 import Meet from './Components/Meet'
 import OnlineDashboard from './Components/OnlineDashboard'
+import ProfileSettings from './Components/ProfileSettings';
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -73,6 +74,12 @@ function App() {
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
     <Route path="/meet" element={ <Meet/>} />
+
+    <Route path="/profilesettings" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+        <ProfileSettings/>
+    </OktoProvider>} />
       
    
     </Routes>
