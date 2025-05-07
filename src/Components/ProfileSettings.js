@@ -54,6 +54,7 @@ function ProfileSettings() {
 
              if(filteredArray[0].ProfileImage)
              {
+                localStorage.setItem('profileImg',filteredArray[0].ProfileImage)
                 setImageUrl(filteredArray[0].ProfileImage)
              }
 
@@ -169,8 +170,8 @@ function ProfileSettings() {
               <label
           htmlFor="fileInput"
           style={{
-            width: "250px",
-            height: "250px",
+            width: "200px",
+            height: "200px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -193,7 +194,7 @@ function ProfileSettings() {
         </center>}
         {imageUrl && (
                 <div style={{ marginTop: "10px" }}>
-                  <img src={imageUrl} alt="Uploaded" style={{ width: "250px",height:'250px',borderRadius:'50%',objectFit: 'cover' }} />
+                  <img src={imageUrl} alt="Uploaded" style={{ width: "200px",height:'200px',borderRadius:'50%',objectFit: 'cover' }} />
                 
                 </div>
               )}

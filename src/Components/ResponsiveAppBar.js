@@ -172,7 +172,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
 
         {localStorage.getItem('email') && localStorage.getItem('profileImg') && <Button  onClick={()=>{
             setShowDashboardDiv(true)
-          }}> <Avatar src={localStorage.getItem('profileImg')} /></Button>}
+          }}> <img style={{width:'3em',height:'3em',borderRadius:'50%',objectFit: 'cover'}} src={localStorage.getItem('profileImg')}/></Button>}
 
       {!localStorage.getItem('email') && !localStorage.getItem('profileImg') && <Button  onClick={()=>{
             window.location.href="/oktologin"

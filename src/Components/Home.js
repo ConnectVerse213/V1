@@ -127,6 +127,10 @@ function Home() {
                 {
                   localStorage.setItem('email',result.email)
                   localStorage.setItem('coins',filteredArray[0].Coins)
+                  if(filteredArray[0].ProfileImage)
+                  {
+                    localStorage.setItem('profileImg',filteredArray[0].ProfileImage)
+                  }
                   if(localStorage.getItem('currentEvent'))
                   {
                     window.location.href=`/event/${localStorage.getItem('currentEvent')}`

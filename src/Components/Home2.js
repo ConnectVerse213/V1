@@ -60,6 +60,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import axios from 'axios';
 import { getCode } from 'country-list';
+import CancelIcon from '@mui/icons-material/Cancel';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -101,8 +102,7 @@ function Home2() {
     };
   
 
-
-    
+ 
 
  const notify = () => toast("Coming Soon!",{
       position: "bottom-right",
@@ -203,6 +203,42 @@ function Home2() {
     const [trendingEvents,setTrendingEvents]=useState([])
     const [city,setCity]=useState('')
     const [category,setCategory]=useState('')
+    const [showLeaderboarddDiv,setShowLeaderboardboardDiv]=useState(false)
+    const [leaderboardArray,setLeaderboardArray]=useState([])
+
+
+    const  getLeaderboard=async ()=>{
+
+      try{
+      
+                  const data = await getDocs(usersCollectionRef1);
+                                                
+                     let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+           
+                     let filteredArray=usersTemp.filter(obj => obj.ProfileImage!=null && obj.UserName!=null)
+      
+                   console.log(filteredArray)
+                   filteredArray.sort((a, b) => b.Coins - a.Coins);
+
+                   setLeaderboardArray(filteredArray)
+
+                   setShowLeaderboardboardDiv(true)
+                   
+      
+                  
+                 
+                                 
+              }
+              catch{
+      
+                  notifyCustom("Error loading leaderboard","error")
+                  setInterval(()=>{
+                      window.location.href="/home"
+                    },3000)
+              }
+    
+    }
+      
 
     async function getCityFromAddress(address) {
       const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${encodeURIComponent(address)}`;
@@ -501,7 +537,10 @@ function Home2() {
     height: '200px', 
     objectFit: 'cover' }} alt="Logo"  />   <l style={{fontSize:"52px"}}><CountUp start={coins-100} end={coins} /></l></div>
      
-<Button variant="contained" style={{border:"green 0.5px solid",backgroundColor:'green'}}>Leaderboard &nbsp; <LeaderboardIcon/></Button>
+<Button variant="contained" style={{border:"green 0.5px solid",backgroundColor:'green'}} onClick={()=>{
+
+  getLeaderboard()
+}}>Leaderboard &nbsp; <LeaderboardIcon/></Button>
 <br></br><br></br>
 
 
@@ -1038,6 +1077,102 @@ function Home2() {
                     
                      </div>
       </div>
+
+      {showLeaderboarddDiv &&  <div style={{
+          width: '250px', 
+          height: '350px',
+          padding: '20px', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '15%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           
+        }}>
+           <div style={{width:'100%',textAlign:'left',cursor:'pointer',color:'#1876d1'}} onClick={()=>{
+            setShowLeaderboardboardDiv(false)
+          }}>
+          <CancelIcon style={{left:'2px'}}/>
+          </div>
+
+   
+          <h2 style={{color:'white'}}>Leaderboard</h2>
+          <br></br>
+          
+
+            <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'3px',justifyContent: 'space-between',
+  width: '100%',color:'white'}}>
+
+         {leaderboardArray.map((x,index)=>{
+
+           if(index<=5) return (
+
+            <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'25px',border:'1px solid white',width:'100%'}}>
+
+              <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+
+            <div>{index+1}.&nbsp;</div>
+              <img style={{width:'2em',height:'2em',borderRadius:'50%',objectFit: 'cover'}} src={x.ProfileImage}></img>
+              <div style={{ width:'3em'}}>{x.UserName.length<6 && `${x.UserName}`}{x.UserName.length>=6 && x.UserName.slice(0,6)}{x.UserName.length>6 && "..."}</div>
+
+              </div>
+
+              <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'3px' }}>
+
+                
+            <img style={{width:'2em',height:'2em',borderRadius:'50%',objectFit: 'cover'}} src={coinImg}></img>
+            <div style={{ width:'3em'}}>{x.Coins.toString().length<10 && `${x.Coins.toString()}`}{x.Coins.toString().length>=10 && x.Coins.toString().slice(0,10)}{x.Coins.toString().length>10 && "..."}</div>
+
+
+</div>
+
+            </div>
+           )
+
+         })}
+         
+
+            </div>
+
+
+
+
+            
+
+            {/* <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',justifyContent:'center',gap:'3px'}}>
+
+              {leaderboardArray.map((x,index)=>{
+
+              if(index<=8)   return (
+
+                <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:'3px' }}>
+
+                
+                  <img style={{width:'2em',height:'2em',borderRadius:'50%',objectFit: 'cover'}} src={coinImg}></img>
+                  <div style={{ width:'3em'}}>{x.Coins.toString().length<10 && `${x.Coins.toString()}`}{x.Coins.toString().length>=10 && x.Coins.toString().slice(0,10)}{x.Coins.toString().length>10 && "..."}</div>
+
+
+                </div>
+                )
+
+               
+
+              })}
+
+                </div> */}
+
+
+
+      
+          
+      
+        </div>}
 
     </div>
   )
