@@ -361,7 +361,11 @@ function Home2() {
           }}><ShareIcon/>  </Button>
 
           {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
-          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
+          <Button variant="outlined" style={{color:'green'}} onClick={(e)=>{
+
+      
+              e.stopPropagation()
+            
             window.location.href=`/manage/${x.id}`
           }}><EditIcon/>  </Button>
           }

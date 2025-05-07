@@ -302,7 +302,8 @@ function Home2() {
         </Typography>
 
           <br></br>
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+            e.stopPropagation()
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
@@ -310,13 +311,18 @@ function Home2() {
             window.location.href=`/event/${x.id}`
           }}><CommentIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="outlined" onClick={(e)=>{
+           
+          e.stopPropagation()
+          
             navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button>
 
           {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
-          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
+          <Button variant="outlined" style={{color:'green'}} onClick={(e)=>{
+
+            e.stopPropagation()
             window.location.href=`/manage/${x.id}`
           }}><EditIcon/>  </Button>
           }
@@ -362,8 +368,8 @@ function Home2() {
           {userApprovedArray.includes(x.id) ? <div>
           
            <div> <Button variant='outlined' color="success"
-        onClick={()=>{
-
+        onClick={(e)=>{
+            e.stopPropagation()
          window.location.href=`/qr/${x.id}`
 
         }}
@@ -372,13 +378,16 @@ function Home2() {
        Get Ticket
       </Button>
       
-      <Button variant="outlined" onClick={()=>{
+      <Button variant="outlined" onClick={(e)=>{
+
+            e.stopPropagation()
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button></div> }
 
             
-            </div>:<div><Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={()=>{
+            </div>:<div><Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={(e)=>{
+              e.stopPropagation()
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button></div>}
