@@ -53,7 +53,10 @@ function OktoLogin() {
               console.log(authResponse)
                setAuthToken(authResponse.auth_token);
                console.log("Authenticated successfully, auth token:", authResponse.auth_token);
-               navigate('/home')
+              
+                navigate('/home')
+               
+             
              
               
              } else if (error) {

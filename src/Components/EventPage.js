@@ -171,6 +171,13 @@ function EventPage() {
 
         try{
 
+          if(!localStorage.getItem('email')){
+            notify("Please Login in first","error")
+            localStorage.setItem('currentEvent',event_id)
+            return
+
+          }
+
           const data = await getDocs(usersCollectionRef1);
                                      
           let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -226,16 +233,12 @@ function EventPage() {
 
     useEffect(() => {
 
-      if(!localStorage.getItem('email'))
+      if(localStorage.getItem('currentEvent'))
       {
-        alert('Please Log In First')
-        window.location.href = '/oktologin';
-
+        localStorage.removeItem('currentEvent');
       }
-      else
-      {
         getEvents();
-      }
+     
          
         },[])
 
@@ -476,7 +479,7 @@ function EventPage() {
 
               {/* Text input (default or empty type) */}
 
-              {(type === null && question.slice(0,5)==='Email') && (
+              {(type === null && question.slice(0,5)==='Email' && localStorage.getItem('email')) && (
                 <input
                   type="text"
                   class="textInput"
@@ -489,6 +492,20 @@ function EventPage() {
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
               )}
+
+          {(type === null && question.slice(0,5)==='Email' && !localStorage.getItem('email')) && (
+                          <input
+                            type="text"
+                            class="textInput"
+
+                            style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
+
+                            
+                            
+                            placeholder={answers[index]}
+                            onChange={(e) => handleChange(index, e.target.value)}
+                          />
+                        )}
 
               {(type === null && question.slice(0,5)!=='Email' || type === '') && (
                 <input

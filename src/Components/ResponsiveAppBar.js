@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import { useOkto } from "okto-sdk-react";
 import Box from '@mui/material/Box';
@@ -18,7 +18,11 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import HomeIcon from '@mui/icons-material/Home';
 import PaidIcon from '@mui/icons-material/Paid';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-
+import Stack from '@mui/material/Stack';
+import { deepOrange } from '@mui/material/colors';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CancelIcon from '@mui/icons-material/Cancel';
 import './ResponsiveAppBar.css'
 
 const pages = ['Products', 'Pricing', 'Blog'];
@@ -27,6 +31,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,dashboardButtonStyle}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [showDashboardDiv,setShowDashboardDiv]=useState(false)
 
    const { showWidgetModal, closeModal } = useOkto();
    const { createWallet, getUserDetails, getPortfolio } = useOkto();
@@ -45,6 +51,8 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  
 
   return (
     <AppBar position="static" style={{backgroundColor:'black',color:'#1876d1'}}>
@@ -157,9 +165,24 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
           <Box sx={{ flexGrow: 0 }} >
 
 <div class="flexWala">
-          <Button variant={dashboardButtonStyle} onClick={()=>{
-            window.location.href="/dashboard"
-          }}>Dashboard</Button>
+
+          {localStorage.getItem('email') && !localStorage.getItem('profileImg') && <Button  onClick={()=>{
+            setShowDashboardDiv(true)
+          }}> <Avatar src="/broken-image.jpg" /></Button>}
+
+        {localStorage.getItem('email') && localStorage.getItem('profileImg') && <Button  onClick={()=>{
+            setShowDashboardDiv(true)
+          }}> <Avatar src={localStorage.getItem('profileImg')} /></Button>}
+
+      {!localStorage.getItem('email') && !localStorage.getItem('profileImg') && <Button  onClick={()=>{
+            window.location.href="/oktologin"
+          }}> <Button variant='outlined'>Login</Button></Button>}
+
+         
+          
+
+
+
           <Button variant="outlined" onClick={()=>{
               showWidgetModal()
             }}><AccountBalanceWalletIcon /></Button>
@@ -168,6 +191,41 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
           </Box>
         </Toolbar>
       </Container>
+
+
+      {showDashboardDiv &&  <div style={{
+          width: '150px', 
+          height: '200px',
+          padding: '20px', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          right: '5px', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           
+        }}>
+          <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
+            setShowDashboardDiv(false)
+          }}>
+          <CancelIcon style={{left:'2px'}}/>
+          </div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/dashboard"
+          }}><DashboardIcon/> <l>Dashboard</l></div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu"><SettingsIcon/> Profile Setting</div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu"><SettingsIcon/> Logout</div>
+      
+        </div>}
+
     </AppBar>
   );
 }

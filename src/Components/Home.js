@@ -97,13 +97,19 @@ function Home() {
 
       if(localStorage.getItem('email') && localStorage.getItem('coins'))
       {
-         window.location.href="/home2"
+
+        
+           window.location.href="/home2"
+        
+        
       }
 
       getUserDetails().then((result)=>{
 
       }).catch(()=>{
 
+
+        console.log("/oktologin")
         window.location.href="/oktologin"
       })
 
@@ -121,7 +127,14 @@ function Home() {
                 {
                   localStorage.setItem('email',result.email)
                   localStorage.setItem('coins',filteredArray[0].Coins)
-                  window.location.href="/home2"
+                  if(localStorage.getItem('currentEvent'))
+                  {
+                    window.location.href=`/event/${localStorage.getItem('currentEvent')}`
+                  }
+                  else{
+                    window.location.href="/home2"
+                  }
+                  
                 }
                 else{
                   localStorage.setItem('email',result.email)
@@ -178,7 +191,7 @@ function Home() {
         }}>
           <h1>Congratulations!</h1>
           <p>Your account has been created.</p>
-          <p>Click on Start Earning to continue.</p>
+          <p>Click on Get Started to continue.</p>
           <br></br>
           <center>    {coins==0 && <button class="button-85" onClick={async()=>{
     
@@ -197,8 +210,17 @@ function Home() {
         await addDoc(usersCollectionRef1, { Email:localStorage.getItem('email'), Coins: 100, EventsCreated: [], EventsRegistered: [], EventsApproved:[],EventsAttended: []});
         setCoins(100)
 
+        if(localStorage.getItem('currentEvent'))
+        {
+
+          window.location.href=`event/${localStorage.getItem('currentEvent')}`
+        }
+
+        else{
+          window.location.href = '/home2';
+        }
         
-        window.location.href = '/home2';
+        
        
 
       
@@ -208,7 +230,7 @@ function Home() {
 
     }
    
-}}><l>Start Earning</l> <img src={coinImg} style={{width: '60px', 
+}}><l>Get Started</l> <img src={coinImg} style={{width: '60px', 
   height: '60px', 
   objectFit: 'cover' }}></img></button>}</center>
       
