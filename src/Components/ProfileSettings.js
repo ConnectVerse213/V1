@@ -60,6 +60,7 @@ function ProfileSettings() {
 
              if(filteredArray[0].UserName)
              {
+                localStorage.setItem('userName',filteredArray[0].UserName)
                 setUserName(filteredArray[0].UserName)
              }
              else

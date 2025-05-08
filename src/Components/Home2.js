@@ -63,7 +63,7 @@ import { getCode } from 'country-list';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
 // import { signInWithGoogle } from "../firebase-config";
-const usersCollectionRef = collection(db, "user");
+
 const usersCollectionRef2 = collection(db, "ticket");
 const usersCollectionRef3 = collection(db, "comments");
 
@@ -351,10 +351,22 @@ function Home2() {
          let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
          let userFilteredArray=users.filter(obj=>obj.UserName && obj.ProfileImage)
+
+       
          let userFilteredArray1=userFilteredArray.map(user=>user.Email)
+
+
+       
          console.log("Final UserFilteredArray",userFilteredArray)    
 
          let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray1.includes(obj.Sender))
+
+         if(chatsData.length==0)
+          {
+           setShowCommentsDiv(["not exist"])
+ 
+           return;
+          }
 
          const FinalChatsData = chatsData.map(msg => {
           const user = userFilteredArray.find(user => user.Email === msg.Sender);
@@ -383,6 +395,19 @@ function Home2() {
        }
 
       const handleSendComment=async ()=>{
+
+
+          if(!(localStorage.getItem('profileImg') && localStorage.getItem('userName')))
+                    {
+                      notifyCustom("Set up your profile to participate in discussions!","error")
+        
+                      setInterval(()=>{
+        
+                        window.location.href="/profilesettings"
+                      },4000)
+
+                      return;
+                    }
 
         let eventId=event_id
 

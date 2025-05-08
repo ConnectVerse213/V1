@@ -178,6 +178,8 @@ function Home2() {
     };
 
      const getComments=async(event_id)=>{
+
+
         
                 let eventId=event_id
         
@@ -203,6 +205,12 @@ function Home2() {
                  console.log("Final UserFilteredArray",userFilteredArray)    
         
                  let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray1.includes(obj.Sender))
+                 if(chatsData.length==0)
+                  {
+                   setShowCommentsDiv(["not exist"])
+         
+                   return;
+                  }
         
                  const FinalChatsData = chatsData.map(msg => {
                   const user = userFilteredArray.find(user => user.Email === msg.Sender);
@@ -231,6 +239,20 @@ function Home2() {
                }
         
               const handleSendComment=async ()=>{
+
+
+                  if(!(localStorage.getItem('profileImg') && localStorage.getItem('userName')))
+                            {
+                              notifyCustom("Set up your profile to participate in discussions!","error")
+                
+                              setInterval(()=>{
+                
+                                window.location.href="/profilesettings"
+                              },4000)
+
+                              return;
+                            }
+
         
                 let eventId=event_id
         

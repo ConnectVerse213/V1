@@ -131,6 +131,10 @@ function Home() {
                   {
                     localStorage.setItem('profileImg',filteredArray[0].ProfileImage)
                   }
+                  if(filteredArray[0].UserName)
+                    {
+                      localStorage.setItem('userName',filteredArray[0].UserName)
+                    }
                   if(localStorage.getItem('currentEvent'))
                   {
                     window.location.href=`/event/${localStorage.getItem('currentEvent')}`
