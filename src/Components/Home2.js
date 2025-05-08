@@ -64,6 +64,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
+const usersCollectionRef3 = collection(db, "comments");
 
 const getEmojiFlag = (address) =>
 {
@@ -205,6 +206,11 @@ function Home2() {
     const [category,setCategory]=useState('')
     const [showLeaderboarddDiv,setShowLeaderboardboardDiv]=useState(false)
     const [leaderboardArray,setLeaderboardArray]=useState([])
+    const [showCommentsDiv,setShowCommentsDiv]=useState([])
+    
+    const [makeComment,setMakeComment]=useState('')
+    const [comments,setComments]=useState([])
+    const [event_id,setEvent_id]=useState('')
 
 
     const  getLeaderboard=async ()=>{
@@ -322,6 +328,97 @@ function Home2() {
 
    
 
+       const getComments=async(event_id)=>{
+
+        let eventId=event_id
+
+        console.log("eventId",eventId)
+
+        let data = await getDocs(usersCollectionRef3);
+                             
+         let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+         let filteredArray=chats.filter(obj=>obj.EventId==eventId)
+                           
+         console.log("fileteredArray",filteredArray)
+
+         if(filteredArray.length!=0)
+
+          {
+            data=await getDocs(usersCollectionRef1);
+
+         let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+         let userFilteredArray=users.filter(obj=>obj.UserName && obj.ProfileImage)
+         userFilteredArray=userFilteredArray.map(user=>user.Email)
+         console.log("Final UserFilteredArray",userFilteredArray)
+
+         let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray.includes(obj.Sender))
+
+         setComments(chatsData)
+         
+
+         setShowCommentsDiv(chatsData)
+
+         console.log("chatsData",chatsData)
+          }
+
+          else{
+            setShowCommentsDiv(["not exist"])
+          }
+
+
+         
+
+       }
+
+      const handleSendComment=async ()=>{
+
+        let eventId=event_id
+
+        console.log("eventId",eventId)
+
+
+
+        
+
+           const data = await getDocs(usersCollectionRef3);
+                                
+            let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+            let filteredArray=chats.filter(obj=>obj.EventId==eventId)
+                              
+            console.log("fileteredArray",filteredArray)
+
+            if(filteredArray.length==0)
+
+              {
+                await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
+
+                setShowCommentsDiv([...showCommentsDiv,makeComment])
+                notifyCustom("Comment Sent!","success")
+              }
+
+              else
+
+              {
+
+
+                            const userDoc1 = doc(db, "comments", filteredArray[0].id);
+                             const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
+                     
+                               // update
+                     
+                     
+                             await updateDoc(userDoc1, newFields1);
+                             notifyCustom("Comment Sent!","success")
+              }
+                
+                              
+                
+                 
+                 
+      }
       const isUserExist=async ()=>{
 
         let data = await getDocs(usersCollectionRef1);
@@ -850,7 +947,14 @@ function Home2() {
 
           <Button variant="outlined" onClick={(e)=>{
              e.stopPropagation()
-            window.location.href=`/event/${x.id}`
+
+             setEvent_id(x.id)
+
+             getComments(x.id)
+
+             
+
+            
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{
@@ -1173,6 +1277,68 @@ function Home2() {
           
       
         </div>}
+
+  
+
+
+        {showCommentsDiv.length!=0 && <div style={{width:'100%',height:'80vh',position:'fixed',bottom:'0px',textAlign:'center',display:'flex',justifyContent:'center',overflowYy: 'auto'}}>  <div style={{
+         
+         width:'95%',
+         height:'100%',
+            backgroundColor: 'black', 
+            border: '2px solid #1876d1',
+          
+           borderTopLeftRadius:'3em',
+           borderTopRightRadius:'3em',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+            
+            
+          
+            zIndex: 9999,
+           
+             
+          }}>
+             <div style={{width:'100%',textAlign:'left',cursor:'pointer',color:'#1876d1'}} onClick={()=>{
+              setShowCommentsDiv([])
+            }}>
+              <br></br>  <br></br>
+            &nbsp; &nbsp; &nbsp; &nbsp;<CancelIcon style={{left:'2px'}}/>
+            </div>
+   
+     <br></br>
+            <h2 style={{color:'white'}} >Comments</h2>
+            <br></br>
+
+            <div style={{display:'flex',flexDirection:'column'}}>
+             
+
+              {showCommentsDiv.length!=0 && showCommentsDiv[0]!=="not exist" && showCommentsDiv.map((x,index)=>{ return(
+
+                <l style={{color:'white'}}>{x.Message}</l>
+
+
+              )
+
+              })}
+
+            </div>
+          
+            <div style={{width:'95%', position: 'fixed',
+  bottom: '5%'}}><input onChange={(e)=>{
+              setMakeComment(e.target.value)
+            }}></input><button onClick={()=>{
+              handleSendComment()
+
+             
+            }}>Send</button></div>
+
+   
+             
+          </div></div>
+     }
+     <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+
+        
 
     </div>
   )
