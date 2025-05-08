@@ -45,6 +45,7 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
+import dayjs from "dayjs";
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef1 = collection(db, "user");
@@ -240,93 +241,95 @@ function Home2() {
     
            }
     
-          const handleSendComment=async ()=>{
-
-
-            if(!(localStorage.getItem('profileImg') && localStorage.getItem('userName')))
-              {
-                notifyCustom("Set up your profile to participate in discussions!","error")
-  
-                setInterval(()=>{
-  
-                  window.location.href="/profilesettings"
-                },4000)
-
-                return;
-              }
-
-    
-            let eventId=event_id
-    
-            console.log("eventId",eventId)
-    
-    
-    
-            
-    
-               const data = await getDocs(usersCollectionRef3);
-                                    
-                let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    
-                let filteredArray=chats.filter(obj=>obj.EventId==eventId)
-                                  
-                console.log("fileteredArray",filteredArray)
-    
-                if(filteredArray.length==0)
-    
-                  {
-    
-                   
-    
+            const handleSendComment=async ()=>{
+         
+         
+                           if(!(localStorage.getItem('profileImg') && localStorage.getItem('userName')))
+                                     {
+                                       notifyCustom("Set up your profile to participate in discussions!","error")
+                         
+                                       setInterval(()=>{
+                         
+                                         window.location.href="/profilesettings"
+                                       },4000)
+         
+                                       return;
+                                     }
+         
                  
-                      await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
-    
-                    
-                      notifyCustom("Comment Sent!","success")
-                     
-                   
-                  }
-    
-                  else
-    
-                  {
-    
-    
-                                const userDoc1 = doc(db, "comments", filteredArray[0].id);
-    
-    
-    
-                                console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
-    
-                                if(makeComment.length>=2 && makeComment.slice(0,2)==="(@")
-                                 
-                                 {
-                
-                                  const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1)}]};
-    
-                                  await updateDoc(userDoc1, newFields1);
+                         let eventId=event_id
+                 
+                         console.log("eventId",eventId)
+                 
+                 
+                 
+                         
+                 
+                            const data = await getDocs(usersCollectionRef3);
+                                                 
+                             let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+                 
+                             let filteredArray=chats.filter(obj=>obj.EventId==eventId)
+                                               
+                             console.log("fileteredArray",filteredArray)
+                 
+                             if(filteredArray.length==0)
+                 
+                               {
+                 
                                 
-                
-                                  notifyCustom("Reply Sent","success")
-                
-                                 } 
-                                 else
-                                 {
-                                 const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
-                         
-                                   // update
-                         
-                         
-                                 await updateDoc(userDoc1, newFields1);
-                                 notifyCustom("Comment Sent!","success")
-                                 }
-                  }
-                    
+                                  const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
+                                              
+                                                   await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]});
+                              
+                              
+                 
+                                 
+                                   notifyCustom("Comment Sent!","success")
                                   
-                    
-                     
-                     
-          }
+                                
+                               }
+                 
+                               else
+                 
+                               {
+                 
+                 
+                                             const userDoc1 = doc(db, "comments", filteredArray[0].id);
+                 
+                                          const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
+                 
+                                             console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
+                 
+                                             if(makeComment.length>=2 && makeComment.slice(0,2)==="(@")
+                                              
+                                              {
+                             
+                                               const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1),Timestamp: now}]};
+                                               await updateDoc(userDoc1, newFields1);
+                                             
+                             
+                                               notifyCustom("Reply Sent","success")
+                             
+                                              } 
+                                              else
+                                              {
+                                               const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]};
+                                      
+                                                // update
+                                      
+                                      
+                                              await updateDoc(userDoc1, newFields1);
+                                              notifyCustom("Comment Sent!","success")
+                                              }
+                               }
+                                 
+                                               
+                                 
+                                  
+                                  
+                       }
+             
 
   
     // 🧠 Update canvas class after render

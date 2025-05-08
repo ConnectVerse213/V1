@@ -24,11 +24,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CancelIcon from '@mui/icons-material/Cancel';
 import './ResponsiveAppBar.css'
+import ChatIcon from '@mui/icons-material/Chat';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,dashboardButtonStyle}) {
+function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,dashboardButtonStyle,chatButtonStyle}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -166,6 +168,18 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
 
 <div class="flexWala">
 
+
+          <Button style={{cursor:'pointer'}}><NotificationsIcon/></Button>
+
+          <Button style={{cursor:'pointer'}} variant={chatButtonStyle} onClick={()=>{
+            window.location.href="/chat"
+          }} ><ChatIcon/></Button>
+
+
+          <Button style={{cursor:'pointer'}} onClick={()=>{
+              showWidgetModal()
+            }}><AccountBalanceWalletIcon /></Button>
+
           {localStorage.getItem('email') && !localStorage.getItem('profileImg') && <Button  onClick={()=>{
             setShowDashboardDiv(true)
           }}> <Avatar src="/broken-image.jpg" /></Button>}
@@ -183,9 +197,6 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
 
 
 
-          <Button variant="outlined" onClick={()=>{
-              showWidgetModal()
-            }}><AccountBalanceWalletIcon /></Button>
           
             </div>
           </Box>

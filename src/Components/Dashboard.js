@@ -45,6 +45,7 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
+import dayjs from "dayjs";
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef1 = collection(db, "user");
@@ -275,9 +276,11 @@ function Home2() {
                       {
         
                        
-        
+                         const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
+                                     
+                                          await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]});
                      
-                          await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
+                     
         
                         
                           notifyCustom("Comment Sent!","success")
@@ -292,7 +295,7 @@ function Home2() {
         
                                     const userDoc1 = doc(db, "comments", filteredArray[0].id);
         
-        
+                                 const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
         
                                     console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
         
@@ -300,8 +303,7 @@ function Home2() {
                                      
                                      {
                     
-                                      const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1)}]};
-        
+                                      const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1),Timestamp: now}]};
                                       await updateDoc(userDoc1, newFields1);
                                     
                     
@@ -310,7 +312,7 @@ function Home2() {
                                      } 
                                      else
                                      {
-                                     const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
+                                      const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]};
                              
                                        // update
                              

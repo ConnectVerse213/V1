@@ -8,6 +8,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  serverTimestamp
 } from "firebase/firestore";
 import { QRCodeCanvas } from 'qrcode.react';
 import Card from '@mui/material/Card';
@@ -62,6 +63,10 @@ import axios from 'axios';
 import { getCode } from 'country-list';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 // import { signInWithGoogle } from "../firebase-config";
 
 const usersCollectionRef2 = collection(db, "ticket");
@@ -428,11 +433,11 @@ function Home2() {
             if(filteredArray.length==0)
 
               {
-
                
-
+               
+                const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
              
-                  await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
+                  await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]});
 
                 
                   notifyCustom("Comment Sent!","success")
@@ -447,7 +452,7 @@ function Home2() {
 
                             const userDoc1 = doc(db, "comments", filteredArray[0].id);
 
-
+                            const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
                             console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
 
@@ -455,7 +460,7 @@ function Home2() {
                              
                              {
             
-                              const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1)}]};
+                              const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1),Timestamp: now}]};
 
                               await updateDoc(userDoc1, newFields1);
                             
@@ -465,7 +470,7 @@ function Home2() {
                              } 
                              else
                              {
-                             const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
+                             const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]};
                      
                                // update
                      
@@ -1422,7 +1427,15 @@ function Home2() {
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+
+              <div style={{display:'flex',gap:'7px'}}>
               <label style={{ color: 'white', fontSize: '14px' }}><b>{x.UserName}</b></label>
+              <div style={{color:'white', fontSize: '14px'}}>{x.Timestamp && dayjs(x.Timestamp).fromNow() 
+              }</div>
+
+              </div>
+              
+
               <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
               <div
                 style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
@@ -1431,6 +1444,8 @@ function Home2() {
                 Reply
               </div>
             </div>
+
+            
           </div>
         ))}
       </div>
