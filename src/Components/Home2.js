@@ -1413,6 +1413,7 @@ function Home2() {
           style={{
             width: '80%',
             height: '30px',
+            fontSize:'16px',
             padding: '5px',
             borderRadius: '5px',
             border: '1px solid #555',
