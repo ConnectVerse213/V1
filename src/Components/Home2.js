@@ -351,17 +351,26 @@ function Home2() {
          let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
          let userFilteredArray=users.filter(obj=>obj.UserName && obj.ProfileImage)
-         userFilteredArray=userFilteredArray.map(user=>user.Email)
-         console.log("Final UserFilteredArray",userFilteredArray)
+         let userFilteredArray1=userFilteredArray.map(user=>user.Email)
+         console.log("Final UserFilteredArray",userFilteredArray)    
 
-         let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray.includes(obj.Sender))
+         let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray1.includes(obj.Sender))
 
-         setComments(chatsData)
+         const FinalChatsData = chatsData.map(msg => {
+          const user = userFilteredArray.find(user => user.Email === msg.Sender);
+          return {
+            ...msg,
+            UserName: user?.UserName || null,
+            ProfileImage: user?.ProfileImage || null
+          };
+        });
+
+         setComments(FinalChatsData)
          
 
-         setShowCommentsDiv(chatsData)
+         setShowCommentsDiv(FinalChatsData)
 
-         console.log("chatsData",chatsData)
+         console.log("chatsData",FinalChatsData)
           }
 
           else{
@@ -394,10 +403,16 @@ function Home2() {
             if(filteredArray.length==0)
 
               {
-                await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
 
-                setShowCommentsDiv([...showCommentsDiv,makeComment])
-                notifyCustom("Comment Sent!","success")
+               
+
+             
+                  await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
+
+                
+                  notifyCustom("Comment Sent!","success")
+                 
+               
               }
 
               else
@@ -406,6 +421,25 @@ function Home2() {
 
 
                             const userDoc1 = doc(db, "comments", filteredArray[0].id);
+
+
+
+                            console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
+
+                            if(makeComment.length>=2 && makeComment.slice(0,2)==="(@")
+                             
+                             {
+            
+                              const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1)}]};
+
+                              await updateDoc(userDoc1, newFields1);
+                            
+            
+                              notifyCustom("Reply Sent","success")
+            
+                             } 
+                             else
+                             {
                              const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
                      
                                // update
@@ -413,6 +447,7 @@ function Home2() {
                      
                              await updateDoc(userDoc1, newFields1);
                              notifyCustom("Comment Sent!","success")
+                             }
               }
                 
                               
@@ -1283,65 +1318,118 @@ function Home2() {
   
 
 
-        {showCommentsDiv.length!=0 && <div style={{width:'100%',height:'80vh',position:'fixed',bottom:'0px',textAlign:'center',display:'flex',justifyContent:'center',overflowYy: 'auto'}}>  <div style={{
-         
-         width:'95%',
-         height:'100%',
-            backgroundColor: 'black', 
-            border: '2px solid #1876d1',
-          
-           borderTopLeftRadius:'3em',
-           borderTopRightRadius:'3em',
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-            
-            
-          
-            zIndex: 9999,
-           
-             
-          }}>
-             <div style={{width:'100%',textAlign:'left',cursor:'pointer',color:'#1876d1'}} onClick={()=>{
-              setShowCommentsDiv([])
-            }}>
-              <br></br>  <br></br>
-            &nbsp; &nbsp; &nbsp; &nbsp;<CancelIcon style={{left:'2px'}}/>
+        {showCommentsDiv.length !== 0 && (
+  <div style={{
+    width: '100%',
+    position: 'fixed',
+    bottom:'0px',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    overflowY: 'hidden', // outer div doesn't scroll
+    zIndex: 1000,
+  }}>
+    <div style={{
+      width: '95%',
+      height: '80vh', // panel height for scrolling content
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      borderTopLeftRadius: '3em',
+      borderTopRightRadius: '3em',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      overflow: 'hidden', // important to clip the content inside
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+    }}>
+      
+      {/* Header */}
+      <div style={{
+        width: '100%',
+        textAlign: 'left',
+        cursor: 'pointer',
+        color: '#1876d1',
+        padding: '10px',
+      }} onClick={() => {
+        setShowCommentsDiv([]);
+        setMakeComment("");
+      }}>
+<br></br>
+        &nbsp;   &nbsp;   &nbsp;   
+        <CancelIcon />
+      </div>
+
+      <center>
+        <h2 style={{ color: 'white' }}>Discussions Panel</h2>
+      </center>
+
+      {/* Scrollable Comment Section */}
+      <div style={{
+        flex: 1, // fill available space
+        overflowY: 'auto',
+        padding: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '25px',
+      }}>
+        {showCommentsDiv.length !== 0 && showCommentsDiv[0] !== "not exist" && showCommentsDiv.map((x, index) => (
+          <div key={index} style={{ display: 'flex', gap: '10px' }}>
+            <div>
+              <img
+                src={x.ProfileImage}
+                alt="profile"
+                style={{
+                  width: '1.5em',
+                  height: '1.5em',
+                  borderRadius: '50%',
+                  objectFit: 'cover'
+                }}
+              />
             </div>
-   
-     <br></br>
-            <h2 style={{color:'white'}} >Comments</h2>
-            <br></br>
-
-            <div style={{display:'flex',flexDirection:'column'}}>
-             
-
-              {showCommentsDiv.length!=0 && showCommentsDiv[0]!=="not exist" && showCommentsDiv.map((x,index)=>{ return(
-
-                <l style={{color:'white'}}>{x.Message}</l>
-
-
-              )
-
-              })}
-
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <label style={{ color: 'white', fontSize: '14px' }}><b>{x.UserName}</b></label>
+              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+              <div
+                style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
+                onClick={() => setMakeComment(`(@${x.UserName}) `)}
+              >
+                Reply
+              </div>
             </div>
+          </div>
+        ))}
+      </div>
 
-            <center>
-        
-            <div style={{width:'95%', position: 'fixed',
-  bottom: '5%',display:'flex',alignItems:'center',justifyContent:'center'}}>
-   
-    <input style={{fontSize:'24px'}}onChange={(e)=>{
-              setMakeComment(e.target.value)
-            }}></input><Button onClick={()=>{
-              handleSendComment()
+      {/* Fixed Input Section */}
+      <div style={{
+        padding: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTop: '1px solid #444',
+        backgroundColor: '#000',
+      }}>
+        <input
+          style={{
+            width: '80%',
+            height: '30px',
+            padding: '5px',
+            borderRadius: '5px',
+            border: '1px solid #555',
+            backgroundColor: '#111',
+            color: 'white'
+          }}
+          value={makeComment}
+          onChange={(e) => setMakeComment(e.target.value)}
+        />
+        <Button onClick={handleSendComment}>
+          <SendIcon fontSize="large" />
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
 
-             
-            }}><SendIcon fontSize="large"/></Button></div>
-
-</center>
-             
-          </div></div>
-     }
      <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
 
         
