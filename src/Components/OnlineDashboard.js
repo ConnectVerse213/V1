@@ -681,119 +681,129 @@ function Home2() {
                      </div>
       </div>
 
-            {showCommentsDiv.length !== 0 && (
-        <div style={{
-          width: '100%',
-          position: 'fixed',
-          bottom:'0px',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          overflowY: 'hidden', // outer div doesn't scroll
-          zIndex: 1000,
-        }}>
-          <div style={{
-            width: '95%',
-            height: '80vh', // panel height for scrolling content
-            backgroundColor: 'black',
-            border: '2px solid #1876d1',
-            borderTopLeftRadius: '3em',
-            borderTopRightRadius: '3em',
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden', // important to clip the content inside
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-            
-            {/* Header */}
-            <div style={{
-              width: '100%',
-              textAlign: 'left',
-              cursor: 'pointer',
-              color: '#1876d1',
-              padding: '10px',
-            }} onClick={() => {
-              setShowCommentsDiv([]);
-              setMakeComment("");
-            }}>
-      <br></br>
-              &nbsp;   &nbsp;   &nbsp;   
-              <CancelIcon />
-            </div>
+           
+        {showCommentsDiv.length !== 0 && (
+  <div style={{
+    width: '100%',
+    position: 'fixed',
+    bottom:'0px',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    overflowY: 'hidden', // outer div doesn't scroll
+    zIndex: 1000,
+  }}>
+    <div style={{
+      width: '95%',
+      height: '80vh', // panel height for scrolling content
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      borderTopLeftRadius: '3em',
+      borderTopRightRadius: '3em',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      overflow: 'hidden', // important to clip the content inside
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+    }}>
       
-            <center>
-              <h2 style={{ color: 'white' }}>Discussions Panel</h2>
-            </center>
-      
-            {/* Scrollable Comment Section */}
-            <div style={{
-              flex: 1, // fill available space
-              overflowY: 'auto',
-              padding: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '25px',
-            }}>
-              {showCommentsDiv.length !== 0 && showCommentsDiv[0] !== "not exist" && showCommentsDiv.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px' }}>
-                  <div>
-                    <img
-                      src={x.ProfileImage}
-                      alt="profile"
-                      style={{
-                        width: '1.5em',
-                        height: '1.5em',
-                        borderRadius: '50%',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.UserName}</b></label>
-                    <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
-                    <div
-                      style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
-                      onClick={() => setMakeComment(`(@${x.UserName}) `)}
-                    >
-                      Reply
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-      
-            {/* Fixed Input Section */}
-            <div style={{
-              padding: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderTop: '1px solid #444',
-              backgroundColor: '#000',
-            }}>
-              <input
-                style={{
-                  width: '80%',
-                  height: '30px',
-                  fontSize:'16px',
-                  padding: '5px',
-                  borderRadius: '5px',
-                  border: '1px solid #555',
-                  backgroundColor: '#111',
-                  color: 'white'
-                }}
-                value={makeComment}
-                onChange={(e) => setMakeComment(e.target.value)}
-              />
-              <Button onClick={handleSendComment}>
-                <SendIcon fontSize="large" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Header */}
+      <div style={{
+        width: '100%',
+        textAlign: 'left',
+        cursor: 'pointer',
+        color: '#1876d1',
+        padding: '10px',
+      }} onClick={() => {
+        setShowCommentsDiv([]);
+        setMakeComment("");
+      }}>
+<br></br>
+        &nbsp;   &nbsp;   &nbsp;   
+        <CancelIcon />
+      </div>
 
+      <center>
+        <h2 style={{ color: 'white' }}>Discussions Panel</h2>
+      </center>
+
+      {/* Scrollable Comment Section */}
+      <div style={{
+        flex: 1, // fill available space
+        overflowY: 'auto',
+        padding: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '25px',
+      }}>
+        {showCommentsDiv.length !== 0 && showCommentsDiv[0] !== "not exist" && showCommentsDiv.map((x, index) => (
+          <div key={index} style={{ display: 'flex', gap: '10px' }}>
+            <div>
+              <img
+                src={x.ProfileImage}
+                alt="profile"
+                style={{
+                  width: '1.5em',
+                  height: '1.5em',
+                  borderRadius: '50%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+
+              <div style={{display:'flex',gap:'7px'}}>
+              <label style={{ color: 'white', fontSize: '14px' }}><b>{x.UserName}</b></label>
+              <div style={{color:'white', fontSize: '14px'}}>{x.Timestamp && dayjs(x.Timestamp).fromNow() 
+              }</div>
+
+              </div>
+              
+
+              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+              <div
+                style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
+                onClick={() => setMakeComment(`(@${x.UserName}) `)}
+              >
+                Reply
+              </div>
+            </div>
+
+            
+          </div>
+        ))}
+      </div>
+
+      {/* Fixed Input Section */}
+      <div style={{
+        padding: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTop: '1px solid #444',
+        backgroundColor: '#000',
+      }}>
+        <input
+          style={{
+            width: '80%',
+            height: '30px',
+            fontSize:'16px',
+            padding: '5px',
+            borderRadius: '5px',
+            border: '1px solid #555',
+            backgroundColor: '#111',
+            color: 'white'
+          }}
+          value={makeComment}
+          onChange={(e) => setMakeComment(e.target.value)}
+        />
+        <Button onClick={handleSendComment}>
+          <SendIcon fontSize="large" />
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   )
 }
