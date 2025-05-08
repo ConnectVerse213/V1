@@ -61,6 +61,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import axios from 'axios';
 import { getCode } from 'country-list';
 import CancelIcon from '@mui/icons-material/Cancel';
+import SendIcon from '@mui/icons-material/Send';
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
@@ -1148,9 +1149,10 @@ function Home2() {
     window.location.href="/creator"
   }}
 >
-  <Fab color="primary" aria-label="add"  size="large" style={{bottom:'40%'}}>
+  {showCommentsDiv.length==0 &&  <Fab color="primary" aria-label="add"  size="large" style={{bottom:'40%'}}>
     <AddIcon />
-  </Fab>
+  </Fab>}
+ 
 </Box>
 <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
@@ -1322,17 +1324,21 @@ function Home2() {
               })}
 
             </div>
-          
+
+            <center>
+        
             <div style={{width:'95%', position: 'fixed',
-  bottom: '5%'}}><input onChange={(e)=>{
+  bottom: '5%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+   
+    <input style={{fontSize:'24px'}}onChange={(e)=>{
               setMakeComment(e.target.value)
-            }}></input><button onClick={()=>{
+            }}></input><Button onClick={()=>{
               handleSendComment()
 
              
-            }}>Send</button></div>
+            }}><SendIcon fontSize="large"/></Button></div>
 
-   
+</center>
              
           </div></div>
      }
