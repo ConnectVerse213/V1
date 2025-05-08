@@ -776,7 +776,9 @@ function Home2() {
 
           <Button variant="outlined" onClick={(e)=>{
              e.stopPropagation()
-            window.location.href=`/event/${x.id}`
+             setEvent_id(x.id)
+
+             getComments(x.id)
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{
@@ -850,7 +852,9 @@ function Home2() {
 
           <Button variant="outlined" onClick={(e)=>{
              e.stopPropagation()
-            window.location.href=`/event/${x.id}`
+             setEvent_id(x.id)
+
+             getComments(x.id)
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{
@@ -919,7 +923,11 @@ function Home2() {
 
           <Button variant="outlined" onClick={(e)=>{
              e.stopPropagation()
-            window.location.href=`/event/${x.id}`
+            
+
+             setEvent_id(x.id)
+
+             getComments(x.id)
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{
@@ -1053,7 +1061,9 @@ function Home2() {
 
           <Button variant="outlined" onClick={(e)=>{
              e.stopPropagation()
-            window.location.href=`/event/${x.id}`
+             setEvent_id(x.id)
+
+             getComments(x.id)
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{

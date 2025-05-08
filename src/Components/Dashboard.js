@@ -43,15 +43,27 @@ import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import EventIcon from '@mui/icons-material/Event';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SendIcon from '@mui/icons-material/Send';
 
 // import { signInWithGoogle } from "../firebase-config";
-const usersCollectionRef = collection(db, "user");
+const usersCollectionRef1 = collection(db, "user");
 const usersCollectionRef2 = collection(db, "ticket");
+
+const usersCollectionRef3 = collection(db, "comments");
+
+
+
 
 function Home2() {
 
     const [randomNumber, setRandomNumber] = useState('');
     const [showQR, setShowQR] = useState(false);
+     const [showCommentsDiv,setShowCommentsDiv]=useState([])
+            
+            const [makeComment,setMakeComment]=useState('')
+            const [comments,setComments]=useState([])
+            const [event_id,setEvent_id]=useState('')
     const qrRef = useRef();
   
     const generateNumber = async(id) => {
@@ -66,6 +78,19 @@ function Home2() {
       setShowQR(false);
     };
   
+      const notifyCustom = (text,type) => toast(text,{
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            type:type
+           
+            });
+
  const notify = () => toast("Coming Soon!",{
       position: "bottom-right",
       autoClose: 5000,
@@ -152,6 +177,133 @@ function Home2() {
       link.click();
     };
 
+     const getComments=async(event_id)=>{
+        
+                let eventId=event_id
+        
+                console.log("eventId",eventId)
+        
+                let data = await getDocs(usersCollectionRef3);
+                                     
+                 let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
+                 let filteredArray=chats.filter(obj=>obj.EventId==eventId)
+                                   
+                 console.log("fileteredArray",filteredArray)
+        
+                 if(filteredArray.length!=0)
+        
+                  {
+                    data=await getDocs(usersCollectionRef1);
+        
+                 let users=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
+                 let userFilteredArray=users.filter(obj=>obj.UserName && obj.ProfileImage)
+                 let userFilteredArray1=userFilteredArray.map(user=>user.Email)
+                 console.log("Final UserFilteredArray",userFilteredArray)    
+        
+                 let chatsData=filteredArray[0].Chats.filter(obj=>userFilteredArray1.includes(obj.Sender))
+        
+                 const FinalChatsData = chatsData.map(msg => {
+                  const user = userFilteredArray.find(user => user.Email === msg.Sender);
+                  return {
+                    ...msg,
+                    UserName: user?.UserName || null,
+                    ProfileImage: user?.ProfileImage || null
+                  };
+                });
+        
+                 setComments(FinalChatsData)
+                 
+        
+                 setShowCommentsDiv(FinalChatsData)
+        
+                 console.log("chatsData",FinalChatsData)
+                  }
+        
+                  else{
+                    setShowCommentsDiv(["not exist"])
+                  }
+        
+        
+                 
+        
+               }
+        
+              const handleSendComment=async ()=>{
+        
+                let eventId=event_id
+        
+                console.log("eventId",eventId)
+        
+        
+        
+                
+        
+                   const data = await getDocs(usersCollectionRef3);
+                                        
+                    let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
+                    let filteredArray=chats.filter(obj=>obj.EventId==eventId)
+                                      
+                    console.log("fileteredArray",filteredArray)
+        
+                    if(filteredArray.length==0)
+        
+                      {
+        
+                       
+        
+                     
+                          await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]});
+        
+                        
+                          notifyCustom("Comment Sent!","success")
+                         
+                       
+                      }
+        
+                      else
+        
+                      {
+        
+        
+                                    const userDoc1 = doc(db, "comments", filteredArray[0].id);
+        
+        
+        
+                                    console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
+        
+                                    if(makeComment.length>=2 && makeComment.slice(0,2)==="(@")
+                                     
+                                     {
+                    
+                                      const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1)}]};
+        
+                                      await updateDoc(userDoc1, newFields1);
+                                    
+                    
+                                      notifyCustom("Reply Sent","success")
+                    
+                                     } 
+                                     else
+                                     {
+                                     const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment}]};
+                             
+                                       // update
+                             
+                             
+                                     await updateDoc(userDoc1, newFields1);
+                                     notifyCustom("Comment Sent!","success")
+                                     }
+                      }
+                        
+                                      
+                        
+                         
+                         
+              }
+    
 
   
     // 🧠 Update canvas class after render
@@ -307,8 +459,11 @@ function Home2() {
             window.location.href=`/event/${x.id}`
           }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={()=>{
-            window.location.href=`/event/${x.id}`
+          <Button variant="outlined" onClick={(e)=>{
+            e.stopPropagation()
+            setEvent_id(x.id)
+
+            getComments(x.id)
           }}><CommentIcon/>  </Button>
 
           <Button variant="outlined" onClick={(e)=>{
@@ -367,7 +522,17 @@ function Home2() {
           <br></br>
           {userApprovedArray.includes(x.id) ? <div>
           
-           <div> <Button variant='outlined' color="success"
+           <div> 
+        
+
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
+             setEvent_id(x.id)
+
+             getComments(x.id)
+          }}><CommentIcon/>  </Button>
+          
+          <Button variant='outlined' color="success"
         onClick={(e)=>{
             e.stopPropagation()
          window.location.href=`/qr/${x.id}`
@@ -386,7 +551,18 @@ function Home2() {
           }}><ShareIcon/>  </Button></div> }
 
             
-            </div>:<div><Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={(e)=>{
+            </div>:<div>
+             
+              
+                        <Button variant="outlined" onClick={(e)=>{
+                           e.stopPropagation()
+                           setEvent_id(x.id)
+              
+                           getComments(x.id)
+                        }}><CommentIcon/>  </Button>
+              
+              
+              <Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={(e)=>{
               e.stopPropagation()
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
@@ -447,6 +623,120 @@ function Home2() {
                     
                      </div>
       </div>
+
+          {showCommentsDiv.length !== 0 && (
+              <div style={{
+                width: '100%',
+                position: 'fixed',
+                bottom:'0px',
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                overflowY: 'hidden', // outer div doesn't scroll
+                zIndex: 1000,
+              }}>
+                <div style={{
+                  width: '95%',
+                  height: '80vh', // panel height for scrolling content
+                  backgroundColor: 'black',
+                  border: '2px solid #1876d1',
+                  borderTopLeftRadius: '3em',
+                  borderTopRightRadius: '3em',
+                  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+                  overflow: 'hidden', // important to clip the content inside
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}>
+                  
+                  {/* Header */}
+                  <div style={{
+                    width: '100%',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    color: '#1876d1',
+                    padding: '10px',
+                  }} onClick={() => {
+                    setShowCommentsDiv([]);
+                    setMakeComment("");
+                  }}>
+            <br></br>
+                    &nbsp;   &nbsp;   &nbsp;   
+                    <CancelIcon />
+                  </div>
+            
+                  <center>
+                    <h2 style={{ color: 'white' }}>Discussions Panel</h2>
+                  </center>
+            
+                  {/* Scrollable Comment Section */}
+                  <div style={{
+                    flex: 1, // fill available space
+                    overflowY: 'auto',
+                    padding: '10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '25px',
+                  }}>
+                    {showCommentsDiv.length !== 0 && showCommentsDiv[0] !== "not exist" && showCommentsDiv.map((x, index) => (
+                      <div key={index} style={{ display: 'flex', gap: '10px' }}>
+                        <div>
+                          <img
+                            src={x.ProfileImage}
+                            alt="profile"
+                            style={{
+                              width: '1.5em',
+                              height: '1.5em',
+                              borderRadius: '50%',
+                              objectFit: 'cover'
+                            }}
+                          />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                          <label style={{ color: 'white', fontSize: '14px' }}><b>{x.UserName}</b></label>
+                          <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+                          <div
+                            style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
+                            onClick={() => setMakeComment(`(@${x.UserName}) `)}
+                          >
+                            Reply
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+            
+                  {/* Fixed Input Section */}
+                  <div style={{
+                    padding: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderTop: '1px solid #444',
+                    backgroundColor: '#000',
+                  }}>
+                    <input
+                      style={{
+                        width: '80%',
+                        height: '30px',
+                        fontSize:'16px',
+                        padding: '5px',
+                        borderRadius: '5px',
+                        border: '1px solid #555',
+                        backgroundColor: '#111',
+                        color: 'white'
+                      }}
+                      value={makeComment}
+                      onChange={(e) => setMakeComment(e.target.value)}
+                    />
+                    <Button onClick={handleSendComment}>
+                      <SendIcon fontSize="large" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+      
 
     </div>
   )
