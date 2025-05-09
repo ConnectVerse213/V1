@@ -26,6 +26,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import './ResponsiveAppBar.css'
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { ToastContainer, toast } from 'react-toastify';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -35,6 +36,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const [showDashboardDiv,setShowDashboardDiv]=useState(false)
+  const [showChatDiv,setShowChatDiv]=useState(false)
 
    const { showWidgetModal, closeModal } = useOkto();
    const { createWallet, getUserDetails, getPortfolio } = useOkto();
@@ -54,6 +56,18 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
     setAnchorElUser(null);
   };
 
+   const notifyCustom = (text,type) => toast(text,{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                type:type
+               
+                });
   
 
   return (
@@ -172,7 +186,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
           <Button style={{cursor:'pointer'}}><NotificationsIcon/></Button>
 
           <Button style={{cursor:'pointer'}} variant={chatButtonStyle} onClick={()=>{
-            window.location.href="/chat"
+            setShowChatDiv(true)
           }} ><ChatIcon/></Button>
 
 
@@ -242,6 +256,39 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
       
         </div>}
 
+        {showChatDiv &&  <div style={{
+          width: '150px', 
+          height: '120px',
+          padding: '20px', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          right: '5px', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           
+        }}>
+          <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
+            setShowChatDiv(false)
+          }}>
+          <CancelIcon style={{left:'2px'}}/>
+          </div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/chat"
+          }}><DashboardIcon/> <l>Chat</l></div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" ><SettingsIcon/> Community</div>
+          
+      
+        </div>}
+
+<ToastContainer/>
     </AppBar>
   );
 }

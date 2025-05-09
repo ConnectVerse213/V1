@@ -233,32 +233,7 @@ function Chat() {
          <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
          <hr></hr>
             <br></br> <br></br>
-         <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
-         
-           {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-             
-         }}>Chat &nbsp; <MessageIcon/> </Button>}
-          {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-              setButtonHighlight(1)
-
-              setShowChat1Div(true)
-             
-         }}>Chat &nbsp; <MessageIcon/>  </Button>}
-
-         {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-             
-         }}>Community &nbsp; <PeopleIcon/></Button>}
-
-         {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-               setButtonHighlight(2)
-               setShowChat1Div([])
-              
-               
-         }}>Community &nbsp; <PeopleIcon/></Button>}
-         
-          
-         
-         </div>
+        
 
            {showChat1Div.length!=0 && (
            <div style={{
@@ -273,7 +248,7 @@ function Chat() {
            }}>
              <div style={{
                width: '95%',
-               height: '75vh', // panel height for scrolling content
+               height: '85vh', // panel height for scrolling content
                backgroundColor: 'black',
               
                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -399,7 +374,7 @@ function Chat() {
         }}>
           <div style={{
             width: '95%',
-            height: '75vh', // panel height for scrolling content
+            height: '85vh', // panel height for scrolling content
             backgroundColor: 'black',
             
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -526,7 +501,32 @@ function Chat() {
         </div>
       )}
       
+      <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
+         
+         {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
+           
+       }}>Chat &nbsp; <MessageIcon/> </Button>}
+        {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
+            setButtonHighlight(1)
 
+            setShowChat1Div(true)
+           
+       }}>Chat &nbsp; <MessageIcon/>  </Button>}
+
+       {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
+           
+       }}>Community &nbsp; <PeopleIcon/></Button>}
+
+       {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
+             setButtonHighlight(2)
+             setShowChat1Div([])
+            
+             
+       }}>Community &nbsp; <PeopleIcon/></Button>}
+       
+        
+       
+       </div>
 <ToastContainer/>
 
     </div>
