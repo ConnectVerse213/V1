@@ -232,7 +232,7 @@ function Chat() {
         <br></br>
          <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
          <hr></hr>
-            <br></br>
+            <br></br> <br></br>
          <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
          
            {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
@@ -262,18 +262,18 @@ function Chat() {
 
            {showChat1Div.length!=0 && (
            <div style={{
-             width: '100%',
-             position: 'fixed',
-             bottom:'0px',
-             textAlign: 'center',
-             display: 'flex',
-             justifyContent: 'center',
-             overflowY: 'hidden', // outer div doesn't scroll
-             zIndex: 1000,
+            width: '100%',
+            position: 'fixed',
+            bottom:'0px',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            overflowY: 'hidden', // outer div doesn't scroll
+            zIndex: 1000,
            }}>
              <div style={{
                width: '95%',
-               height: '78vh', // panel height for scrolling content
+               height: '75vh', // panel height for scrolling content
                backgroundColor: 'black',
               
                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -388,18 +388,18 @@ function Chat() {
       
         {showChat2Div.length !== 0 && (
         <div style={{
-          width: '100%',
-          position: 'fixed',
-          bottom:'0px',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          overflowY: 'hidden', // outer div doesn't scroll
-          zIndex: 100000,
+            width: '100%',
+            position: 'fixed',
+            bottom:'0px',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            overflowY: 'hidden', // outer div doesn't scroll
+            zIndex: 100000,
         }}>
           <div style={{
             width: '95%',
-            height: '80vh', // panel height for scrolling content
+            height: '75vh', // panel height for scrolling content
             backgroundColor: 'black',
             
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
