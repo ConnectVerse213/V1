@@ -140,6 +140,9 @@ function Chat() {
                          
                             await addDoc(usersCollectionRef4, { People: [localStorage.getItem('userName'), userName], Chats: [{ Sender: localStorage.getItem('userName'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('userName')]: localStorage.getItem('profileImg'), [userName]: profileImage } });
 
+                            setMakeComment("")
+
+                            getComments(userName,profileImage)
                             
                             
                              
@@ -158,6 +161,8 @@ function Chat() {
                                                 
                                                 
                             await updateDoc(userDoc1, newFields1);
+
+                            setMakeComment("")
 
                             getComments(userName,profileImage)
 
