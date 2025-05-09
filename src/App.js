@@ -22,6 +22,7 @@ import Meet from './Components/Meet'
 import OnlineDashboard from './Components/OnlineDashboard'
 import ProfileSettings from './Components/ProfileSettings';
 import Chat from './Components/Chat'
+import TestRealTime from './Components/TestRealTime'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -74,6 +75,7 @@ function App() {
     </OktoProvider>} />
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
+    <Route path="/testing3" element={ <TestRealTime/>} />
     <Route path="/meet" element={ <Meet/>} />
 
     <Route path="/profilesettings" element={
