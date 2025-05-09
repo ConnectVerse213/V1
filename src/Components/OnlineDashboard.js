@@ -285,7 +285,7 @@ function Home2() {
                               
                  
                                  
-                                   notifyCustom("Comment Sent!","success")
+                                                   getComments(event_id)
                                   
                                 
                                }
@@ -309,7 +309,7 @@ function Home2() {
                                                await updateDoc(userDoc1, newFields1);
                                              
                              
-                                               notifyCustom("Reply Sent","success")
+                                               getComments(event_id)
                              
                                               } 
                                               else
@@ -320,7 +320,7 @@ function Home2() {
                                       
                                       
                                               await updateDoc(userDoc1, newFields1);
-                                              notifyCustom("Comment Sent!","success")
+                                              getComments(event_id)
                                               }
                                }
                                  

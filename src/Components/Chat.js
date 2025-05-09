@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import ResponsiveAppBar from './ResponsiveAppBar'
 import { db } from "../firebase-config";
 import {
@@ -20,6 +20,9 @@ import './Chat.css'
 import SendIcon from '@mui/icons-material/Send';
 import dayjs from "dayjs";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
+
+
 
 const usersCollectionRef1 = collection(db, "user");
 const usersCollectionRef4 = collection(db, "chats");
@@ -102,7 +105,7 @@ function Chat() {
             
                       if(!(localStorage.getItem('profileImg') && localStorage.getItem('userName')))
                                 {
-                                  notifyCustom("Set up your profile to participate in discussions!","error")
+                                  notifyCustom("Set up your profile to chat!","error")
                     
                                   setInterval(()=>{
                     
@@ -138,7 +141,7 @@ function Chat() {
                             await addDoc(usersCollectionRef4, { People: [localStorage.getItem('userName'), userName], Chats: [{ Sender: localStorage.getItem('userName'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('userName')]: localStorage.getItem('profileImg'), [userName]: profileImage } });
 
                             
-                              notifyCustom("Message Sent!","success")
+                            
                              
                            
                           }
@@ -155,7 +158,10 @@ function Chat() {
                                                 
                                                 
                             await updateDoc(userDoc1, newFields1);
-                            notifyCustom("Message Sent!","success")
+
+                            getComments(userName,profileImage)
+
+                          
 
 
                           }
@@ -224,9 +230,30 @@ function Chat() {
                      
         }
 
+        const scrollRef = useRef(null);
+
         useEffect(()=>{
+
+            if(!localStorage.getItem('email'))
+            {
+               window.location.href="/oktologin"
+
+            }
+
+
+           
+              
             getUsers()
         },[])
+
+        useEffect(()=>{
+
+            if (scrollRef.current) {
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+              }
+        }
+    
+    ,[showChat2Div])
   return (
     <div>
         <br></br>
@@ -362,7 +389,7 @@ function Chat() {
 
       
         {showChat2Div.length !== 0 && (
-        <div style={{
+        <div  style={{
             width: '100%',
             position: 'fixed',
             bottom:'0px',
@@ -405,7 +432,7 @@ function Chat() {
             </center>
       
             {/* Scrollable Comment Section */}
-            <div style={{
+            <div ref={scrollRef} style={{
               flex: 1, // fill available space
               overflowY: 'auto',
               padding: '10px',
