@@ -206,7 +206,7 @@ const Chat = () => {
                     x.isReply.indexOf('|') + 1,
                     x.isReply.indexOf('|', x.isReply.indexOf('|') + 1)
                   )
-                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor: x.isReply.slice(2,x.isReply.indexOf('|')) != localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : ' #1876d1', alignItems:'flex-start',padding:'1em'}}>
+                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor: x.isReply.slice(2,x.isReply.indexOf('|')) == x.SenderUserName  && x.SenderUserName ==localStorage.getItem('userName') ? '#82a7cd' : x.SenderUserName ==localStorage.getItem('userName') && x.SenderUserName!=x.isReply.slice(2,x.isReply.indexOf('|')) ?'#82a7cd':x.isReply.slice(2,x.isReply.indexOf('|'))==x.SenderUserName ? 'grey': 'grey' , alignItems:'flex-start',padding:'1em'}}>
 
                    
                     <label style={{ color:'white', cursor: 'pointer',fontSize:'14px'}} >
