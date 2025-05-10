@@ -23,6 +23,7 @@ import OnlineDashboard from './Components/OnlineDashboard'
 import ProfileSettings from './Components/ProfileSettings';
 import Chat from './Components/Chat'
 import TestRealTime from './Components/TestRealTime'
+import Community from './Components/Community'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -75,7 +76,7 @@ function App() {
     </OktoProvider>} />
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
-    <Route path="/testing3" element={  <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+    <Route path="/testing3/:community_id" element={  <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
        <TestRealTime/>
     </OktoProvider>} />
     <Route path="/meet" element={ <Meet/>} />
@@ -90,6 +91,12 @@ function App() {
         
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
         <Chat/>
+    </OktoProvider>} />
+
+    <Route path="/community" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+        <Community/>
     </OktoProvider>} />
       
    

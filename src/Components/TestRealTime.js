@@ -12,8 +12,11 @@ import PaidIcon from '@mui/icons-material/Paid';
 import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useParams } from 'react-router-dom';
 
 const Chat = () => {
+
+      const { community_id } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isReply,setIsReply]=useState("")
@@ -26,7 +29,7 @@ const Chat = () => {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const filteredArray = querySnapshot.docs
         .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(doc => doc.Name === "ConnectVerse Community");
+        .filter(doc => doc.id === community_id);
 
       if (filteredArray.length > 0) {
         setMessages(filteredArray[0]);
@@ -69,13 +72,30 @@ const Chat = () => {
                                     
    let communities=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
-   let filteredArray=communities.filter(obj=>obj.Name=="ConnectVerse Community")
+   let filteredArray=communities.filter(obj=>obj.id==community_id)
 
      const userDoc1 = doc(db, "community", filteredArray[0].id);
     
     const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-        const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now}
+     
+        if(filteredArray[0].Participants.includes(localStorage.getItem('email')))
+
+            {
+                const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants]}
+
+                await updateDoc(userDoc1, newFields1);
+            }
+
+        else
+        {
+
+            const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants,localStorage.getItem('email')]}
+
+            await updateDoc(userDoc1, newFields1);
+        }
+
+       
 
 
  
@@ -83,7 +103,7 @@ const Chat = () => {
                                // update
                      
                      
-    await updateDoc(userDoc1, newFields1);
+   
 
 
     setNewMessage("");
