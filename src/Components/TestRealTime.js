@@ -218,7 +218,8 @@ const Chat = () => {
 
                 
 
-                        <div style={{maxHeight:'2.6em'}}>{x.isReply.slice(x.isReply.indexOf('|',x.isReply.indexOf('|')+1)+1)}</div>
+                        <div style={{maxHeight:'2.4em',overflow: 'hidden',padding:'2px'}}>{x.isReply.slice(x.isReply.indexOf('|',x.isReply.indexOf('|')+1)+1)}</div>
+                       
                     </div>
 
                     
