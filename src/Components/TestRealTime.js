@@ -206,12 +206,12 @@ const Chat = () => {
                     x.isReply.indexOf('|') + 1,
                     x.isReply.indexOf('|', x.isReply.indexOf('|') + 1)
                   )
-                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor:'rgb(65, 65, 65)', alignItems:'flex-start',padding:'1em'}}>
+                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor: x.isReply.slice(2,x.isReply.indexOf('|')) != localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : ' #1876d1', alignItems:'flex-start',padding:'1em'}}>
 
                    
                     <label style={{ color:'white', cursor: 'pointer',fontSize:'14px'}} >
 
-                       <b>{x.isReply.slice(2,x.isReply.indexOf('|'))}</b> 
+                       <b>{x.isReply.slice(2,x.isReply.indexOf('|'))===localStorage.getItem('userName')?"You":x.isReply.slice(2,x.isReply.indexOf('|'))}</b> 
                    </label>
                 
                     <div style={{ color:'white', cursor: 'pointer',fontSize:'14px',textAlign:'left'}} >
