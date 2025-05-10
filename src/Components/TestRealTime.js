@@ -110,7 +110,7 @@ const Chat = () => {
             overflow: 'hidden', // important to clip the content inside
             display: 'flex',
             flexDirection: 'column',
-           
+            justifyContent: 'space-between',
           }}>
             <br></br>
             {messages && messages.length!=0 && 
@@ -158,14 +158,12 @@ const Chat = () => {
       
             {/* Scrollable Comment Section */}
             <div ref={scrollRef}  style={{
-           
+              flex: 1, // fill available space
               overflowY: 'auto',
               padding: '10px',
-             
               display: 'flex',
               flexDirection: 'column',
               gap: '25px',
-             
             }}>
               { messages.Chats.map((x, index) => (
                 <div key={index} style={{ display: 'flex', gap: '10px' }}>
@@ -203,8 +201,7 @@ const Chat = () => {
             {/* Fixed Input Section */}
             <div style={{
                 position:'fixed',
-                bottom:'0',
-               height:'10vh',
+                bottom:'10px',
                 width:'100%',
               padding: '10px',
               display: 'flex',
