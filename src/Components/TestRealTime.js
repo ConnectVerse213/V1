@@ -197,7 +197,7 @@ const Chat = () => {
                 </div>
               ))}
             </div>
-      
+      <br></br>
             {/* Fixed Input Section */}
             <div style={{
                 position:'fixed',
