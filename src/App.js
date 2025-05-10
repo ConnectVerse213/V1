@@ -75,7 +75,9 @@ function App() {
     </OktoProvider>} />
     <Route path="/testing" element={ <Testing/>} />
     <Route path="/testing2" element={ <Testing2/>} />
-    <Route path="/testing3" element={ <TestRealTime/>} />
+    <Route path="/testing3" element={  <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+       <TestRealTime/>
+    </OktoProvider>} />
     <Route path="/meet" element={ <Meet/>} />
 
     <Route path="/profilesettings" element={

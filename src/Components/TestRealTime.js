@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef} from "react";
 import { collection, getDocs,updateDoc, doc, deleteDoc,addDoc, onSnapshot, query, orderBy, serverTimestamp, Timestamp } from "firebase/firestore";
 import { db } from "../firebase-config.js";
 
 import dayjs from "dayjs";
+import Button from '@mui/material/Button';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SendIcon from '@mui/icons-material/Send';
+import ResponsiveAppBar from "./ResponsiveAppBar.js";
+import DescriptionIcon from '@mui/icons-material/Description';
+import PaidIcon from '@mui/icons-material/Paid';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     const q = query(collection(db, "community"))
@@ -29,7 +38,16 @@ const Chat = () => {
     return () => unsubscribe();
   }, []);
 
-//   const sendMessage = async () => {
+  useEffect(()=>{
+  
+              if (scrollRef.current) {
+                  scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
+          }
+      
+      ,[messages])
+
+//   const sendMessage = async () => {x
 //     if (!newMessage.trim()) return;
 
 //     await addDoc(collection(db, "community"), {
@@ -66,37 +84,133 @@ const Chat = () => {
   };
 
   return (
-    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto", color:'white' }}>
-      <h2>Real-time Chat</h2>
+    <div >
+     <br></br>
+         <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
+         <hr></hr>
+            <br></br> <br></br>
 
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "1rem",
-          height: "300px",
-          overflowY: "auto",
-          marginBottom: "1rem",
-        }}
-      >
-        {messages && messages.length!=0 && messages.Chats.map((msg) => (
-          <div key={msg.id} style={{ marginBottom: "0.5rem" }}>
-            {msg.Message}
+            {messages && messages.length!=0 && 
+            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'fixed',top:'110px',width:'100%',justifyContent:'flex-start',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:' #1876d1',padding:'1em'}}>
+                    <img src={messages.ProfileImage} style={{width:'3.5em',height:'3.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
+                    <l style={{ color: 'white' , fontSize:'24px'}}>{messages.Name}</l>
+
+                    <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
+                        
+                    <Button style={{color:'white'}} ><DescriptionIcon/> &nbsp; Description</Button>
+                    <Button style={{color:'white'}}><PaidIcon/> &nbsp; Airdrop</Button>
+                    <Button style={{color:'white'}}><SettingsIcon/> &nbsp; Settings</Button>
+                    
+                    </div>
+                   
+                    </div>
+}
+            <br></br>
+
+         {messages && messages.length!=0 && (
+        <div style={{
+          width: '100%',
+          position: 'fixed',
+          bottom:'0px',
+          textAlign: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          overflowY: 'hidden', // outer div doesn't scroll
+          zIndex: 1000,
+        }}>
+          <div style={{
+            width: '95%',
+            height: '70vh', // panel height for scrolling content
+            backgroundColor: 'black',
+            
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+            overflow: 'hidden', // important to clip the content inside
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}>
+            
+            {/* Header */}
+           
+      
+          
+
+        
+      
+            {/* Scrollable Comment Section */}
+            <div ref={scrollRef}  style={{
+              flex: 1, // fill available space
+              overflowY: 'auto',
+              padding: '10px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '25px',
+            }}>
+              { messages.Chats.map((x, index) => (
+                <div key={index} style={{ display: 'flex', gap: '10px' }}>
+                  <div>
+                    <img
+                      src={x.ProfileImage}
+                      alt="profile"
+                      style={{
+                        width: '1.5em',
+                        height: '1.5em',
+                        borderRadius: '50%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      
+                    <div style={{display:'flex',gap:'7px'}}>
+                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName}</b></label>
+                    <div style={{color:'white', fontSize: '14px'}}>{x.Timestamp && dayjs(x.Timestamp).fromNow() 
+                    }</div>
+      
+                    </div>
+                    
+      
+                    <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+                   
+                  </div>
+      
+                  
+                </div>
+              ))}
+            </div>
+      
+            {/* Fixed Input Section */}
+            <div style={{
+              padding: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderTop: '1px solid #444',
+              backgroundColor: '#000',
+            }}>
+              <input
+                style={{
+                  width: '80%',
+                  height: '30px',
+                  fontSize:'16px',
+                  padding: '5px',
+                  borderRadius: '5px',
+                  border: '1px solid #555',
+                  backgroundColor: '#111',
+                  color: 'white'
+                }}
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+              />
+              <Button onClick={sendMessage}>
+                <SendIcon fontSize="large" />
+              </Button>
+            </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
 
-      <div style={{ display: "flex", gap: "0.5rem" }}>
-        <input
-          type="text"
-          placeholder="Enter message..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          style={{ flex: 1, padding: "0.5rem" }}
-        />
-        <button onClick={sendMessage} style={{ padding: "0.5rem 1rem" }}>
-          Send
-        </button>
-      </div>
+     
     </div>
   );
 };
