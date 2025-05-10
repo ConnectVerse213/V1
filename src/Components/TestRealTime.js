@@ -16,6 +16,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isReply,setIsReply]=useState("")
 
   const scrollRef = useRef(null);
 
@@ -74,7 +75,10 @@ const Chat = () => {
     
     const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
- const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now}],Timestamp: now}
+        const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now}
+
+
+ 
                      
                                // update
                      
@@ -128,13 +132,13 @@ const Chat = () => {
 
                 <div>
 
-                <Button style={{color:'white'}}><ArrowBackIosIcon/></Button>
+                <Button style={{color:'white'}}><ArrowBackIosIcon fontSize="small"/></Button>
 
                 </div>
 
                     
-                <Button style={{color:'white'}} ><DescriptionIcon/> &nbsp; Description</Button>
-                <Button style={{color:'white'}}><PaidIcon/> &nbsp; Airdrop</Button>
+                <Button style={{color:'#1876d1'}} ><DescriptionIcon/> &nbsp; Description</Button>
+                <Button style={{color:'#1876d1'}}><PaidIcon/> &nbsp; Airdrop</Button>
                 
                 </div>
 
@@ -166,7 +170,7 @@ const Chat = () => {
               gap: '25px',
             }}>
               { messages.Chats.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px' }}>
+                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }}>
                   <div>
                     <img
                       src={x.ProfileImage}
@@ -179,17 +183,74 @@ const Chat = () => {
                       }}
                     />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      
-                    <div style={{display:'flex',gap:'7px'}}>
-                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName}</b></label>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px'}}>
+
+
+                 
+                    <div style={{display:'flex',gap:'7px'}} id={`ChatId=${x.ChatId}`} >
+
+                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName!=localStorage.getItem('userName')?x.SenderUserName : "You"}</b></label>
+                   
+            
+                    
                     <div style={{color:'white', fontSize: '14px'}}>{x.Timestamp && dayjs(x.Timestamp).fromNow() 
                     }</div>
+
       
                     </div>
+
+                    {x.isReply && x.isReply.length!=0 && 
+                
+
+                <a style={{textDecoration:'none'}} href={`#ChatId=${parseInt(x.isReply.slice(
+                    x.isReply.indexOf('|') + 1,
+                    x.isReply.indexOf('|', x.isReply.indexOf('|') + 1)
+                  )
+                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor:'rgb(65, 65, 65)', alignItems:'flex-start',padding:'1em'}}>
+
+                   
+                    <label style={{ color:'white', cursor: 'pointer',fontSize:'14px'}} >
+
+                       <b>{x.isReply.slice(2,x.isReply.indexOf('|'))}</b> 
+                   </label>
+                
+                    <div style={{ color:'white', cursor: 'pointer',fontSize:'14px',textAlign:'left'}} >
+
+                
+
+                        <div style={{maxHeight:'2.6em'}}>{x.isReply.slice(x.isReply.indexOf('|',x.isReply.indexOf('|')+1)+1)}</div>
+                    </div>
+
                     
+                       
+
+
+                    </div>
+                    </a>
+                
+                
+                }
       
-                    <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+                    
+                    <div
+                        style={{ color: 'grey', cursor: 'pointer',display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'10px' }}
+                        onClick={() => {
+
+                            setIsReply(`@(${x.SenderUserName}|${x.ChatId}|${x.Message})`)
+                           
+
+                        }
+                        
+                        } 
+                    >
+
+           
+                     <div style={{ color: 'white', textAlign: 'left' }} >{x.Message}</div>
+                   
+                        <label style={{color: 'white',fontSize: '14px'}}> Reply</label>
+                       
+                    </div>
+      
                    
                   </div>
       
@@ -210,9 +271,34 @@ const Chat = () => {
               borderTop: '1px solid #444',
               backgroundColor: '#000',
             }}>
-              <input
+                <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',width:'100%',gap:'2em'}}>
+
+                {isReply.length!=0 && 
+                
+
+                <div style={{ display:'flex',justifyContent:'space-between' ,gap:'10px'}}>
+                
+                    <label style={{ color: 'grey', cursor: 'pointer',fontSize:'16px'}} >
+
+                        Replying to {isReply.slice(2,isReply.indexOf('|'))}
+                    </label>
+
+                    <CancelIcon style={{color:'white'}} fontSize='small' onClick={()=>{
+                        setIsReply("")
+                    }} />
+
+
+
+                    </div>
+                
+                
+                }
+
+                <div style={{display:'flex', width:'100%'}}>
+
+                <input
                 style={{
-                  width: '80%',
+                  width: '100%',
                   height: '30px',
                   fontSize:'16px',
                   padding: '5px',
@@ -224,9 +310,13 @@ const Chat = () => {
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
               />
-              <Button onClick={sendMessage}>
+                 <Button onClick={sendMessage}>
                 <SendIcon fontSize="large" />
               </Button>
+              </div>
+                    </div>
+              
+             
             </div>
           </div>
         </div>
