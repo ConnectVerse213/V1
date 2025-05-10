@@ -10,6 +10,8 @@ import ResponsiveAppBar from "./ResponsiveAppBar.js";
 import DescriptionIcon from '@mui/icons-material/Description';
 import PaidIcon from '@mui/icons-material/Paid';
 import SettingsIcon from '@mui/icons-material/Settings';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -86,27 +88,7 @@ const Chat = () => {
   return (
     <div >
      <br></br>
-         <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
-         <hr></hr>
-            <br></br> <br></br>
-
-            {messages && messages.length!=0 && 
-            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'fixed',top:'110px',width:'100%',justifyContent:'flex-start',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:' #1876d1',padding:'1em'}}>
-                    <img src={messages.ProfileImage} style={{width:'3.5em',height:'3.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
-                    <l style={{ color: 'white' , fontSize:'24px'}}>{messages.Name}</l>
-
-                    <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
-                        
-                    <Button style={{color:'white'}} ><DescriptionIcon/> &nbsp; Description</Button>
-                    <Button style={{color:'white'}}><PaidIcon/> &nbsp; Airdrop</Button>
-                    <Button style={{color:'white'}}><SettingsIcon/> &nbsp; Settings</Button>
-                    
-                    </div>
-                   
-                    </div>
-}
-            <br></br>
-
+        
          {messages && messages.length!=0 && (
         <div style={{
           width: '100%',
@@ -119,8 +101,8 @@ const Chat = () => {
           zIndex: 1000,
         }}>
           <div style={{
-            width: '95%',
-            height: '70vh', // panel height for scrolling content
+            width: '100%',
+            height: '100vh', // panel height for scrolling content
             backgroundColor: 'black',
             
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
@@ -129,8 +111,44 @@ const Chat = () => {
             flexDirection: 'column',
             justifyContent: 'space-between',
           }}>
-            
-            {/* Header */}
+            <br></br>
+            {messages && messages.length!=0 && 
+            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'sticky',width:'100%',justifyContent:'space-between',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:'black',padding:'1em',paddingRight:'3em'}}>
+
+
+                <div style={{display:'flex',flexWrap:'wrap',alignItems:'center',gap:'5px'}}>
+
+                <img src={messages.ProfileImage} style={{width:'3.5em',height:'3.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
+
+
+                <l style={{ color: 'white' , fontSize:'24px'}}>{messages.Name}</l>
+
+                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
+
+                <div>
+
+                <Button style={{color:'white'}}><ArrowBackIosIcon/></Button>
+
+                </div>
+
+                    
+                <Button style={{color:'white'}} ><DescriptionIcon/> &nbsp; Description</Button>
+                <Button style={{color:'white'}}><PaidIcon/> &nbsp; Airdrop</Button>
+                
+                </div>
+
+                </div>
+
+              
+                   
+                 
+                   
+                    
+                   
+                   
+                    </div>
+}
+<br></br><br></br>
            
       
           
