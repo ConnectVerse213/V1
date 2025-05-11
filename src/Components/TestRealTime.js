@@ -130,35 +130,9 @@ const Chat = () => {
                 });
 
   return (
-    <div >
-     <br></br>
-        
-         {messages && messages.length!=0 && (
-        <div style={{
-          width: '100%',
-          position: 'fixed',
-          top:'0px',
-          height: '100vh',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          overflowY: 'hidden', // outer div doesn't scroll
-          zIndex: 1000,
-        }}>
-          <div style={{
-            width: '100%',
-            height: '80vh', // panel height for scrolling content
-            backgroundColor: 'black',
-            
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden', // important to clip the content inside
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-            <br></br>
-            {messages && messages.length!=0 && 
-            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'sticky',width:'100%',justifyContent:'space-between',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:'black',padding:'1em',paddingRight:'3em'}}>
+    <div style={{overflowX:'hidden'}}>
+     <br></br>{messages && messages.length!=0 && 
+            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'sticky',width:'100%',justifyContent:'space-between',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:'black',padding:'1em',paddingRight:'3em',height:'2em',zIndex:'999999'}}>
 
 
                 <div style={{display:'flex',flexWrap:'wrap',alignItems:'center',gap:'5px'}}>
@@ -206,6 +180,31 @@ const Chat = () => {
                    
                     </div>
 }
+        
+         {messages && messages.length!=0 && (
+        <div style={{
+            width: '100%',
+            position: 'fixed',
+            top:'0px',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'center',
+            overflowY: 'hidden', // outer div doesn't scroll
+            zIndex: 100000,
+        }}>
+          <div style={{
+             width: '100%',
+             height: '90vh', // panel height for scrolling content
+             backgroundColor: 'black',
+             
+             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+             overflow: 'hidden', // important to clip the content inside
+             display: 'flex',
+             flexDirection: 'column',
+             justifyContent: 'space-between',
+          }}>
+            <br></br>
+            
 <br></br><br></br>
            
       
@@ -221,6 +220,7 @@ const Chat = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: '25px',
+             
             }}>
               { messages.Chats.map((x, index) => (
                 <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }}>
