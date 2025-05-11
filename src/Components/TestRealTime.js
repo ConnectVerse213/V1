@@ -14,6 +14,7 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useParams } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 const Chat = () => {
 
@@ -156,16 +157,18 @@ const Chat = () => {
 
                 <l style={{ color: 'white' , fontSize:'16px'}}><b>{messages.Name} &nbsp;&nbsp;&nbsp;&nbsp;</b></l>
 
-                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
+                </div>
 
-              <MenuIcon style={{color:'white'}} onClick={()=>{
+                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap',paddingRight:'4em'}}> 
+
+              <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
                 setShowChatDiv(true)
-              }} />
+              }} fontSize="small"/>
 
                     
                
                 
-                </div>
+             
 
                 </div>
 
