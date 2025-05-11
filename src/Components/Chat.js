@@ -508,9 +508,10 @@ function Chat() {
                     
                   </div>
       
-                  
+                  <br></br> <br></br> <br></br>
                 </div>
               ))}
+               <br></br> <br></br> <br></br>
             </div>
       
             {/* Fixed Input Section */}
@@ -544,6 +545,7 @@ function Chat() {
               </Button>
             </div>
           </div>
+          
         </div>
       )}
       
