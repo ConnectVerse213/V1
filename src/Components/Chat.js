@@ -34,6 +34,7 @@ function Chat() {
         const [showChat2Div,setShowChat2Div]=useState([])
         const [usersData,setUsersData]=useState([])
         const [searchUser,setSearchUser]=useState('')
+        const [userData,setUserData]=useState({})
        
             
             const [makeComment,setMakeComment]=useState('')
@@ -250,6 +251,7 @@ function Chat() {
                 {
                     let x=JSON.parse(localStorage.getItem('getChat'))
                     setUserName(x.UserName)
+                    setUserData(x)
                     setProfileImage(x.ProfileImage)
                    getComments(x.UserName,x.ProfileImage)
 
@@ -289,7 +291,7 @@ function Chat() {
             display: 'flex',
             justifyContent: 'center',
             overflowY: 'hidden', // outer div doesn't scroll
-            zIndex: 1000,
+            zIndex: 10,
            }}>
              <div style={{
                width: '95%',
@@ -336,7 +338,7 @@ function Chat() {
                     const email = person.Email.toLowerCase().replace(/\s/g, '');
                   
                     return userName.includes(query) || email.includes(query);
-                }).map((x)=>{
+                }).map((x,index)=>{
 
                     if(x.UserName!==localStorage.getItem('userName') ) return(
 
@@ -346,6 +348,8 @@ function Chat() {
                                
                                 setUserName(x.UserName)
                                 setProfileImage(x.ProfileImage)
+                                setUserData(x)
+
                                getComments(x.UserName,x.ProfileImage)
                             }} >
 
@@ -406,148 +410,9 @@ function Chat() {
 
 
       
-        {showChat2Div.length !== 0 && (
-        <div  style={{
-            width: '100%',
-            position: 'fixed',
-            top:'0px',
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            overflowY: 'hidden', // outer div doesn't scroll
-            zIndex: 100000,
-        }}>
-          <div style={{
-            width: '100%',
-            height: '85vh', // panel height for scrolling content
-            backgroundColor: 'black',
-            
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-            overflow: 'hidden', // important to clip the content inside
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
-            
-            {/* Header */}
-            <div style={{
-              width: '100%',
-              textAlign: 'left',
-              cursor: 'pointer',
-              color: '#1876d1',
-              padding: '10px',
-            }} onClick={() => {
-              setShowChat2Div([]);
-              setMakeComment("");
-            }}>
-      <br></br>
-              &nbsp;    
-             <ArrowBackIosIcon/>
-            </div>
-      
-           
-      
-            {/* Scrollable Comment Section */}
-            <div ref={scrollRef} style={{
-              flex: 1, // fill available space
-              overflowY: 'auto',
-              padding: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '25px',
-            }}>
-              {showChat2Div.length !== 0 && showChat2Div[0] !== "not exist" && showChat2Div.Chats.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px' }}>
-                  <div>
-
-                    { x.Sender===localStorage.getItem('userName') &&
-                         <img
-                         src={localStorage.getItem('profileImg')}
-                         alt="profile"
-                         style={{
-                           width: '1.5em',
-                           height: '1.5em',
-                           borderRadius: '50%',
-                           objectFit: 'cover'
-                         }}
-                       />
-                    }
-
-            { x.Sender!=localStorage.getItem('userName') &&
-                                    <img
-                                    src={profileImage}
-                                    alt="profile"
-                                    style={{
-                                    width: '1.5em',
-                                    height: '1.5em',
-                                    borderRadius: '50%',
-                                    objectFit: 'cover'
-                         }}
-                       />
-                    }
-                   
+        
 
 
-
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      
-                    <div style={{display:'flex',gap:'7px'}}>
-                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
-                    <div style={{color:'white', fontSize: '14px'}}>{x.Timestamp && dayjs(x.Timestamp).fromNow() 
-                    }</div>
-      
-                    </div>
-
-                    
-
-                    
-                    
-      
-                    <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
-                    
-                  </div>
-      
-                  <br></br> <br></br> <br></br>
-                </div>
-              ))}
-               <br></br> <br></br> <br></br>
-            </div>
-      
-            {/* Fixed Input Section */}
-            <div style={{
-              padding: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderTop: '1px solid #444',
-              backgroundColor: '#000',
-              position:'fixed',
-              bottom:'5px',
-              width:'100%'
-            }}>
-              <input
-                style={{
-                  width: '80%',
-                  height: '30px',
-                  fontSize:'16px',
-                  padding: '5px',
-                  borderRadius: '5px',
-                  border: '1px solid #555',
-                  backgroundColor: '#111',
-                  color: 'white'
-                }}
-                value={makeComment}
-                onChange={(e) => setMakeComment(e.target.value)}
-              />
-              <Button onClick={()=>{handleSendComment()}}>
-                <SendIcon fontSize="large" />
-              </Button>
-            </div>
-          </div>
-          
-        </div>
-      )}
       
       <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
          
@@ -574,6 +439,141 @@ function Chat() {
         
        
        </div>
+
+
+
+       {showChat2Div.length !== 0 && (
+  <div style={{
+    width: '100%',
+    position: 'fixed',
+    top: '0px',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    overflowY: 'hidden',
+    zIndex: 1000000000,
+    backgroundColor: 'yellow',
+    height: '100vh' // Full height of viewport
+  }}>
+    <div style={{
+      width: '100%',
+      height: '100vh',
+      backgroundColor: 'purple',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+
+      {/* Header */}
+      <div  style={{padding:'10px'}} onClick={() => {
+
+       
+        setShowChat2Div([]);
+        setMakeComment("");
+      }}>
+
+        <div style={{display:'flex',alignItems:'center',gap:'15px',color:'white'}}>
+       
+        <ArrowBackIosIcon  />
+
+        <img src={userData.ProfileImage}  style={{
+                    width: '3em',
+                    height: '3em',
+                    borderRadius: '50%',
+                    objectFit: 'cover'
+                  }}></img>
+
+        <l style={{color:'white'}}>{userData.UserName}</l>
+
+        </div>
+
+        
+      </div>
+
+      {/* Scrollable Comment Section */}
+      <div ref={scrollRef} style={{
+        flex: 1,
+        overflowY: 'auto',
+        padding: '10px',
+        backgroundColor: 'red',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '25px',
+      }}>
+        {showChat2Div.length !== 0 && showChat2Div[0] !== "not exist" && showChat2Div.Chats.map((x, index) => (
+          <div key={index} style={{ display: 'flex', gap: '10px' }}>
+            <div>
+              {x.Sender === localStorage.getItem('userName') ? (
+                <img
+                  src={localStorage.getItem('profileImg')}
+                  alt="profile"
+                  style={{
+                    width: '1.5em',
+                    height: '1.5em',
+                    borderRadius: '50%',
+                    objectFit: 'cover'
+                  }}
+                />
+              ) : (
+                <img
+                  src={profileImage}
+                  alt="profile"
+                  style={{
+                    width: '1.5em',
+                    height: '1.5em',
+                    borderRadius: '50%',
+                    objectFit: 'cover'
+                  }}
+                />
+              )}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', gap: '7px' }}>
+                <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
+                <div style={{ color: 'white', fontSize: '14px' }}>
+                  {x.Timestamp && dayjs(x.Timestamp).fromNow()}
+                </div>
+              </div>
+              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Input Section */}
+      <div style={{
+        padding: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTop: '1px solid #444',
+        backgroundColor: 'yellow',
+      }}>
+        <input
+          style={{
+            width: '80%',
+            height: '30px',
+            fontSize: '16px',
+            padding: '5px',
+            borderRadius: '5px',
+            border: '1px solid #555',
+            backgroundColor: '#111',
+            color: 'white'
+          }}
+          value={makeComment}
+          onChange={(e) => setMakeComment(e.target.value)}
+        />
+        <Button onClick={() => { handleSendComment() }}>
+          <SendIcon fontSize="large" />
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+       
 <ToastContainer/>
 
     </div>
