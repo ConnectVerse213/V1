@@ -165,7 +165,9 @@ const Chat = () => {
 
                 <div>
 
-                <Button style={{color:'white'}}><ArrowBackIosIcon fontSize="small"/></Button>
+                <Button style={{color:'white'}} onClick={()=>{
+                    window.location.href="/community"
+                }}><ArrowBackIosIcon fontSize="small"/></Button>
 
                 </div>
 

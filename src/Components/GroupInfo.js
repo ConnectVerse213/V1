@@ -21,6 +21,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import SearchIcon from '@mui/icons-material/Search';
 import ShareIcon from '@mui/icons-material/Share';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const Chat = () => {
 
@@ -31,6 +32,7 @@ const Chat = () => {
   const [showChatDiv,setShowChatDiv]=useState(false)
   const [membersArray,setMembersArray]=useState([])
   const [showSearchDiv,setShowSearchDiv]=useState(false)
+  const [search,setSearch]=useState('')
 
   const scrollRef = useRef(null);
 
@@ -174,9 +176,9 @@ const Chat = () => {
             &nbsp;&nbsp;
             <ArrowBackIosIcon style={{color:'white'}} fontSize="small"/> <l style={{color:'white'}}>Back</l></div> 
 
-        <div style={{width:'100%',textAlign:'right'}} onClick={()=>{
+        {/* <div style={{width:'100%',textAlign:'right'}} onClick={()=>{
             window.location.href=`/testing3/${community_id}`
-           }}> <l style={{color:'white'}}>Edit</l>  &nbsp;&nbsp;</div> 
+           }}> <l style={{color:'white'}}>Edit</l>  &nbsp;&nbsp;</div>  */}
 
 
      </div>
@@ -324,11 +326,15 @@ const Chat = () => {
         }}>
           <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
             setShowSearchDiv(false)
-          }}>
+          }}> &nbsp;&nbsp;&nbsp;&nbsp;
           <CancelIcon style={{left:'2px'}} fontSize="small"/>
           </div>
           <br></br>
-          <input style={{width:'80%',border:'0.2px solid grey',backgroundColor:'black',color:'white',fontSize:'24px'}} placeholder="&nbsp; &nbsp;🔍 Search Members"></input>
+          <input style={{width:'80%',border:'0.2px solid grey',backgroundColor:'black',color:'white',fontSize:'24px'}} placeholder="&nbsp; &nbsp;🔍 Search Members" onChange={(e)=>{
+
+            setSearch(e.target.value)
+            
+          }}></input>
           <br></br> <br></br> <br></br>
           <center>
           {membersArray && membersArray.length!=0 && <div style={{backgroundColor:'rgba(255,255,255,0.2',width:'70%',borderRadius:'1em',color:'white',padding:'1.5em',display:'flex',flexDirection:'column', gap:'12px'}}>
@@ -337,14 +343,35 @@ const Chat = () => {
             <br></br>
             
             {     
-               membersArray.map((x)=>{
+               membersArray.filter(person => {
+
+                const query = search.toLowerCase().replace(/\s/g, '');
+                const userName = person.UserName.toLowerCase().replace(/\s/g, '');
+                const email = person.Email.toLowerCase().replace(/\s/g, '');
+              
+                return userName.includes(query) || email.includes(query);
+            }).map((x)=>{
                 return (
 
-                    <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
+                    <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+
+                <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
                     
                     <img src={x.ProfileImage} style={{width:'2em',height:'2em',borderRadius:'50%',objectFit:'cover'}}></img>
 
                     <l>{x.UserName}</l>
+
+                    </div>
+
+                    <ArrowForwardIosIcon fontSize="small" onClick={()=>{
+
+
+                        localStorage.setItem('getChat',JSON.stringify(x))
+
+                        window.location.href="/chat"
+
+                    }}/>
+
                     
                     </div>
 

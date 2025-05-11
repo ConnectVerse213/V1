@@ -281,11 +281,11 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
           <br></br>
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
             window.location.href="/chat"
-          }}><DashboardIcon/> <l>Chat</l></div>
+          }}><l>Chat</l></div>
           <br></br>
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/testing3"
-          }}><SettingsIcon/> Community</div>
+            window.location.href="/community"
+          }}> Community</div>
           
       
         </div>}

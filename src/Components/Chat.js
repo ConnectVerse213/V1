@@ -245,6 +245,19 @@ function Chat() {
 
             }
 
+            if(localStorage.getItem('getChat'))
+
+                {
+                    let x=JSON.parse(localStorage.getItem('getChat'))
+                    setUserName(x.UserName)
+                    setProfileImage(x.ProfileImage)
+                   getComments(x.UserName,x.ProfileImage)
+
+                   localStorage.removeItem('getChat')
+                }
+
+           
+
 
            
               
@@ -271,7 +284,7 @@ function Chat() {
            <div style={{
             width: '100%',
             position: 'fixed',
-            bottom:'0px',
+            top:'12em',
             textAlign: 'center',
             display: 'flex',
             justifyContent: 'center',
@@ -546,12 +559,11 @@ function Chat() {
        }}>Chat &nbsp; <MessageIcon/>  </Button>}
 
        {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-           
+           window.location.href="/community"
        }}>Community &nbsp; <PeopleIcon/></Button>}
 
        {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-             setButtonHighlight(2)
-             setShowChat1Div([])
+             window.location.href="/community"
             
              
        }}>Community &nbsp; <PeopleIcon/></Button>}
