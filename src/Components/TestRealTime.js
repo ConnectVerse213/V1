@@ -16,6 +16,8 @@ import { useParams } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { ToastContainer, toast } from 'react-toastify';
+import PeopleIcon from '@mui/icons-material/People';
 
 const Chat = () => {
 
@@ -113,6 +115,20 @@ const Chat = () => {
     setNewMessage("");
   };
 
+
+   const notifyCustom = (text,type) => toast(text,{
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                type:type
+               
+                });
+
   return (
     <div >
      <br></br>
@@ -160,7 +176,9 @@ const Chat = () => {
 
                 </div>
 
-                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap',paddingRight:'4em'}}> 
+                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap',paddingRight:'2em',gap:'13px'}}> 
+
+              
 
               {!showChatDiv && <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
                 setShowChatDiv(true)
@@ -359,17 +377,18 @@ const Chat = () => {
 
 {showChatDiv &&  <div style={{
           width: '150px', 
-          height: '250px',
+          height: '180px',
           padding: '20px', 
          color:'white',
           backgroundColor: 'black', 
           border: '2px solid #1876d1',
+          borderRadius:'10px',
           blur:'50px', 
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           position: 'absolute', 
           top: '5%', 
-          right: '0px', 
+          right: '-40px', 
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
@@ -382,22 +401,19 @@ const Chat = () => {
           </div>
           <br></br>
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/chat"
-          }}><DescriptionIcon/> <l>Description</l></div>
+            window.location.href=`/groupinfo/${community_id}`
+          }}><DescriptionIcon/> <l>Group Info</l></div>
           <br></br>
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/testing3"
-          }}><PaidIcon/>  Airdrop to Community</div>
+           notifyCustom("Coming Soon!","default")
+          }}><PaidIcon/>  Airdrop </div>
           <br></br>
           
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
             window.location.href="/testing3"
-          }}><SettingsIcon/> Chats</div>
+          }}><PeopleIcon/> Add Members</div>
 
-          <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/testing3"
-          }}><SettingsIcon/> Home</div>
+        
 
 
 
@@ -407,7 +423,7 @@ const Chat = () => {
       
         </div>}
 
-     
+     <ToastContainer/>
     </div>
   );
 };

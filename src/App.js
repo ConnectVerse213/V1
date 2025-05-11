@@ -24,6 +24,7 @@ import ProfileSettings from './Components/ProfileSettings';
 import Chat from './Components/Chat'
 import TestRealTime from './Components/TestRealTime'
 import Community from './Components/Community'
+import GroupInfo from './Components/GroupInfo'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -97,6 +98,12 @@ function App() {
         
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
         <Community/>
+    </OktoProvider>} />
+
+    <Route path="/groupinfo/:community_id" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+       <GroupInfo/>
     </OktoProvider>} />
       
    
