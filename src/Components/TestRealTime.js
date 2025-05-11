@@ -393,7 +393,7 @@ const Chat = () => {
           top: '5%', 
           right: '-40px', 
           transform: 'translateX(-50%)',
-          zIndex: 9999,
+          zIndex: 999999999,
           animation: 'popupAnimation 0.5s ease',
            
         }}>
