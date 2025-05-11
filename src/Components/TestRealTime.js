@@ -311,12 +311,13 @@ const Chat = () => {
                   
                 </div>
               ))}
+              <br></br>
             </div>
       <br></br>
             {/* Fixed Input Section */}
             <div style={{
                 position:'fixed',
-                bottom:'10px',
+                bottom:'0px',
                 width:'100%',
               padding: '10px',
               display: 'flex',
