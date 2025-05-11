@@ -410,7 +410,7 @@ function Chat() {
         <div  style={{
             width: '100%',
             position: 'fixed',
-            bottom:'0px',
+            top:'0px',
             textAlign: 'center',
             display: 'flex',
             justifyContent: 'center',
@@ -418,7 +418,7 @@ function Chat() {
             zIndex: 100000,
         }}>
           <div style={{
-            width: '95%',
+            width: '100%',
             height: '85vh', // panel height for scrolling content
             backgroundColor: 'black',
             
@@ -445,9 +445,7 @@ function Chat() {
              <ArrowBackIosIcon/>
             </div>
       
-            <center>
-              <h2 style={{ color: 'white' }}>Chats</h2>
-            </center>
+           
       
             {/* Scrollable Comment Section */}
             <div ref={scrollRef} style={{
@@ -523,6 +521,9 @@ function Chat() {
               justifyContent: 'center',
               borderTop: '1px solid #444',
               backgroundColor: '#000',
+              position:'fixed',
+              bottom:'5px',
+              width:'100%'
             }}>
               <input
                 style={{
