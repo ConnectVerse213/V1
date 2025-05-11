@@ -15,6 +15,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useParams } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const Chat = () => {
 
@@ -161,9 +162,13 @@ const Chat = () => {
 
                 <div style={{display:'flex',alignItems:'center',flexWrap:'wrap',paddingRight:'4em'}}> 
 
-              <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
+              {!showChatDiv && <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
                 setShowChatDiv(true)
-              }} fontSize="small"/>
+              }} fontSize="small"/>}
+
+            {showChatDiv && <MoreVertIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
+                setShowChatDiv(false)
+              }} fontSize="small"/>}
 
                     
                
@@ -364,7 +369,7 @@ const Chat = () => {
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           position: 'absolute', 
           top: '5%', 
-          right: '5px', 
+          right: '0px', 
           transform: 'translateX(-50%)',
           zIndex: 9999,
           animation: 'popupAnimation 0.5s ease',
@@ -373,7 +378,7 @@ const Chat = () => {
           <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
             setShowChatDiv(false)
           }}>
-          <CancelIcon style={{left:'2px'}}/>
+          <CancelIcon style={{left:'2px'}} fontSize="small"/>
           </div>
           <br></br>
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
