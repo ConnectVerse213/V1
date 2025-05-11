@@ -13,6 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useParams } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Chat = () => {
 
@@ -20,6 +21,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isReply,setIsReply]=useState("")
+  const [showChatDiv,setShowChatDiv]=useState(false)
 
   const scrollRef = useRef(null);
 
@@ -143,22 +145,25 @@ const Chat = () => {
 
                 <div style={{display:'flex',flexWrap:'wrap',alignItems:'center',gap:'5px'}}>
 
-                <img src={messages.ProfileImage} style={{width:'3.5em',height:'3.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
-
-
-                <l style={{ color: 'white' , fontSize:'24px'}}>{messages.Name}</l>
-
-                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
-
                 <div>
 
                 <Button style={{color:'white'}}><ArrowBackIosIcon fontSize="small"/></Button>
 
                 </div>
 
+                <img src={messages.ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
+
+
+                <l style={{ color: 'white' , fontSize:'16px'}}><b>{messages.Name} &nbsp;&nbsp;&nbsp;&nbsp;</b></l>
+
+                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap'}}> 
+
+              <MenuIcon style={{color:'white'}} onClick={()=>{
+                setShowChatDiv(true)
+              }} />
+
                     
-                <Button style={{color:'#1876d1'}} ><DescriptionIcon/> &nbsp; Description</Button>
-                <Button style={{color:'#1876d1'}}><PaidIcon/> &nbsp; Airdrop</Button>
+               
                 
                 </div>
 
@@ -342,6 +347,57 @@ const Chat = () => {
           </div>
         </div>
       )}
+
+
+{showChatDiv &&  <div style={{
+          width: '150px', 
+          height: '250px',
+          padding: '20px', 
+         color:'white',
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          right: '5px', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           
+        }}>
+          <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
+            setShowChatDiv(false)
+          }}>
+          <CancelIcon style={{left:'2px'}}/>
+          </div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/chat"
+          }}><DescriptionIcon/> <l>Description</l></div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/testing3"
+          }}><PaidIcon/>  Airdrop to Community</div>
+          <br></br>
+          
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/testing3"
+          }}><SettingsIcon/> Chats</div>
+
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/testing3"
+          }}><SettingsIcon/> Home</div>
+
+
+
+
+       
+          
+      
+        </div>}
 
      
     </div>
