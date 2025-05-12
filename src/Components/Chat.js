@@ -496,6 +496,7 @@ function Chat() {
         
         maxHeight:'85%',
         overflowY: 'auto',
+        overflowX:'hidden',
         padding: '10px',
         backgroundColor: 'red',
         display: 'flex',
@@ -563,6 +564,8 @@ function Chat() {
         backgroundColor: 'yellow',
         bottom:'0px',
         width:'100%',
+        overflowX:'hidden',
+        overflowY:'hidden',
         zIndex:'999999999999'
       }}>
         <input
