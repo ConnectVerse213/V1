@@ -541,7 +541,7 @@ function Chat() {
 
            
 
-           {x.Sender==localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',backgroundColor:'#1876d1',padding:'1em',borderRadius:'5px' }}>
+           {x.Sender==localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',backgroundColor:'#1876d1',padding:'1em',borderRadius:'5px',maxWidth:'70%' }}>
               <div style={{ display: 'flex', gap: '7px' }}>
                 <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
                 <div style={{ color: 'white', fontSize: '14px' }}>
@@ -553,7 +553,7 @@ function Chat() {
                 }
 
 
-        {x.Sender!=localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,backgroundColor:'rgb(65, 65, 65)',padding:'1em',borderRadius:'5px'}}>
+        {x.Sender!=localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,backgroundColor:'rgb(65, 65, 65)',padding:'1em',borderRadius:'5px',maxWidth:'70%'}}>
               <div style={{ display: 'flex', gap: '7px' }}>
                 <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
                 <div style={{ color: 'white', fontSize: '14px' }}>

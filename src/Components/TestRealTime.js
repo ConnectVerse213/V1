@@ -236,7 +236,7 @@ const Chat = () => {
                       }}
                     />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px'}}>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}}>
 
 
                  
