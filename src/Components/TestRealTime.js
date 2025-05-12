@@ -36,10 +36,23 @@ const Chat = () => {
 
 const MENU_ID = "message-options";
 const { show } = useContextMenu({ id: MENU_ID });
+const touchTimer = useRef(null);
 
-  const handleContextMenu = (event) => {
+const handleContextMenu = (event) => {
     event.preventDefault();
     show({ event });
+  };
+
+  const handleTouchStart = (event) => {
+    // Start timer
+    touchTimer.current = setTimeout(() => {
+      show({ event }); // Show menu after long press
+    }, 600); // 600ms = long press
+  };
+
+  const handleTouchEnd = () => {
+    // Cancel if user didn't hold long enough
+    clearTimeout(touchTimer.current);
   };
 
   const scrollRef = useRef(null);
@@ -305,7 +318,9 @@ const { show } = useContextMenu({ id: MENU_ID });
              
             }}  >
               { messages.Chats.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} onContextMenu={handleContextMenu} >
+                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} onContextMenu={handleContextMenu}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd} >
                   <div>
                     <img
                       src={x.ProfileImage}
