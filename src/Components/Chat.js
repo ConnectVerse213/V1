@@ -548,7 +548,7 @@ function Chat() {
 
 
 
-        <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+        <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
       </div>
 
       {/* Input Section */}
