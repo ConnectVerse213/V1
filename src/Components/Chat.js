@@ -493,8 +493,8 @@ function Chat() {
       {/* Scrollable Comment Section */}
       <div ref={scrollRef} style={{
         flex: 1,
-
-        maxHeight:'75%',
+        
+        maxHeight:'85%',
         overflowY: 'auto',
         padding: '10px',
         backgroundColor: 'red',
@@ -502,6 +502,8 @@ function Chat() {
         flexDirection: 'column',
         gap: '25px',
       }}>
+
+
         {showChat2Div.length !== 0 && showChat2Div[0] !== "not exist" && showChat2Div.Chats.map((x, index) => (
           <div key={index} style={{ display: 'flex', gap: '10px' }}>
             <div>
@@ -530,6 +532,8 @@ function Chat() {
               )}
             </div>
 
+           
+
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', gap: '7px' }}>
                 <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
@@ -541,6 +545,10 @@ function Chat() {
             </div>
           </div>
         ))}
+
+
+
+        <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
       </div>
 
       {/* Input Section */}
