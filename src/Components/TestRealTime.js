@@ -19,6 +19,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ToastContainer, toast } from 'react-toastify';
 import PeopleIcon from '@mui/icons-material/People';
 import Confetti from 'react-confetti'
+import { Menu, Item, useContextMenu } from 'react-contexify';
+import 'react-contexify/dist/ReactContexify.css';
 
 import './TestRealTime.css'
 
@@ -30,6 +32,15 @@ const Chat = () => {
   const [isReply,setIsReply]=useState("")
   const [showChatDiv,setShowChatDiv]=useState(false)
   const [showConfetti,setShowConfetti]=useState(false)
+
+
+const MENU_ID = "message-options";
+const { show } = useContextMenu({ id: MENU_ID });
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    show({ event });
+  };
 
   const scrollRef = useRef(null);
 
@@ -290,10 +301,11 @@ const Chat = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: '25px',
+
              
-            }}>
+            }}  >
               { messages.Chats.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }}>
+                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} onContextMenu={handleContextMenu} >
                   <div>
                     <img
                       src={x.ProfileImage}
@@ -306,10 +318,7 @@ const Chat = () => {
                       }}
                     />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}}>
-
-
-                 
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}} >
                     <div style={{display:'flex',gap:'7px'}} id={`ChatId=${x.ChatId}`} >
 
                     <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName!=localStorage.getItem('userName')?x.SenderUserName : "You"}</b></label>
@@ -369,9 +378,20 @@ const Chat = () => {
                     >
 
            
-                     <div style={{ color: 'white', textAlign: 'left' }} >{x.Message}</div>
+                     <div style={{ color: 'white', textAlign: 'left' }}  >  
+                         
+      
+      {x.Message}
+      
+      </div>
+
+     
+
+                     <div style={{display:'flex',justifyContent:'flex-start' ,gap:'4px'}}></div>
                    
                         <label style={{color: 'white',fontSize: '14px'}}> Reply</label>
+
+                       
                        
                     </div>
       
@@ -538,7 +558,14 @@ const Chat = () => {
 )}
 
 
-    </div>
+    
+<Menu id={MENU_ID} style={{backgroundColor:'white',zIndex:'999999999999999999999999',color:'black'}}>
+                        <Item onClick={() => alert('Pinned')}>📌 Pin</Item>
+                        <Item onClick={() => alert('Deleted')}>🗑️ Delete</Item>
+                    </Menu>
+        
+      </div>
+  
   );
 };
 
