@@ -9,7 +9,9 @@ import {
   deleteDoc,
   doc,
   serverTimestamp,
-  Timestamp
+  Timestamp,
+  onSnapshot
+
 } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
 import MessageIcon from '@mui/icons-material/Message';
@@ -60,46 +62,32 @@ function Chat() {
 
 
 
-            const getComments=async(userName,profileImage)=>{
-            
-                
-            
-                    console.log("userName",userName)
-            
-                    let data = await getDocs(usersCollectionRef4);
-                                         
-                     let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-            
-                     let filteredArray=chats.filter(obj=>obj.People.includes(localStorage.getItem('userName')) && obj.People.includes(userName))
-                                       
-                     console.log("fileteredArray",filteredArray)
-            
-                     if(filteredArray.length!=0)
-            
-                      {
-    
-        
-        
-                     setShowChat2Div(filteredArray[0])
-            
-                    
-                      }
-
-                      else{
-
-                       
-                          setShowChat2Div(["not exist"])
-                
-                          return;
-                        
-                      }
-            
-                    
-            
-            
-                     
-            
-                   }
+                          const getComments = (userName, profileImage) => {
+                            console.log("userName", userName);
+                          
+                            const unsubscribe = onSnapshot(usersCollectionRef4, (snapshot) => {
+                              const chats = snapshot.docs.map((doc) => ({
+                                ...doc.data(),
+                                id: doc.id,
+                              }));
+                          
+                              const currentUser = localStorage.getItem("userName");
+                          
+                              const filteredArray = chats.filter(
+                                (obj) => obj.People.includes(currentUser) && obj.People.includes(userName)
+                              );
+                          
+                              console.log("filteredArray", filteredArray);
+                          
+                              if (filteredArray.length !== 0) {
+                                setShowChat2Div(filteredArray[0]);
+                              } else {
+                                setShowChat2Div(["not exist"]);
+                              }
+                            });
+                          
+                            return unsubscribe; // Call this to stop listening later if needed
+                          };
             
                   const handleSendComment=async ()=>{
             
