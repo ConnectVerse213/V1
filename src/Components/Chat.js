@@ -280,13 +280,60 @@ function Chat() {
          <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
          <hr></hr>
             <br></br> <br></br>
+
+            <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
+         
+         {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
+           
+       }}>Chat &nbsp; <MessageIcon/> </Button>}
+        {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
+            setButtonHighlight(1)
+
+            setShowChat1Div(true)
+           
+       }}>Chat &nbsp; <MessageIcon/>  </Button>}
+
+       {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
+           window.location.href="/community"
+       }}>Community &nbsp; <PeopleIcon/></Button>}
+
+       {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
+             window.location.href="/community"
+            
+             
+       }}>Community &nbsp; <PeopleIcon/></Button>}
+       
+        
+       
+       </div>
+
+       <br></br>  <br></br>  <br></br>
+
+            <center>
+               
+                 <input placeholder='Search by Username' style={{
+                  width: '80%',
+                  height: '30px',
+                  fontSize:'16px',
+                  padding: '5px',
+                  borderRadius: '5px',
+                  border: '1px solid #555',
+                  backgroundColor: '#111',
+                  zIndex:'999999999',
+                  color: 'white'}} onChange={(e)=>{
+
+                    setSearchUser(e.target.value)
+
+                 }}></input>
+               </center>
+
         
 
            {showChat1Div.length!=0 && (
            <div style={{
             width: '100%',
             position: 'fixed',
-            top:'12em',
+            
             textAlign: 'center',
             display: 'flex',
             justifyContent: 'center',
@@ -306,28 +353,11 @@ function Chat() {
              }}>
                
                {/* Header */}
-               <br></br>
-         <br></br>   <br></br>
-               <center>
+       
                
-                 <input placeholder='Search by Username' style={{
-                  width: '80%',
-                  height: '30px',
-                  fontSize:'16px',
-                  padding: '5px',
-                  borderRadius: '5px',
-                  border: '1px solid #555',
-                  backgroundColor: '#111',
-                  color: 'white'}} onChange={(e)=>{
-
-                    setSearchUser(e.target.value)
-
-                 }}></input>
-               </center>
-
            
 
-               <div style={{color:'white'}}>
+               <div style={{color:'white', overflowY: 'auto'}}>
 
                <div style={{display:'flex',flexDirection:'column',padding:'3em'}}>
                  {usersData.length!=0  && <div style={{color:'white'}}>
@@ -414,31 +444,7 @@ function Chat() {
 
 
       
-      <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
-         
-         {buttonHight==1 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-           
-       }}>Chat &nbsp; <MessageIcon/> </Button>}
-        {buttonHight!=1 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-            setButtonHighlight(1)
-
-            setShowChat1Div(true)
-           
-       }}>Chat &nbsp; <MessageIcon/>  </Button>}
-
-       {buttonHight==2 && <Button variant="contained" style={{borderRadius:'0px'}} onClick={()=>{
-           window.location.href="/community"
-       }}>Community &nbsp; <PeopleIcon/></Button>}
-
-       {buttonHight!=2 && <Button variant="outlined" style={{borderRadius:'0px',border:'#1876d1 0.09px solid', color:'#1876d1'}} onClick={()=>{
-             window.location.href="/community"
-            
-             
-       }}>Community &nbsp; <PeopleIcon/></Button>}
-       
-        
-       
-       </div>
+     
 
 
 
