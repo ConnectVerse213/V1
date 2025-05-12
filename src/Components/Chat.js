@@ -458,20 +458,20 @@ function Chat() {
     justifyContent: 'center',
     overflowY: 'hidden',
     zIndex: 1000000000,
-    backgroundColor: 'yellow',
+    backgroundColor: 'black',
     height: '100vh' // Full height of viewport
   }}>
     <div style={{
       width: '100%',
       height: '100vh',
-      backgroundColor: 'purple',
+     
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
       display: 'flex',
       flexDirection: 'column',
     }}>
 
       {/* Header */}
-      <div  style={{padding:'10px'}} onClick={() => {
+      <div  style={{padding:'20px',borderBottom:'0.3px solid #1876d1'}} onClick={() => {
 
        
         setShowChat2Div([]);
@@ -504,7 +504,7 @@ function Chat() {
         overflowY: 'auto',
         overflowX:'hidden',
         padding: '10px',
-        backgroundColor: 'red',
+       
         display: 'flex',
         flexDirection: 'column',
         gap: '25px',
@@ -512,7 +512,7 @@ function Chat() {
 
 
         {showChat2Div.length !== 0 && showChat2Div[0] !== "not exist" && showChat2Div.Chats.map((x, index) => (
-          <div key={index} style={{ display: 'flex', gap: '10px' }}>
+          <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end'}}>
             <div>
               {x.Sender === localStorage.getItem('userName') ? (
                 <img
@@ -541,7 +541,7 @@ function Chat() {
 
            
 
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+           {x.Sender==localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',backgroundColor:'#1876d1',padding:'1em',borderRadius:'5px' }}>
               <div style={{ display: 'flex', gap: '7px' }}>
                 <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
                 <div style={{ color: 'white', fontSize: '14px' }}>
@@ -550,7 +550,28 @@ function Chat() {
               </div>
               <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
             </div>
+                }
+
+
+        {x.Sender!=localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,backgroundColor:'rgb(65, 65, 65)',padding:'1em',borderRadius:'5px'}}>
+              <div style={{ display: 'flex', gap: '7px' }}>
+                <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
+                <div style={{ color: 'white', fontSize: '14px' }}>
+                  {x.Timestamp && dayjs(x.Timestamp).fromNow()}
+                </div>
+              </div>
+              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+            </div>
+                }
+
+
+
+
           </div>
+
+       
+
+
         ))}
 
 
@@ -567,7 +588,7 @@ function Chat() {
         alignItems: 'center',
         justifyContent: 'center',
         borderTop: '1px solid #444',
-        backgroundColor: 'yellow',
+       backgroundColor:'black',
         bottom:'0px',
         width:'100%',
         overflowX:'hidden',
