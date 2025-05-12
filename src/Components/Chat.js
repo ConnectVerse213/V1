@@ -493,6 +493,8 @@ function Chat() {
       {/* Scrollable Comment Section */}
       <div ref={scrollRef} style={{
         flex: 1,
+
+        maxHeight:'50%',
         overflowY: 'auto',
         padding: '10px',
         backgroundColor: 'red',
