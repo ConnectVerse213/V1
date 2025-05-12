@@ -18,6 +18,9 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ToastContainer, toast } from 'react-toastify';
 import PeopleIcon from '@mui/icons-material/People';
+import Confetti from 'react-confetti'
+
+import './TestRealTime.css'
 
 const Chat = () => {
 
@@ -26,10 +29,35 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [isReply,setIsReply]=useState("")
   const [showChatDiv,setShowChatDiv]=useState(false)
+  const [showConfetti,setShowConfetti]=useState(false)
 
   const scrollRef = useRef(null);
 
   useEffect(() => {
+
+   
+
+    if(!localStorage.getItem('email'))
+    {
+        notifyCustom("Please login in to join community","error")
+
+        setInterval(()=>{
+
+            window.location.href="/oktologin"
+        },500)
+    }
+
+    if(localStorage.getItem('email') && !(localStorage.getItem('userName') && localStorage.getItem('profileImg')))
+    {
+
+        notifyCustom("Set up your profile to join community","error")
+
+        setInterval(()=>{
+
+            window.location.href="/profilesettings"
+        },3000)
+
+    }
     const q = query(collection(db, "community"))
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -39,6 +67,10 @@ const Chat = () => {
 
       if (filteredArray.length > 0) {
         setMessages(filteredArray[0]);
+        if(filteredArray[0].Participants && !filteredArray[0].Participants.includes(localStorage.getItem('email')))
+        {
+            setShowConfetti(true)
+        }
         console.log("Matched Document:", filteredArray[0]);
       } else {
         setMessages(null);
@@ -116,6 +148,34 @@ const Chat = () => {
   };
 
 
+    const addNewMember=async()=>{
+       
+
+    const data = await getDocs(collection(db, "community"));
+                                    
+   let communities=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+   let filteredArray=communities.filter(obj=>obj.id==community_id)
+
+     const userDoc1 = doc(db, "community", filteredArray[0].id);
+    
+    const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
+
+     
+        if(!filteredArray[0].Participants.includes(localStorage.getItem('email')))
+
+            {
+                const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats],Timestamp: now,Participants:[...filteredArray[0].Participants,localStorage.getItem('email')]}
+
+            await updateDoc(userDoc1, newFields1);
+
+            notifyCustom(`${messages.Name} joined!`,"success")
+            }
+
+           
+                 
+    }
+
    const notifyCustom = (text,type) => toast(text,{
                 position: "top-right",
                 autoClose: 5000,
@@ -131,6 +191,15 @@ const Chat = () => {
 
   return (
     <div style={{overflowX:'hidden'}}>
+
+
+{ showConfetti && <Confetti
+      width={"1500px"}
+      height={"800px"}
+
+      style={{zIndex:'99999999999999999'}}
+    />
+}
      <br></br>{messages && messages.length!=0 && 
             <div style={{display:'flex',alignItems:'center',gap:'5px', position:'sticky',width:'100%',justifyContent:'space-between',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:'black',padding:'1em',paddingRight:'3em',height:'2em',zIndex:'999999'}}>
 
@@ -427,7 +496,48 @@ const Chat = () => {
       
         </div>}
 
-     <ToastContainer/>
+     <ToastContainer style={{zIndex:'9999999999999999999999999999999'}}/>
+
+
+     {showConfetti && (
+        <div style={{
+
+            position:'fixed',
+            top:'10px',
+          width: '300px', 
+          height: '230px',
+          padding: '20px', 
+          backgroundColor: '#fff', 
+          border: '1px solid #ddd', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '30%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          animation: 'popupAnimation 0.5s ease',
+          zIndex:'99999999999999999',
+
+          border:'2px solid #1876d1'
+
+        }}>
+            <center>
+          <h1>Welcome to {messages.Name}!</h1>
+          <br></br>
+          <button class="button-85" style={{height:'3em'}} onClick={async()=>{
+
+            setShowConfetti(false)
+
+            addNewMember()
+
+
+          }}>Join</button>
+          </center>
+          <br></br>
+          </div>
+)}
+
+
     </div>
   );
 };

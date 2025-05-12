@@ -26,6 +26,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 
 
+
 const usersCollectionRef1 = collection(db, "user");
 const usersCollectionRef4 = collection(db, "chats");
 
@@ -363,6 +364,30 @@ function Chat() {
                        
 
                             <div class="people" onClick={()=>{
+
+                                if(!localStorage.getItem('email'))
+                                    {
+                                        notifyCustom("Please login in to chat","error")
+                                
+                                        setInterval(()=>{
+                                
+                                            window.location.href="/oktologin"
+                                            return
+                                        },300)
+                                    }
+                                
+                                    if(localStorage.getItem('email') && !(localStorage.getItem('userName') && localStorage.getItem('profileImg')))
+                                    {
+                                
+                                        notifyCustom("Set up your profile to chat","error")
+                                
+                                        setInterval(()=>{
+                                
+                                            window.location.href="/profilesettings"
+                                            return
+                                        },3000)
+                                
+                                    }
                                
                                 setUserName(x.UserName)
                                 setProfileImage(x.ProfileImage)
@@ -608,7 +633,7 @@ function Chat() {
 
 
        
-<ToastContainer/>
+<ToastContainer style={{zIndex:'99999999999'}}/>
 
     </div>
   )
