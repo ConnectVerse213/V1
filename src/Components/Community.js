@@ -7,6 +7,11 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase-config.js";
 
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import CardActionArea from '@mui/material/CardActionArea';
 import Button from '@mui/material/Button';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
@@ -16,7 +21,21 @@ import PaidIcon from '@mui/icons-material/Paid';
 import SettingsIcon from '@mui/icons-material/Settings';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+import { ToastContainer, toast } from 'react-toastify';
+
+
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+
 import dayjs from "dayjs";
+import ShareIcon from '@mui/icons-material/Share';
+import uploadImg from '../assets/images/uploadImg.png'
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const Chat = () => {
  
@@ -24,6 +43,7 @@ const Chat = () => {
   const [description,setDescription]=useState('')
   const [createdCommunities, setCreatedCommunities] = useState([]);
   const [joinedCommunities, setJoinedCommunities] = useState([]);
+  const [showCreateDiv,setShowCreateDiv]=useState(false)
 
   const scrollRef = useRef(null);
 
@@ -60,102 +80,388 @@ const Chat = () => {
                    
                     const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
                  
-                      await addDoc(collection(db,"community"), {Name:name,Description:description, Chats:[],Creator:localStorage.getItem('email'),ProfileImage:localStorage.getItem('profileImg'),Timestamp:now,Participants:[localStorage.getItem('email')]});
+                      await addDoc(collection(db,"community"), {Name:name,Description:description, Chats:[],Creator:localStorage.getItem('email'),ProfileImage:imageUrl,Timestamp:now,Participants:[localStorage.getItem('email')]});
+
+                      notifyCustom("Community Created!","success")
+
+                      setImageUrl("")
+
+                      setShowCreateDiv(false)
     
   }
 
+
+  const [imageUrl, setImageUrl] = useState("");
+ 
+    const handleImageUpload = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+  
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "my_unsigned_preset"); // 👈 Replace
+      formData.append("cloud_name", "getsetcourse");       // 👈 Replace
+  
+      const res = await fetch(`https://api.cloudinary.com/v1_1/getsetcourse/image/upload`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      const data = await res.json();
+      setImageUrl(data.secure_url); // ✅ Final image URL
+    };
+  
+    const notifyCustom = (text,type) => toast(text,{
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: false,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                  type:type
+                 
+                  });
+    
+  
+
   return (
     <div>
-      <br />
-      <h1 style={{ color:'white'}}>Community</h1>
+     <br></br>
+         <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
+         <hr></hr>
+            <br></br> <br></br>
+      <Button variant="outlined" onClick={()=>{
+           setShowCreateDiv(true)
+      }}>Create  &nbsp;<AddCircleIcon/></Button>
+      <Button variant="outlined" onClick={()=>{
+           window.location.href = '/manage';
+      }}>Manage &nbsp;<EditCalendarIcon/></Button>
+      <br></br> <br></br> <br></br>
+
+     
       <br></br>
 
-      <input onChange={(e)=>{
+      <h2 style={{color:'white'}}>Created ({createdCommunities && createdCommunities.length })</h2>
 
-        setName(e.target.value)
-
-      }}></input> <input onChange={(e)=>{
-
-        setDescription(e.target.value)
-
-      }}></input>
-
-      <button onClick={()=>{
-
-        createCommunity()
-      }}>Create Community</button>
       <br></br>
-
-      <h3 style={{color:'white'}}>Created Communities</h3>
+      <div style={{display:'flex',flexWrap:'wrap',gap:'2em',justifyContent:'center'}}>
       {createdCommunities && createdCommunities.length !== 0 && createdCommunities.map((x)=>{
 
         return (
-        <div style={{
+         <Card 
+            sx={{ maxWidth: 345,minWidth:250  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' ,paddingTop:'1em'}} 
+>
+  <CardActionArea
+    onClick={() => {
+      window.location.href = `/testing3/${x.id}`;
+    }}
+  >
+    <img 
+     style={{width:'20em' ,height:'20em'}}
+      src={x.ProfileImage} 
+      alt="Event"
+    />
 
-          maxWidth: '20em',
-         
-          display: 'flex',
-          flexDirection:'column',
-          justifyContent: 'center',
-          border:'2px solid white',
-          color:'white',
-          gap:'5px'
-        }} onClick={()=>{
+    <CardContent 
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+       
+        color: 'white',
+        gap: '5px',
+        padding: '1em'
+      }}
+    >
+      <h2>{x.Name}</h2>
 
-            window.location.href=`/testing3/${x.id}`
-        }}>
-           
-       <l>{x.Name}  </l> 
+      <div style={{display:'flex',gap:'3px',flexWrap:'wrap',justifyContent:'center'}}>
 
-       <l>Created by {x.Creator}  </l> 
+      <Button variant="outlined" onClick={()=>{
 
-       <l>{x.Description}  </l> 
+        window.location.href=`/testing3/${x.id}`
+      }}><OpenInNewIcon/></Button>
+
+      <Button variant="outlined"><ShareIcon/></Button>
+
+      <Button variant="outlined" style={{border:'0.08px solid red',color:'red'}}><LogoutIcon/></Button>
+
+     
 
 
-
-         
-        </div>
+      </div>
+     
+     
+    </CardContent>
+  </CardActionArea>
+</Card>
 
        ) })}
+
+       </div>
 
    <br></br>
 
    <hr></hr>
 
-   <h3 style={{color:'white'}}>Joined Communities</h3>
+   <h2 style={{color:'white'}}>Joined ({joinedCommunities && joinedCommunities.length })</h2>
+   <br></br>
+
+   <div style={{display:'flex',flexWrap:'wrap',gap:'2em',justifyContent:'center'}}>
       {joinedCommunities && joinedCommunities.length !== 0 && joinedCommunities.map((x)=>{
 
         return (
-        <div style={{
+            <Card 
+            sx={{ maxWidth: 345,minWidth:250  }} style={{ background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' ,paddingTop:'1em'}} 
+>
+  <CardActionArea
+    onClick={() => {
+      window.location.href = `/testing3/${x.id}`;
+    }}
+  >
+    <img 
+     style={{width:'20em' ,height:'20em'}}
+      src={x.ProfileImage} 
+      alt="Event"
+    />
 
-            maxWidth: '20em',
-           
-            display: 'flex',
-            flexDirection:'column',
-            justifyContent: 'center',
-            border:'2px solid white',
-            color:'white',
-            gap:'5px'
-          }} onClick={()=>{
+    <CardContent 
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+       
+        color: 'white',
+        gap: '5px',
+        padding: '1em'
+      }}
+    >
+      <h2>{x.Name}</h2>
 
-            window.location.href=`/testing3/${x.id}`
-        }}>
-             
-         <l>{x.Name}  </l> 
-  
-         <l>Created by {x.Creator}  </l> 
-  
-         <l>{x.Description}  </l> 
-  
-         
-        </div>
+      <div style={{display:'flex',gap:'3px',flexWrap:'wrap',justifyContent:'center'}}>
+
+      <Button variant="outlined" onClick={()=>{
+
+        window.location.href=`/testing3/${x.id}`
+        }}><OpenInNewIcon/></Button>
+
+      <Button variant="outlined"><ShareIcon/></Button>
+
+      <Button variant="outlined" style={{border:'0.08px solid red',color:'red'}}><LogoutIcon/></Button>
+
+     
+
+
+      </div>
+     
+     
+    </CardContent>
+  </CardActionArea>
+</Card>
 
        ) })}
+       </div>
+<br></br> <br></br><br></br>
+
+{showCreateDiv && (
+  <div
+    style={{
+      width: '100vw',
+      height: '100vh',
+      padding: '20px',
+      position: 'fixed',
+      top: '0px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      color: 'white',
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      borderRadius: '10px',
+      textAlign: 'center',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      zIndex: 9999,
+      animation: 'popupAnimation 0.5s ease',
+      overflowY: 'auto',
+      backdropFilter: 'blur(10px)'
+    }}
+  >
+    <div
+      style={{
+        width: '100%',
+        textAlign: 'left',
+        cursor: 'pointer'
+      }}
+      onClick={() => {
+        setShowCreateDiv(false);
+      }}
+    >
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <CancelIcon style={{ left: '2px' }} fontSize="small" />
+    </div>
+
+    <br />
+
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '2em'
+      }}
+    >
+      <div>
+        <input
+          type="file"
+          accept="image/*"
+          id="fileInput"
+          onChange={handleImageUpload}
+          style={{ display: 'none' }}
+        />
+
+        {imageUrl.length === 0 && (
+          <center>
+            <label
+              htmlFor="fileInput"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundImage: `url(${uploadImg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                color: 'white',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textShadow: '1px 1px 2px black',
+                border: '0.5px solid #1876d1',
+                width: '250px',
+                height: '250px',
+                objectFit: 'cover'
+              }}
+            ></label>
+            <br />
+            <l style={{ color: '#1876d1', textAlign: 'left' }}>
+              Choose an image for Profile
+            </l>
+          </center>
+        )}
+
+        {imageUrl && (
+          <div style={{ marginTop: '10px' }}>
+            <img
+              src={imageUrl}
+              alt="Uploaded"
+              style={{
+                width: '300px',
+                height: '300px',
+                borderRadius: '50%',
+                objectFit: 'cover'
+              }}
+            />
+          </div>
+        )}
+
+        <br />
+        <br />
+
+        {imageUrl.length !== 0 && (
+          <center>
+            <label
+              htmlFor="fileInput"
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#4A90E2',
+                color: 'white',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              Change Picture
+            </label>
+          </center>
+        )}
+      </div>
+
+      <input
+        style={{
+          fontSize: '16px',
+          width: '15em',
+          backgroundColor: 'black',
+          color: 'white',
+          height: '2em',
+          borderRadius: '6px',
+          border: '0.5px solid #1876d1'
+        }}
+        placeholder="Name of the community"
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+
+      <textarea
+        placeholder="Enter Description"
+        rows="10"
+        cols="10"
+        style={{
+          fontSize: '16px',
+          width: '15em',
+          backgroundColor: 'black',
+          color: 'white',
+          borderRadius: '6px',
+          border: '0.5px solid #1876d1'
+        }}
+        onChange={(e) => setDescription(e.target.value)}
+      ></textarea>
+
+      <Button
+        variant="contained"
+        style={{ width: '18em' }}
+        onClick={() => {
+          createCommunity();
+        }}
+      >
+        Create Community
+      </Button>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+  </div>
+)}
 
 
+<Fab 
+  color="primary" 
+  aria-label="add"  
+  size="large" 
+  style={{
+    position: 'fixed',
+    bottom: '5%',
+    right: '10px',
+  }}
+
+  onClick={()=>{
+
+    setShowCreateDiv(true)
+  }}
+>
+  <AddIcon />
+</Fab>
+
+<ToastContainer/>
     </div>
   );
 };
+
+
+
 
 export default Chat;
 
