@@ -543,12 +543,15 @@ function Chat() {
 
       {/* Input Section */}
       <div style={{
+        position:'fixed',
         padding: '10px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderTop: '1px solid #444',
         backgroundColor: 'yellow',
+        bottom:'0px',
+        width:'100%',
       }}>
         <input
           style={{
@@ -560,6 +563,7 @@ function Chat() {
             border: '1px solid #555',
             backgroundColor: '#111',
             color: 'white'
+            
           }}
           value={makeComment}
           onChange={(e) => setMakeComment(e.target.value)}
