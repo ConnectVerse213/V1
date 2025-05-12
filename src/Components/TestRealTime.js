@@ -205,7 +205,8 @@ const Chat = () => {
           }}>
             <br></br>
             
-<br></br><br></br>
+<br></br><br></br><br></br>
+<br></br><br></br><br></br>
            
       
           
