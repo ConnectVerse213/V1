@@ -425,10 +425,9 @@ function Home2() {
     <div>
      <br></br>
            <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="contained"/>
-           <hr></hr>
+          
     
-
-     
+           <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
 
 
   

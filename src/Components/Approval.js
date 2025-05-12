@@ -277,8 +277,7 @@ function EventManage() {
       <div id="up"></div>
       <br></br>
       <ResponsiveAppBar  homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
-      <hr></hr>
-      <br></br> 
+      <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
 
       <center>
 

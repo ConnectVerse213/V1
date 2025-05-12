@@ -322,20 +322,23 @@ function EditEvent() {
           Add2
         </button>
       {showDiv &&  <div style={{
-          width: '360px', 
-          height: '300px',
-          padding: '20px', 
-          backgroundColor: 'white', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
+         
+         width: '100vw',
+         height: '100vh',
+         padding: '20px',
+         backgroundColor: 'white',
+         border: '2px solid #1876d1',
+         textAlign: 'center',
+         boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+         position: 'fixed',
+         top: 0,
+         left: 0,
+         zIndex: 9999,
+         animation: 'popupAnimation 0.5s ease',
+         // Optional for background blur effect
+         backdropFilter: 'blur(10px)', // Only works with transparent background
+          
+     
           
         }}>
           <h1>Questions</h1>

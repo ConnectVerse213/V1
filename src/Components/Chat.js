@@ -267,8 +267,7 @@ function Chat() {
     <div>
         <br></br>
          <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
-         <hr></hr>
-            <br></br> <br></br>
+         <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
 
             <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>
          

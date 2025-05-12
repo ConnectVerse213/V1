@@ -584,7 +584,16 @@ function Home2() {
   return (
     <div>
       <br></br>
-           <ResponsiveAppBar homeButtonStyle="contained" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
+
+      {/* <div style={{top:'0',position:'fixed',zIndex:'999999999',width:'100%',backgroundColor:'black'}}>
+        <br></br>
+           <ResponsiveAppBar homeButtonStyle="contained" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined" />
+
+           </div>
+           <br></br><br></br><br></br><br></br> */}
+
+           <ResponsiveAppBar homeButtonStyle="contained" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined" />
+           <br></br><br></br><br></br>
     
 
 {showConfetti && <Confetti 

@@ -45,6 +45,7 @@ import eventpageBackground from '../assets/images/coinBackground2.gif'
 import eventpageEntireBackground from '../assets/images/eventBackground5.gif'
 import CloseIcon from '@mui/icons-material/Close';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
@@ -250,8 +251,7 @@ function EventPage() {
       <div id="up"></div>
       <br></br>
       <ResponsiveAppBar   homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
-      <hr></hr>
-      <br></br> <br></br>
+      <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
   
         <div className="item" >
 
@@ -447,14 +447,16 @@ function EventPage() {
      
     }}
     >
+      <br></br> <br></br>  <br></br> <br></br> 
 
 <div style={{textAlign:'right',marginRight:'1em'}}>
-     <CloseIcon style={{ color: 'red' }} onClick={()=>{
+     <CancelIcon style={{color:'white'}} onClick={()=>{
       setShowAcceptInvite(false)
      }} />
 
      </div>
-     <br></br>
+     <br></br> 
+   
   
 
       {events.length !== 0 &&

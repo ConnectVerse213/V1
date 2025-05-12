@@ -177,8 +177,8 @@ const QrScanner = () => {
    
 
 <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined" />
-     <hr></hr>
-     <br></br><br></br><br></br><br></br><br></br>
+    
+     <br></br><br></br><br></br><br></br><br></br> <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
       
       <Webcam
         ref={webcamRef}

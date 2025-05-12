@@ -71,7 +71,8 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
   
 
   return (
-    <AppBar position="static" style={{backgroundColor:'black',color:'#1876d1'}}>
+    <AppBar position="static" style={{backgroundColor:'black',color:'#1876d1',position:'fixed',top:'0',zIndex:'99999999999999999999999999999999999999',borderBottom:'1px solid white'}}>
+      <br></br>
       <Container maxWidth="xl" style={{backgroundColor:'black'}}>
         <Toolbar disableGutters>
          

@@ -146,8 +146,7 @@ function ProfileSettings() {
         <br></br>
         <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
     
-        <hr></hr><br></br>
-       <br></br>
+        <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
         <div style={{color:'white', display:'flex',alignItems:'center',gap:'3px',justifyContent:'center'}}><SettingsIcon fontSize="large"/> &nbsp;<l style={{fontSize:'28px'}}> Profile Settings </l></div>
 
         <br></br> 

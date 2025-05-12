@@ -54,6 +54,7 @@ import ResponsiveAppBar from './ResponsiveAppBar';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import CategoryIcon from '@mui/icons-material/Category';
+import PeopleIcon from '@mui/icons-material/People';
 
 
 
@@ -75,7 +76,7 @@ function AdminCreate() {
     const [selectedAddress, setSelectedAddress] = useState("");
     const [startDateTime, setStartDateTime] = useState('2025-04-30T08:00');
     const [endDateTime, setEndDateTime] = useState('2025-05-01T14:00');
-    const [capacity,setCapacity]=useState(50)
+    const [capacity,setCapacity]=useState(0)
     const [isOnline,setIsOnline]=useState(false)
     const [moderatorLink,setModeratorLink]=useState("")
     const [guestLink,setGuestLink]=useState("")
@@ -253,13 +254,8 @@ function AdminCreate() {
       <div id="up"></div>
        <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
       
-         
-               <hr style={{ 
-  
-  border: '0.05px solid white', // A bit thicker for visibility
-  margin: '10px 0' ,
-  color:'white'
-}} />
+       <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
+              
       <br></br>
       
 
@@ -469,50 +465,62 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
     
     setDescription(true)
 
-  }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div></a>
+  }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <l style={{color:'#1876d1'}}>Edit</l></div>}</div></a>
 
    
        
        
         <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em'}}>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em'}}>
 
 
 
-          <div class="tickets" style={{display:'flex',alignItems:'center',marginTop:'2.5%'}} onClick={()=>{
-              notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free &nbsp;
-          <EditIcon fontSize='small'/></div></div>
-          
-          <a href="#up"  style={{ background: "transparent", border: "none" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
-          
-          <div class="capacity" style={{display:'flex',alignItems:'center'}} onClick={()=>{
-            
-              setShowCapacity(true)
          
           
-           
-          }}><div  style={{display:'flex',alignItems:'center'}} ><PeopleAltIcon fontSize='small'/>
-          &nbsp;<l>Capacity</l></div>
-          <div style={{display:'flex',alignItems:'center'}}>{capacity} &nbsp;
-          <EditIcon fontSize='small'/></div>
-                      </div>
+          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
+              notify("Subscribe to premium for paid tickets","light","top-right","warning")
+          }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><ConfirmationNumberIcon fontSize='small'/>
+        &nbsp;<l>Tickets</l></div>
+        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
+        <l style={{color:'#1876d1'}}>Free</l></div>
+                    </div>
 
-        
 
 
-          <div class="capacity" style={{display:'flex',alignItems:'center'}} onClick={()=>{
+    
+
+
+          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
             
             setShowCategory(true)
        
         
          
-        }}><div  style={{display:'flex',alignItems:'center'}} ><CategoryIcon fontSize='small'/>
-        &nbsp;<l>Category</l></div>
-        <div style={{display:'flex',alignItems:'center'}}>{category.slice(0,2)+"..."} &nbsp;
-        <EditIcon fontSize='small'/></div>
+        }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><CategoryIcon fontSize='small'/>
+        &nbsp;<l>Category </l></div>
+        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
+        <l style={{color:'#1876d1'}}>{category.length==0 ? "select" : category.slice(0,6)+"..."}</l></div>
                     </div>
-                      </a>
+          
+          
+                    <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
+            
+            setShowCapacity(true)
+       
+        
+         
+        }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><PeopleIcon fontSize='small'/>
+        &nbsp;<l>Capacity </l></div>
+        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
+        <l style={{color:'#1876d1'}}>{capacity==0 ? "select" :capacity}</l></div>
+                    </div>
+          
+          
+        
+
+
+         
+                   
       
           
           
@@ -550,7 +558,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 <Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 
           backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',}}
+          backgroundRepeat: 'no-repeat'}}
         open={open}
         onClose={handleClose}
         
@@ -644,39 +652,47 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
 
       {description &&  <div style={{
-          width: '330px', 
-          height: '700px',
+          width: '100%', 
+          minHeight:'100%',
+         
           padding: '20px', 
+          position:'fixed',
+          top:'0px',
+          left:'50%',
+          
+         color:'white',
           backgroundColor: 'black', 
-          border: '2px solid #1876d1', 
-          color:'white',
+          border: '2px solid #1876d1',
+          borderRadius:'10px',
+          
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
+        
           transform: 'translateX(-50%)',
-          zIndex: 9999,
+          zIndex: 99999999,
           animation: 'popupAnimation 0.5s ease',
-       backgroundImage:`url(${eventpageBackground})`,
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center center',
-                backgroundRepeat: 'no-repeat',
+          backgroundImage:`url(${eventpageBackground})`,
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
         }}>
+
+            <br></br><br></br><br></br><br></br>
           <h2>Description</h2>
-          <div >
+          <div style={{borderRadius:'10px'}} >
+            <center>
                 {/* Toolbar with buttons */}
-                <div>
-                  <div class="editorIcons">
-                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
+                <div style={{borderRadius:'10px'}}>
+                  <div class="editorIcons" style={{backgroundColor:'#1876d1',width:'20em', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}>
+                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
                  
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
-                  <Button variant="outlined"style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
+                  <Button variant="outlined"style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
                   </div>
                 </div>
-          
+                </center>
                 {/* The editable content area with increased height */}
                 <center>
                 <div
@@ -686,18 +702,20 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
                     border: '1px solid #1876d1', // Optional: Add a border to the editor
                     backgroundColor:'black',width:'20em',
                     color:'white',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    borderRadius:'2px'
                   }}
                 >
                   <EditorContent
                     editor={editor}
+                    
                     style={{
                       padding: '10px', // Optional: Add padding for better layout
                     }}
                   />
                 </div>
                 </center>
-          <br></br>
+        
          
                 {/* Inline CSS to remove focus outline */}
                 <style>
@@ -708,60 +726,70 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
                     }
                   `}
                 </style>
-                <br></br>
+              
           
-                
-               
-              </div>
-     
-          <center>
-          <Button variant="outlined" style={{border:'1px solid red',color:'red'}} onClick={()=>{
+                <center>
+            <div style={{backgroundColor:'black',width:'20em',display:'flex',justifyContent:'center',paddinng:'2em',height:'4em',alignItems:'center', border: '1px solid #1876d1' , borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}}>
+          <Button variant="outlined" style={{border:'1px solid red',color:'red',height:'2em'}} onClick={()=>{
             
             setDescription(false)
            
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  &nbsp;
-          <Button variant="contained"  onClick={()=>{
+          <Button variant="contained" style={{height:'2em'}} onClick={()=>{
             
             setText(editor.getHTML())
             setDescription(false)
             console.log(editor.getHTML())
            
           }}>Save</Button>
+
+</div>
           </center>
+               
+              </div>
+     
+         
         </div>}
- 
 
         {showCapacity &&  <div style={{
-          width: '300px', 
-          height: '300px',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-           backgroundImage:`url(${eventpageBackground})`,
-                    backgroundSize: 'cover', 
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
+            width: '100%', 
+            minHeight:'100%',
+           
+            padding: '20px', 
+            position:'fixed',
+            top:'0px',
+            left:'50%',
+            
+           color:'white',
+            backgroundColor: 'black', 
+            border: '2px solid #1876d1',
+            borderRadius:'10px',
+            
+            textAlign: 'center', 
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          
+            transform: 'translateX(-50%)',
+            zIndex: 99999999,
+            animation: 'popupAnimation 0.5s ease',
+            backgroundImage:`url(${eventpageBackground})`,
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
         }}>
+            <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+            <center>
+            <div style={{backgroundColor:'black',padding:'2em',width:'20em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
           <center>
-          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white',width:'80%'}}onChange={(e)=>{
+          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
           </center>
           <br></br>
-          <br></br><div class="subscribe" style={{display:'flex',alignItems:'flex-start'}}><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
+          <br></br><div class="subscribe"><AddCardIcon/><l>Buy Premium for unlimited capacity </l></div>
           <br></br><l></l>
           <div >
          
@@ -780,29 +808,44 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
             setShowCapacity(false)
            
           }}>Save</Button>
+
+          <br></br>
+          
+          </center>
+
+          </div>
+
           </center>
         </div>}
- 
+
         {showShowCategory &&  <div style={{
-          width: '300px', 
+            width: '100%', 
+            minHeight:'100%',
+           
+            padding: '20px', 
+            position:'fixed',
+            top:'0px',
+            left:'50%',
+            
+           color:'white',
+            backgroundColor: 'black', 
+            border: '2px solid #1876d1',
+            borderRadius:'10px',
+            
+            textAlign: 'center', 
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-           backgroundImage:`url(${eventpageBackground})`,
-                    backgroundSize: 'cover', 
-                    backgroundPosition: 'center center',
-                    backgroundRepeat: 'no-repeat',
+            transform: 'translateX(-50%)',
+            zIndex: 99999999,
+            animation: 'popupAnimation 0.5s ease',
+            backgroundImage:`url(${eventpageBackground})`,
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
         }}>
+          <br></br>  <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+<center>
+          <div style={{backgroundColor:'black',padding:'2em',width:'20em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
           <h2 style={{color:'white'}}>Category</h2>
          
           <br></br>
@@ -814,7 +857,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           }} placeholder='Layer1,Defi'>{category}</p>
           
           <br></br> <br></br>
-          <button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+          <Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Defi".toLowerCase())) {
     setCategory(category.length === 0 ? "Defi" : category + ",Defi");
     categoryColor[0]="#1876d1"
@@ -832,9 +875,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Defi"))+category.slice(category.indexOf(",Defi")+5));
     }
   }
-}}>Defi</button>
+}}>Defi</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("GameFi".toLowerCase())) {
     setCategory(category.length === 0 ? "GameFi" : category + ",GameFi");
     categoryColor[1]="#1876d1"
@@ -852,9 +895,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",GameFi"))+category.slice(category.indexOf(",GameFi")+7));
     }
   }
-}}>GameFi</button>
+}}>GameFi</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined"style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("AI Agents".toLowerCase())) {
     setCategory(category.length === 0 ? "AI Agents" : category + ",AI Agents");
     categoryColor[2]="#1876d1"
@@ -872,9 +915,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",AI Agents"))+category.slice(category.indexOf(",AI Agents")+11));
     }
   }
-}}>AI Agents</button>
+}}>AI Agents</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Layer 1".toLowerCase())) {
     setCategory(category.length === 0 ? "Layer 1" : category + ",Layer 1");
     categoryColor[3]="#1876d1"
@@ -892,9 +935,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Layer 1"))+category.slice(category.indexOf(",Layer 1")+8));
     }
   }
-}}>Layer 1</button>
+}}>Layer 1</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined"style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Layer 2".toLowerCase())) {
     setCategory(category.length === 0 ? "Layer 2" : category + ",Layer 2");
   } else {
@@ -908,9 +951,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Layer 2"))+category.slice(category.indexOf(",Layer 2")+8));
     }
   }
-}}>Layer 2</button>
+}}>Layer 2</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Layer 3".toLowerCase())) {
     setCategory(category.length === 0 ? "Layer 3" : category + ",Layer 3");
   } else {
@@ -924,9 +967,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Layer 3"))+category.slice(category.indexOf(",Layer 3")+8));
     }
   }
-}}>Layer 3</button>
+}}>Layer 3</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("LLM".toLowerCase())) {
     setCategory(category.length === 0 ? "LLM" : category + ",LLM");
   } else {
@@ -940,9 +983,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",LLM"))+category.slice(category.indexOf(",LLM")+4));
     }
   }
-}}>LLM</button>
+}}>LLM</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Other Technologies".toLowerCase())) {
     setCategory(category.length === 0 ? "Other Technologies" : category + ",Other Technologies");
   } else {
@@ -956,9 +999,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Other Technologies"))+category.slice(category.indexOf(",Other Technologies")+19));
     }
   }
-}}>Other Technologies</button>
+}}>Other Technologies</Button>
 
-<button style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
+<Button variant="outlined" style={{borderRadius:'5px', margin: '5px'}} onClick={()=>{
   if(!category.toLowerCase().includes("Non Tech".toLowerCase())) {
     setCategory(category.length === 0 ? "Non Tech" : category + ",Non Tech");
   } else {
@@ -972,7 +1015,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
       setCategory(category.slice(0,category.indexOf(",Non Tech"))+category.slice(category.indexOf(",Non Tech")+9));
     }
   }
-}}>Non Tech</button>
+}}>Non Tech</Button>
 
           
           </center>
@@ -996,6 +1039,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
            
           }}>Save</Button>
+          </center>
+
+          </div>
           </center>
         </div>}
  

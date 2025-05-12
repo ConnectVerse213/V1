@@ -130,8 +130,7 @@ const Chat = () => {
     <div>
      <br></br>
          <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
-         <hr></hr>
-            <br></br> <br></br>
+         <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
       <Button variant="outlined" onClick={()=>{
            setShowCreateDiv(true)
       }}>Create  &nbsp;<AddCircleIcon/></Button>
@@ -287,6 +286,7 @@ const Chat = () => {
       backdropFilter: 'blur(10px)'
     }}
   >
+     <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
     <div
       style={{
         width: '100%',

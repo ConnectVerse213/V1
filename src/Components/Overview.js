@@ -69,6 +69,7 @@ import IconButton from '@mui/material/IconButton';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import { useParams } from 'react-router-dom';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -392,14 +393,8 @@ function AdminCreate() {
       
       <div id="up"></div>
        <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
-       <hr style={{ 
-  
-  border: '0.05px solid white', // A bit thicker for visibility
-  margin: '10px 0' ,
-  color:'white'
-}} />
-       <br></br>
-
+       <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
+     
        <center>
        
        
@@ -853,39 +848,47 @@ function AdminCreate() {
 
 
       {description &&  <div style={{
-          width: '330px', 
-          height: '700px',
+          width: '100%', 
+          minHeight:'100%',
+         
           padding: '20px', 
+          position:'fixed',
+          top:'0px',
+          left:'50%',
+          
+         color:'white',
           backgroundColor: 'black', 
-          border: '2px solid #1876d1', 
-          color:'white',
+          border: '2px solid #1876d1',
+          borderRadius:'10px',
+          
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
+        
           transform: 'translateX(-50%)',
-          zIndex: 9999,
+          zIndex: 99999999,
           animation: 'popupAnimation 0.5s ease',
           backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
         }}>
+
+            <br></br><br></br><br></br><br></br>
           <h2>Description</h2>
-          <div >
+          <div style={{borderRadius:'10px'}} >
+            <center>
                 {/* Toolbar with buttons */}
-                <div>
-                  <div class="editorIcons">
-                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
+                <div style={{borderRadius:'10px'}}>
+                  <div class="editorIcons" style={{backgroundColor:'#1876d1',width:'20em', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}>
+                  <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
                  
-                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
-                  <Button variant="outlined"style={{borderRadius:'0', border: '1px solid #1876d1'}} onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
+                  <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleBulletList().run()}><FormatListBulletedIcon/></Button>
+                  <Button variant="outlined"style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleOrderedList().run()}><FormatListNumberedIcon/></Button>
                   </div>
                 </div>
-          
+                </center>
                 {/* The editable content area with increased height */}
                 <center>
                 <div
@@ -895,7 +898,8 @@ function AdminCreate() {
                     border: '1px solid #1876d1', // Optional: Add a border to the editor
                     backgroundColor:'black',width:'20em',
                     color:'white',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    borderRadius:'2px'
                   }}
                 >
                   <EditorContent
@@ -907,7 +911,7 @@ function AdminCreate() {
                   />
                 </div>
                 </center>
-          <br></br>
+        
          
                 {/* Inline CSS to remove focus outline */}
                 <style>
@@ -918,50 +922,61 @@ function AdminCreate() {
                     }
                   `}
                 </style>
-                <br></br>
+              
           
-                
-               
-              </div>
-     
-          <center>
-          <Button variant="outlined" style={{border:'1px solid red',color:'red'}} onClick={()=>{
+                <center>
+            <div style={{backgroundColor:'black',width:'20em',display:'flex',justifyContent:'center',paddinng:'2em',height:'4em',alignItems:'center', border: '1px solid #1876d1' , borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}}>
+          <Button variant="outlined" style={{border:'1px solid red',color:'red',height:'2em'}} onClick={()=>{
             
             setDescription(false)
            
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  &nbsp;
-          <Button variant="contained"  onClick={()=>{
+          <Button variant="contained" style={{height:'2em'}} onClick={()=>{
             
             setText(editor.getHTML())
             setDescription(false)
             console.log(editor.getHTML())
            
           }}>Save</Button>
+
+</div>
           </center>
+               
+              </div>
+     
+         
         </div>}
  
 
         {showCapacity &&  <div style={{
-          width: '360px', 
-          height: '300px',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-          backgroundImage:`url(${eventpageBackground})`,
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
+            width: '100%', 
+            minHeight:'100%',
+           
+            padding: '20px', 
+            position:'fixed',
+            top:'0px',
+            left:'50%',
+            
+           color:'white',
+            backgroundColor: 'black', 
+            border: '2px solid #1876d1',
+            borderRadius:'10px',
+            
+            textAlign: 'center', 
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          
+            transform: 'translateX(-50%)',
+            zIndex: 99999999,
+            animation: 'popupAnimation 0.5s ease',
+            backgroundImage:`url(${eventpageBackground})`,
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
         }}>
+            <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+            <center>
+            <div style={{backgroundColor:'black',padding:'2em',width:'20em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
@@ -971,7 +986,7 @@ function AdminCreate() {
           }} placeholder='Enter Capacity'></input>
           </center>
           <br></br>
-          <br></br><div class="subscribe"><AddCardIcon/><l>Subscribe to Premium for unlimited capacity </l></div>
+          <br></br><div class="subscribe"><AddCardIcon/><l>Buy Premium for unlimited capacity </l></div>
           <br></br><l></l>
           <div >
          
@@ -994,35 +1009,52 @@ function AdminCreate() {
           <br></br>
           
           </center>
+
+          </div>
+
+          </center>
         </div>}
 
         {showDiv &&  <div style={{
-          width: '360px', 
-          height: '350px',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          left: '50%', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-          backgroundImage:`url(${eventpageBackground})`,
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
+           width: '100%', 
+           minHeight:'100%',
+          
+           padding: '20px', 
+           position:'fixed',
+           top:'0px',
+           left:'50%',
+           
+          color:'white',
+           backgroundColor: 'black', 
+           border: '2px solid #1876d1',
+           borderRadius:'10px',
+           blur:'50px', 
+           textAlign: 'center', 
+           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+         
+           transform: 'translateX(-50%)',
+           zIndex: 99999999,
+           animation: 'popupAnimation 0.5s ease',
+           backgroundImage:`url(${eventpageBackground})`,
+           backgroundSize: 'cover', 
+           backgroundPosition: 'center center',
+           backgroundRepeat: 'no-repeat',
         }}>
+            <br></br> <br></br>   <br></br>  <br></br> <br></br> <br></br><br></br>  <br></br> <br></br> <br></br>
 
+            <center>
 
- 
-        <CloseIcon style={{marginTop:'2px',marginLeft:'90%',color:'red'}} onClick={()=>{
+            <div style={{backgroundColor:'black',padding:'2em',width:'18em',paddingBottom:'3em', border: '1px solid #1876d1',borderRadius:'10px'}}>
+            
+            <CancelIcon style={{marginTop:'2px',marginLeft:'90%',color:'white'}} onClick={()=>{
 
             setShowDiv(false)
-        }} />
+            }} />
+                        
+            <br></br> 
+
+ 
+       
 
         <br></br>
         
@@ -1043,34 +1075,40 @@ function AdminCreate() {
 
             <h3 style={{color:'white'}}>Questions</h3>
             <br></br>
+
+            <div style={{backgroundColor:'#1876d1',display:'flex',justifyContent:'flex-start',flexWrap:'wrap'}}>
             
-            <Button variant="outlined" onClick={()=>{
+            <Button variant="contained" style={{borderRadius:'0',width:'50%'}} onClick={()=>{
                  setNewQuestion("")
               setShowTextOption(true)
             }}> <TextFormatIcon/> Text </Button> 
 
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="contained" style={{borderRadius:'0',width:'50%'}} onClick={()=>{
              setNewQuestion("")
             setShowOptionOption(true)
           }}><ListIcon/> Options</Button>
 
 
-          <Button variant="outlined" onClick={()=>{
+          <Button variant="contained" style={{borderRadius:'0',width:'50%'}}onClick={()=>{
 
             setNewQuestion("Twitter")
             setShowSocialsOption(true)
             
-          }}><AccountCircleIcon/> Socials</Button>
-          <Button variant="outlined" onClick={()=>{
+          }}><AccountCircleIcon/> &nbsp;Socials</Button>
+
+          <Button variant="contained" style={{borderRadius:'0',width:'50%'}} onClick={()=>{
             setNewQuestion("")
             setShowWebsiteOption(true)
            
           }}><LinkIcon/> Website</Button>
-          <Button variant="outlined" onClick={()=>{
+
+          {/* <Button variant="contained" style={{borderRadius:'0'}} onClick={()=>{
              setNewQuestion("")
             setShowCheckboxOption(true)
-          }}><CheckBoxIcon/>Checkbox</Button>
+          }}><CheckBoxIcon/>Checkbox</Button> */}
+
+</div>
         
             </div>}
 
@@ -1139,7 +1177,7 @@ function AdminCreate() {
           Add
         </button>
 
-
+          
               </div>
    }
 
@@ -1360,11 +1398,12 @@ function AdminCreate() {
 
 
               </div>
+             
    }
 
           
-          
-         
+          </div>
+          </center>
           
         </div>}
         <Dialog
@@ -1373,6 +1412,7 @@ function AdminCreate() {
   onClose={handleClose}
   TransitionComponent={Transition}
 >
+    <br></br> <br></br> <br></br> <br></br> 
   <AppBar sx={{ position: 'relative' }}>
     <Toolbar style={{ backgroundColor: 'black' }}>
       <IconButton
