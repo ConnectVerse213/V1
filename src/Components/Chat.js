@@ -494,7 +494,7 @@ function Chat() {
       <div ref={scrollRef} style={{
         flex: 1,
 
-        maxHeight:'50%',
+        maxHeight:'100%',
         overflowY: 'auto',
         padding: '10px',
         backgroundColor: 'red',
@@ -554,6 +554,7 @@ function Chat() {
         backgroundColor: 'yellow',
         bottom:'0px',
         width:'100%',
+        zIndex:'999999999999'
       }}>
         <input
           style={{
