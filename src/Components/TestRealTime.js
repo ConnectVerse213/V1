@@ -21,6 +21,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import Confetti from 'react-confetti'
 import { Menu, Item, useContextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import './TestRealTime.css'
 
@@ -32,6 +33,8 @@ const Chat = () => {
   const [isReply,setIsReply]=useState("")
   const [showChatDiv,setShowChatDiv]=useState(false)
   const [showConfetti,setShowConfetti]=useState(false)
+  const [showDeleteDiv,setShowDeleteDiv]=useState(false)
+  const [deleteIndex,setDeleteIndex] =useState(-10)
 
 
 const MENU_ID = "message-options";
@@ -105,6 +108,42 @@ const handleContextMenu = (event) => {
     // Cleanup listener on unmount
     return () => unsubscribe();
   }, []);
+
+
+  const handleDelete=async()=>{
+
+            let index=deleteIndex
+
+       
+            const data = await getDocs(collection(db, "community"));
+                                    
+            let communities=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+         
+            let filteredArray=communities.filter(obj=>obj.id==community_id)
+
+           
+            let newChats=filteredArray[0].Chats.filter((_, i) => i !== index)
+
+
+
+        
+         
+            const userDoc1 = doc(db, "community", filteredArray[0].id);
+
+            const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:newChats,Timestamp: filteredArray[0].Timestamp,Participants:[...filteredArray[0].Participants]}
+
+            await updateDoc(userDoc1, newFields1);
+
+            notifyCustom("message deleted for everyone","success")
+            setDeleteIndex(-10)
+            setShowDeleteDiv(false)
+
+
+
+        
+
+
+  }
 
   useEffect(()=>{
   
@@ -318,9 +357,8 @@ const handleContextMenu = (event) => {
              
             }}  >
               { messages.Chats.map((x, index) => (
-                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} onContextMenu={handleContextMenu}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd} >
+
+                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} >
                   <div>
                     <img
                       src={x.ProfileImage}
@@ -333,7 +371,11 @@ const handleContextMenu = (event) => {
                       }}
                     />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}} >
+
+              
+          
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}}  onContextMenu={handleContextMenu}
+              >
                     <div style={{display:'flex',gap:'7px'}} id={`ChatId=${x.ChatId}`} >
 
                     <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName!=localStorage.getItem('userName')?x.SenderUserName : "You"}</b></label>
@@ -402,10 +444,24 @@ const handleContextMenu = (event) => {
 
      
 
-                     <div style={{display:'flex',justifyContent:'flex-start' ,gap:'4px'}}></div>
-                   
-                        <label style={{color: 'white',fontSize: '14px'}}> Reply</label>
+                     <div style={{display:'flex',justifyContent:'flex-start' ,gap:'10px',alignItems:'center'}}>
 
+
+                     <label style={{color: 'white',fontSize: '14px'}}> Reply</label>
+
+                     {(messages.Creator==localStorage.getItem('email') || x.SenderUserName==localStorage.getItem('userName')) && <label style={{color: 'white',fontSize: '14px'}} onClick={(e)=>{
+
+                        e.stopPropagation()
+                        setDeleteIndex(index)
+                        setShowDeleteDiv(true)
+                     }}>Delete</label>
+                        }
+
+
+
+                     </div>
+                   
+                       
                        
                        
                     </div>
@@ -415,7 +471,14 @@ const handleContextMenu = (event) => {
       
                   
                 </div>
-              ))}
+              ))
+
+
+            
+              
+              }
+
+
               <br></br> <br></br> <br></br>
             </div>
       <br></br> <br></br> <br></br>
@@ -573,11 +636,56 @@ const handleContextMenu = (event) => {
 )}
 
 
+{showDeleteDiv && (
+        <div style={{
+
+            position:'fixed',
+            top:'10px',
+          width: '300px', 
+          height: '150px',
+          padding: '20px', 
+          backgroundColor: '#fff', 
+          border: '1px solid #ddd', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '30%', 
+          left: '50%', 
+          transform: 'translateX(-50%)',
+          animation: 'popupAnimation 0.5s ease',
+          zIndex:'99999999999999999',
+
+          border:'2px solid #1876d1'
+
+        }}>
+            <center>
+          <h3>Are you sure you want to delete this message ?</h3>
+          <br></br>
+          <Button style={{height:'3em'}} variant="outlined" onClick={async()=>{
+
+           
+            handleDelete()
+         
+
+
+          }}>Yes</Button>
+
+          &nbsp; 
+
+        <Button style={{height:'3em'}} variant="outlined" onClick={async()=>{
+
+        setShowDeleteDiv(false)
+
+
+
+
+        }}>No</Button>
+          </center>
+          <br></br>
+          </div>
+)}
     
-<Menu id={MENU_ID} style={{backgroundColor:'white',zIndex:'999999999999999999999999',color:'black'}}>
-                        <Item onClick={() => alert('Pinned')}>📌 Pin</Item>
-                        <Item onClick={() => alert('Deleted')}>🗑️ Delete</Item>
-                    </Menu>
+
         
       </div>
   
