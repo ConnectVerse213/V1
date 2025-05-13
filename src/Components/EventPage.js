@@ -360,11 +360,12 @@ function EventPage() {
 {
   events.length!=0 && events[0].Type!="online" && <div style={{paddingLeft:'1.5em'}}>
 <a href="#up" style={{textDecoration:'none'}}>
-    <button class="button-85" style={{height:'3em'}} type="submit" onClick={()=>{
+  <br></br>
+    <button class="button-85" style={{height:'2.5em'}} type="submit" onClick={()=>{
 
       setShowAcceptInvite(true)
     }}>Accept Invitation</button></a>
-
+<br></br>
 
   </div>
 }
@@ -440,14 +441,11 @@ function EventPage() {
     
       zIndex: 9999,
       
-       backgroundImage:`url(${eventpageBackground})`,
-                          backgroundSize: 'cover', 
-                          backgroundPosition: 'center center',
-                          backgroundRepeat: 'no-repeat',
+       backgroundColor:'rgb(15,16,17)'
      
     }}
     >
-      <br></br> <br></br>  <br></br> <br></br> 
+      <br></br> <br></br>  <br></br> <br></br> <br></br> 
 
 <div style={{textAlign:'right',marginRight:'1em'}}>
      <CancelIcon style={{color:'white'}} onClick={()=>{
@@ -455,9 +453,9 @@ function EventPage() {
      }} />
 
      </div>
-     <br></br> 
-   
-  
+     <br></br>  <br></br>  <br></br>  <br></br> 
+   <center>
+  <div style={{width:'40vh'}}>
 
       {events.length !== 0 &&
         events[0].Questions.map((question, index) => {
@@ -472,12 +470,12 @@ function EventPage() {
             <div key={index} >
 
 
-              <div >
-              {type !== null && type!=="checkbox" && type!=="options" && <label style={{margin:'2em',color:'white'}}>{label}</label>}
+              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',marginBottom:'2em',gap:'10px'}}>
+              {type !== null && type!=="checkbox" && type!=="options" && <label style={{color:'rgb(207,207,207)'}}><b>{label}</b></label>}
 
-              {type==null && <label style={{margin:'2em',color:'white'}}>{question}</label>}
+              {type==null && <label style={{color:'rgb(207,207,207)'}}><b>{question}</b></label>}
               
-          <br></br>
+         
 
               {/* Text input (default or empty type) */}
 
@@ -486,7 +484,7 @@ function EventPage() {
                   type="text"
                   class="textInput"
 
-                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
+                  style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
 
                   value={`${localStorage.getItem('email')}`}
                   
@@ -500,7 +498,7 @@ function EventPage() {
                             type="text"
                             class="textInput"
 
-                            style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
+                            style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
 
                             
                             
@@ -514,7 +512,7 @@ function EventPage() {
                   type="text"
                   class="textInput"
 
-                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',border:'none'}}
+                  style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
                   
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
@@ -526,7 +524,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="textInput"
-                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7x',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',backgroundColor:'rgb(46,47,48)'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -537,7 +535,7 @@ function EventPage() {
                 <input
                   type="text"
                   className="textInput"
-                  style={{fontSize:'16px',height:'2em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',backgroundColor:'rgb(46,47,48)'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
                 />
@@ -547,8 +545,8 @@ function EventPage() {
               {type === 'checkbox' && (
                 <div >
 
-                  <l style={{marginLeft:'2em',marginBottom:'2em',color:'white'}}>{label}</l>
-                  <input type="checkbox" value="yes"  onChange={(e) =>handleChange(index, e.target.value.toString())}/>
+                  <l style={{marginBottom:'2em',width:'100%',color:'rgb(207,207,207)'}}><b>{label}</b></l>
+                  <input type="checkbox" value="yes" style={{backgroundColor:'rgb(46,47,48)',color:'white'}} onChange={(e) =>handleChange(index, e.target.value.toString())}/>
                 </div>
               )}
 
@@ -562,13 +560,13 @@ function EventPage() {
 
                
 
-               <div>
-               <l style={{height:'2em',margin:'2em',color:'white'}}> {label}</l>
-                <br></br>
+               <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'5px',width:'100%'}}> 
+               <l style={{height:'2em',color:'rgb(207,207,207)'}}> <b>{label}</b></l>
+                
                 <select
                   class="textInput"
                   value={selectedOption}
-                  style={{fontSize:'16px',height:'2.5em',margin:'2em',borderRadius:'10px',backgroundColor:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2.5em',width:'100%',borderRadius:'10px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none'}}
                   onChange={(event)=>{
                     
 
@@ -591,7 +589,7 @@ function EventPage() {
                     </option>
                   ))}
                 </select>
-                <br></br>  <br></br>
+                
 
          
 
@@ -611,15 +609,19 @@ function EventPage() {
         }
 
 <center>
-  <br></br>  <br></br>
+  
 
+  {/* class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} */}
 
-  <button  class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} onClick={handleSubmit} >
-        Register
-      </button>
+  <Button  variant="contained" class="button-85"  style={{width:'100%',height:'2.5em',borderRadius:'7px',fontSize:'16px',border:'none',color:'rgb(207,207,207)'}} onClick={handleSubmit} >
+      <b> Register </b> 
+      </Button>
     
       
      
+      </center>
+
+      </div>
       </center>
       <br></br><br></br> <br></br><br></br> <br></br><br></br> <br></br><br></br> <br></br><br></br>
     </div>
