@@ -42,6 +42,7 @@ import mapImage from '../assets/images/mapImage.svg'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ResponsiveAppBar from './ResponsiveAppBar';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
+import eventpageBackground2 from '../assets/images/eventBackgroundVideo.mp4'
 import eventpageEntireBackground from '../assets/images/eventBackground5.gif'
 import CloseIcon from '@mui/icons-material/Close';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
@@ -411,7 +412,7 @@ function EventPage() {
        <br></br>
 
       
-
+     
 
        {showAcceptInvite && 
 
@@ -439,23 +440,46 @@ function EventPage() {
       height: '100vh',
       overflowY: 'auto',
     
-      zIndex: 9999,
+      zIndex: 99999,
       
-       backgroundColor:'rgb(15,16,17)'
+       backgroundColor:'black'
+
+      
+
+                 
      
     }}
     >
-      <br></br> <br></br>  <br></br> <br></br> <br></br> 
 
-<div style={{textAlign:'right',marginRight:'1em'}}>
+<video
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          objectFit: "cover",
+          zIndex: 0,
+        }}
+        src={eventpageBackground2} 
+      />
+      <br></br> <br></br>  <br></br>   <br></br> <br></br>  <br></br><br></br>  <br></br>  
+
+
+   <center >
+  <div style={{width:'40vh',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' ,padding:'2em',border:'2px solid grey',borderRadius:'10px'}}>
+
+  <div style={{textAlign:'right'}}>
      <CancelIcon style={{color:'white'}} onClick={()=>{
       setShowAcceptInvite(false)
      }} />
 
      </div>
-     <br></br>  <br></br>  
-   <center>
-  <div style={{width:'40vh'}}>
+     <br></br>  
 
       {events.length !== 0 &&
         events[0].Questions.map((question, index) => {
