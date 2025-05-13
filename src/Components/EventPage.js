@@ -467,7 +467,7 @@ function EventPage() {
         }}
         src={eventpageBackground2} 
       />
-      <br></br> <br></br>  <br></br>   <br></br> <br></br>  <br></br><br></br>  <br></br>  
+      <br></br> <br></br>  <br></br>   <br></br> <br></br>  <br></br>
 
 
    <center >
