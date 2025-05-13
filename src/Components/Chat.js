@@ -266,7 +266,8 @@ function Chat() {
   return (
     <div>
         <br></br>
-         <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>
+        {showChat2Div.length==0 &&     <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" chatButtonStyle="contained" dashboardButtonStyle="outlined"/>}
+     
          <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
 
             <div style={{display:'flex',justifyContent:'center', gap:'5px'}}>

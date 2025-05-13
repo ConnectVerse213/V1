@@ -625,7 +625,7 @@ function Home2() {
           <p>You just won {parseInt(localStorage.getItem('coins'))-parseInt(coins)} coins !</p>
           <br></br>
           <center>
-          <button class="button-85" onClick={()=>{
+          <button class="button-85" style={{height:'3em'}} onClick={()=>{
             if(localStorage.getItem('coins') && localStorage.getItem('coins')>=1 )
             {
              setShowDiv(false)
@@ -633,6 +633,10 @@ function Home2() {
              localStorage.setItem('count',1)
              notifyGift(parseInt(localStorage.getItem('coins'))-coins)
              setCoins(parseInt(localStorage.getItem('coins')))
+
+             setInterval(()=>{
+              window.location.reload()
+             },3000)
             }
             
            
@@ -1219,7 +1223,7 @@ function Home2() {
 </div>
 <br></br><br></br><br></br><br></br><br></br>
 
-<ToastContainer/>
+<ToastContainer style={{zIndex:'99999999999'}}/>
 <Box
   sx={{
     position: 'fixed',   // Fixes it relative to the viewport

@@ -234,7 +234,7 @@ function ProfileSettings() {
         </center>
 <br></br>
 
-      <ToastContainer/>
+      <ToastContainer style={{zIndex:'99999999999'}}/>
     </div>
   )
 }
