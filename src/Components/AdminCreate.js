@@ -411,33 +411,39 @@ function AdminCreate() {
 
 {
 
-isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%' }}>
  
 
-<div class="location2" style={{cursor:'pointer'}}>
 
-  <center>
 
-    <div style={{display:'flex',alignItems:'center',gap:'5px',paddingLeft:'10px'}} >
+
+    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between', width:'100%',padding:'0.5em'}} >
       <VideoCallIcon/>
-<div >
+
+  <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
   <input placeholder="Moderator Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
     setModeratorLink(e.target.value)
   }}></input>
-  <br></br>   
+
   <input placeholder="Guest Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
     setGuestLink(e.target.value)
   }}></input>
-<br></br>
+
 </div>
 
 <l style={{color:'#1876d1'}} onClick={()=>{
   setIsOnline(false)
 }}><i>or <br></br> Offline Event </i></l>
 
+
+
+
+
+
 </div>
-  </center>
-</div>
+
+
+
 
   </div>
 
@@ -553,7 +559,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
     
        
-<ToastContainer/>
+<ToastContainer style={{zIndex:'999999999999999999'}} />
 
 <Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 
