@@ -453,7 +453,7 @@ function EventPage() {
      }} />
 
      </div>
-     <br></br>  <br></br>  <br></br>  <br></br> 
+     <br></br>  <br></br>  <br></br>  
    <center>
   <div style={{width:'40vh'}}>
 
@@ -482,7 +482,7 @@ function EventPage() {
               {(type === null && question.slice(0,5)==='Email' && localStorage.getItem('email')) && (
                 <input
                   type="text"
-                  class="textInput"
+                  
 
                   style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
 
@@ -496,7 +496,7 @@ function EventPage() {
           {(type === null && question.slice(0,5)==='Email' && !localStorage.getItem('email')) && (
                           <input
                             type="text"
-                            class="textInput"
+                            
 
                             style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
 
@@ -510,7 +510,7 @@ function EventPage() {
               {(type === null && question.slice(0,5)!=='Email' || type === '') && (
                 <input
                   type="text"
-                  class="textInput"
+                
 
                   style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',border:'none',backgroundColor:'rgb(46,47,48)',color:'white'}}
                   
@@ -523,7 +523,7 @@ function EventPage() {
               {type === 'socials' && (
                 <input
                   type="text"
-                  className="textInput"
+               
                   style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7x',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',backgroundColor:'rgb(46,47,48)'}}
                   placeholder={answers[index]}
                   onChange={(e) => handleChange(index, e.target.value)}
@@ -533,7 +533,7 @@ function EventPage() {
               {/* Website input */}
               {type === 'website' && (
                 <input
-                  type="text"
+                 
                   className="textInput"
                   style={{fontSize:'16px',height:'2em',width:'100%',borderRadius:'7px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',backgroundColor:'rgb(46,47,48)'}}
                   placeholder={answers[index]}
@@ -545,8 +545,8 @@ function EventPage() {
               {type === 'checkbox' && (
                 <div >
 
-                  <l style={{marginBottom:'2em',width:'100%',color:'rgb(207,207,207)'}}><b>{label}</b></l>
-                  <input type="checkbox" value="yes" style={{backgroundColor:'rgb(46,47,48)',color:'white'}} onChange={(e) =>handleChange(index, e.target.value.toString())}/>
+                  <l style={{width:'100%',color:'rgb(207,207,207)'}}><b>{label}</b></l>
+                  <input type="checkbox" value="yes" style={{width:'100%',backgroundColor:'rgb(46,47,48)',color:'white'}} onChange={(e) =>handleChange(index, e.target.value.toString())}/>
                 </div>
               )}
 
@@ -564,7 +564,7 @@ function EventPage() {
                <l style={{height:'2em',color:'rgb(207,207,207)'}}> <b>{label}</b></l>
                 
                 <select
-                  class="textInput"
+                  
                   value={selectedOption}
                   style={{fontSize:'16px',height:'2.5em',width:'100%',borderRadius:'10px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none'}}
                   onChange={(event)=>{
