@@ -453,7 +453,7 @@ function EventPage() {
      }} />
 
      </div>
-     <br></br>  <br></br>  <br></br>  
+     <br></br>  <br></br>  
    <center>
   <div style={{width:'40vh'}}>
 
@@ -470,12 +470,15 @@ function EventPage() {
             <div key={index} >
 
 
-              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',marginBottom:'2em',gap:'10px'}}>
-              {type !== null && type!=="checkbox" && type!=="options" && <label style={{color:'rgb(207,207,207)'}}><b>{label}</b></label>}
+              <div style={{display:'flex',flexDirection:'column',marginBottom:'2em',gap:'10px'}}>
 
-              {type==null && <label style={{color:'rgb(207,207,207)'}}><b>{question}</b></label>}
+                <div style={{width:'100%',textAlign:'left'}}>
+              {type !== null && type!=="checkbox" && type!=="options" && <label style={{color:'rgb(207,207,207)'}}><b>{label}</b>
+              <br></br><br></br></label>}
+
+              {type==null && <label style={{color:'rgb(207,207,207)'}}><b>{question}</b> <br></br><br></br></label>}
               
-         
+              
 
               {/* Text input (default or empty type) */}
 
@@ -545,7 +548,7 @@ function EventPage() {
               {type === 'checkbox' && (
                 <div >
 
-                  <l style={{width:'100%',color:'rgb(207,207,207)'}}><b>{label}</b></l>
+                  <l style={{width:'100%',color:'rgb(207,207,207)'}}><b>{label}</b> <br></br><br></br></l>
                   <input type="checkbox" value="yes" style={{width:'100%',backgroundColor:'rgb(46,47,48)',color:'white'}} onChange={(e) =>handleChange(index, e.target.value.toString())}/>
                 </div>
               )}
@@ -560,13 +563,13 @@ function EventPage() {
 
                
 
-               <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'5px',width:'100%'}}> 
-               <l style={{height:'2em',color:'rgb(207,207,207)'}}> <b>{label}</b></l>
+               <div style={{width:'100%',textAlign:'left'}}> 
+               <l style={{height:'2em',color:'rgb(207,207,207)'}}> <b>{label}</b><br></br><br></br></l>
                 
                 <select
                   
                   value={selectedOption}
-                  style={{fontSize:'16px',height:'2.5em',width:'100%',borderRadius:'10px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none'}}
+                  style={{fontSize:'16px',height:'2.5em',width:'20.5em',borderRadius:'10px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none'}}
                   onChange={(event)=>{
                     
 
@@ -596,7 +599,7 @@ function EventPage() {
                 </div>)}
 
 
-
+</div>
 </div>
             </div>
           );
