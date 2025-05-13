@@ -411,16 +411,16 @@ function AdminCreate() {
 
 {
 
-isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%' }}>
+isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%',height:'10em' }}>
  
 
 
 
 
-    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between', width:'100%',padding:'0.5em'}} >
+    <div style={{display:'flex',alignItems:'flex-start',justifyContent:'flex-start', width:'100%',padding:'0.5em',gap:'20px'}} >
       <VideoCallIcon/>
 
-  <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
+  <div style={{display:'flex',flexDirection:'column',gap:'20px'}}>
   <input placeholder="Moderator Link" style={{backgroundColor:'transparent',fontSize:'17px',border:'1px solid #1876d1',color:'white'}} onChange={(e)=>{
     setModeratorLink(e.target.value)
   }}></input>
@@ -429,11 +429,13 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
     setGuestLink(e.target.value)
   }}></input>
 
-</div>
-
 <l style={{color:'#1876d1'}} onClick={()=>{
   setIsOnline(false)
 }}><i>or <br></br> Offline Event </i></l>
+
+</div>
+
+
 
 
 
