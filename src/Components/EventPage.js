@@ -616,7 +616,7 @@ function EventPage() {
 
   {/* class="buttonInput" variant="contained" style={{height:'3em',borderRadius:'1em',backgroundColor:'black',color:'white',border:'1px solid white'}} */}
 
-  <Button  variant="contained" class="button-85"  style={{width:'100%',height:'2.5em',borderRadius:'7px',fontSize:'16px',border:'none',color:'rgb(207,207,207)'}} onClick={handleSubmit} >
+  <Button  variant="contained" class="button-85"  style={{width:'100%',height:'2.5em',fontSize:'16px',border:'none',color:'rgb(207,207,207)'}} onClick={handleSubmit} >
       <b> Register </b> 
       </Button>
     

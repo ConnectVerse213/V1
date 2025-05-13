@@ -180,25 +180,25 @@
       }
 
 
-     
+  
+      
+      /* CSS */
       .button-85 {
-        width: 32em; /* desktop default */
-        height: 200em;
-        font-size: 1.2rem;
+        padding: 0.6em 2em;
         border: none;
         outline: none;
-        color: white;
+        color: rgb(255, 255, 255);
         background: #111;
         cursor: pointer;
         position: relative;
         z-index: 0;
-        border-radius: 7px;
+        border-radius: 10px;
         user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
       }
       
-      .button-85::before {
+      .button-85:before {
         content: "";
         background: linear-gradient(
           45deg,
@@ -219,14 +219,26 @@
         z-index: -1;
         filter: blur(5px);
         -webkit-filter: blur(5px);
-        width: 32em;
+        width: calc(100% + 4px);
         height: calc(100% + 4px);
         animation: glowing-button-85 20s linear infinite;
         transition: opacity 0.3s ease-in-out;
-        border-radius: 7px;
+        border-radius: 10px;
       }
       
-      .button-85::after {
+      @keyframes glowing-button-85 {
+        0% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 400% 0;
+        }
+        100% {
+          background-position: 0 0;
+        }
+      }
+      
+      .button-85:after {
         z-index: -1;
         content: "";
         position: absolute;
@@ -235,7 +247,7 @@
         background: #222;
         left: 0;
         top: 0;
-        border-radius: 7px;
+        border-radius: 10px;
       }
 
     
