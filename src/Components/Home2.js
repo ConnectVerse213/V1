@@ -479,6 +479,8 @@ function Home2() {
                              getComments(event_id)
                              }
               }
+
+              setMakeComment("")
                 
                               
                 

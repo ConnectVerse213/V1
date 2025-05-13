@@ -470,64 +470,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
    
        
        
-        <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em'}}>
-
-
-
-         
-          
-          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-              notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><ConfirmationNumberIcon fontSize='small'/>
-        &nbsp;<l>Tickets</l></div>
-        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
-        <l style={{color:'#1876d1'}}>Free</l></div>
-                    </div>
-
-
-
-    
-
-
-          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-            
-            setShowCategory(true)
-       
         
-         
-        }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><CategoryIcon fontSize='small'/>
-        &nbsp;<l>Category </l></div>
-        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
-        <l style={{color:'#1876d1'}}>{category.length==0 ? "select" : category.slice(0,6)+"..."}</l></div>
-                    </div>
-          
-          
-                    <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-            
-            setShowCapacity(true)
-       
-        
-         
-        }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><PeopleIcon fontSize='small'/>
-        &nbsp;<l>Capacity </l></div>
-        <div style={{display:'flex',alignItems:'right'}}> &nbsp;
-        <l style={{color:'#1876d1'}}>{capacity==0 ? "select" :capacity}</l></div>
-                    </div>
-          
-          
-        
-
-
-         
-                   
-      
-          
-          
-
-
-          
-        </div>
       <br></br><br></br>
         <button  className='button-85' style={{height:'2em',width:'100%'}} onClick={()=>{
             createUser()
@@ -553,7 +496,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
     
        
-<ToastContainer style={{zIndex:'99999999999'}}/>
+<ToastContainer/>
 
 <Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 

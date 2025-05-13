@@ -70,6 +70,8 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import { useParams } from 'react-router-dom';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CategoryIcon from '@mui/icons-material/Category';
+import PeopleIcon from '@mui/icons-material/People';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -565,8 +567,8 @@ function AdminCreate() {
 <div class="location2"><l style={{fontSize:'20px',gap:'2px'}}>
   &nbsp;&nbsp;
  <LocationPinIcon fontSize='small' />
-  {selectedAddress.slice(0,selectedAddress.indexOf(","))}....
-  &nbsp; <EditIcon fontSize="small" />
+  {selectedAddress.slice(0,selectedAddress.indexOf(","))}...
+<EditIcon style={{color:'#1876d1'}} fontSize="small" />
   </l>
 <l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Offline Location</i></l>
 
@@ -627,48 +629,80 @@ function AdminCreate() {
     
     setDescription(true)
 
-  }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <EditIcon fontSize='small'/></div>}</div></a>
+  }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"..."}<EditIcon style={{color:'#1876d1'}} fontSize='small'/>
+  
+  
+  
+  </div>}</div></a>
 
    
-       
-       
-        <l style={{color:'#1876d1'}}>Event Options</l>
-
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center'}}>
+  <l style={{color:'#1876d1'}}>Event Options</l>
+        <div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',padding:'0.5em',width:'19.5em'}}>
 
 
 
-          <div class="tickets" style={{display:'flex',alignItems:'center',marginTop:'2.5%'}} onClick={()=>{
-              notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div style={{display:'flex',alignItems:'center'}}><ConfirmationNumberIcon fontSize='small'/>&nbsp;<l>Tickets</l></div><div style={{display:'flex',alignItems:'center'}}>Free &nbsp;
-          <EditIcon fontSize='small'/></div></div>
-          
-          <a href="#up"  style={{ background: "transparent", border: "none" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
-          
-          <div class="capacity" style={{display:'flex',alignItems:'center'}} onClick={()=>{
-            
-              setShowCapacity(true)
          
           
-           
-          }}><div  style={{display:'flex',alignItems:'center'}} ><PeopleAltIcon fontSize='small'/>
-          &nbsp;<l>Capacity</l></div>
-          <div style={{display:'flex',alignItems:'center'}}>{capacity} &nbsp;
-          <EditIcon fontSize='small'/></div>
-                      </div>
+          <div  style={{display:'flex',alignItems:'center',justifyContent:'space-between'}} onClick={()=>{
+              notify("Subscribe to premium for paid tickets","light","top-right","warning")
+          }}>
 
+            <div style={{display:'flex',gap:'10px'}}>
+            <div  style={{display:'flex',alignItems:'center'}} ><ConfirmationNumberIcon fontSize='small'/>
+        &nbsp;<l>Tickets</l> 
+        </div>
 
-                      <br></br>
-                      
-                      
-                      </a>
-      
+        <l style={{color:'green'}}>Free</l> 
+
+          </div>
         
+       
+          <l style={{color:'#1876d1'}}>Change</l> 
+        
+       
+       
+                    </div>
+
+          
+        <div  style={{display:'flex',alignItems:'center',justifyContent:'space-between'}} onClick={()=>{
+            
+            setShowCapacity(true)
+       
+        
+         
+        }}>
+            
+            <div style={{display:'flex',gap:'10px'}}>
+            <div  style={{display:'flex',alignItems:'center'}} ><PeopleIcon fontSize='small'/>
+        &nbsp;<l>Capacity</l> 
+        </div>
+
+        <l style={{color:'green'}}>{capacity}</l> 
+
+          </div>
+        
+       
+          <l style={{color:'#1876d1'}}>Change</l> 
+        
+       
+       
+                    </div>
+          
+          
+        
+
+
+         
+                   
+      
+          
           
 
 
           
         </div>
+       
+       
     
 
         <l style={{color:'#1876d1'}}>Event Questions</l>
@@ -754,7 +788,7 @@ function AdminCreate() {
 <Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 
           backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',}}
+          backgroundRepeat: 'no-repeat',top:'2%'}}
         open={open}
         onClose={handleClose}
         
@@ -1114,7 +1148,7 @@ function AdminCreate() {
 
 
           {/* Text Option */}
-
+          
 
             {
               showTextOption &&
@@ -1122,9 +1156,9 @@ function AdminCreate() {
               <div>
                 <h3 style={{color:'white'}}>Text</h3>
              
-              
+                <div style={{width:'100%',textAlign:'center'}}>
                  <input
-          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
+          type="text" style={{fontSize:'18px',width:'100%',height:'2em',borderRadius:'2px',border:'none'}}
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Write a new question"
@@ -1132,28 +1166,23 @@ function AdminCreate() {
         />
       <br></br>
 
-      {textOptionType==="short" && <div> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
-        setTextOptionType("short")
-      }}>SHORT</button> <button style={{width:'10.3em',height:'2em',border:'1px solid #1876d1',backgroundColor:'white',color:'#1876d1'}}onClick={()=>{
-        setTextOptionType("multiline")
-      }}>MULTILINE</button> </div>}
+    
+      
 
-        {textOptionType==="multiline" && <div> <button style={{width:'10.2em',height:'2em',border:'1px solid #1876d1',backgroundColor:'white',color:'#1876d1'}} onClick={()=>{
-        setTextOptionType("short")
-      }}>SHORT</button> <button style={{width:'10.3em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}} onClick={()=>{
-        setTextOptionType("multiline")
-      }}>MULTILINE</button> </div>}
+    </div>
      
         
         <br></br>
 
-        <button style={{width:'10.5em',height:'2em',border:'1px solid red',backgroundColor:'white',color:'red'}} onClick={()=>{
+        <div style={{display:'flex',justifyContent:'center', width:'100%',gap:'15px'}}>
+
+        <Button variant="outlined" style={{width:'9.6em',height:'2em',border:'1px solid red',color:'red'}} onClick={()=>{
 
           setNewQuestion("")  
           setShowTextOption(false)
-        }}>Cancel</button>
+        }}>Cancel</Button>
      
-        <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
+        <Button variant="contained" style={{width:'9.6em',height:'2em'}}
           onClick={()=>{
             
 
@@ -1162,7 +1191,7 @@ function AdminCreate() {
             setShowTextOption(false)
 
             setShowDiv(false)
-             notify("Question added!","light","top-center","success")
+            
 
             
 
@@ -1175,8 +1204,8 @@ function AdminCreate() {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
           Add
-        </button>
-
+        </Button>
+</div>
           
               </div>
    }
@@ -1214,12 +1243,16 @@ function AdminCreate() {
 
         <br></br> <br></br>
 
-        <button onClick={()=>{
+        <div style={{display:'flex',justifyContent:'center',gap:'15px'}}>
+
+        <Button variant="outlined" onClick={()=>{
 
           setNewQuestion("")
           setShowOptionOption(false)
-        }}  style={{width:'10.5em',height:'2em',border:'1px solid red',backgroundColor:'white',color:'red'}} >Cancel</button>
-        <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
+        }}  style={{width:'9em',height:'2em',border:'1px solid red',color:'red'}} >Cancel</Button>
+
+
+        <Button variant="contained" style={{width:'9em',height:'2em'}}
           onClick={()=>{
 
             
@@ -1227,7 +1260,7 @@ function AdminCreate() {
              setShowOptionOption(false)
  
              setShowDiv(false)
-             notify("Question added!","light","top-center","success")
+            
 
            
             
@@ -1237,7 +1270,9 @@ function AdminCreate() {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
           Add
-        </button>
+        </Button>
+
+        </div>
 
 
               </div>
@@ -1276,7 +1311,7 @@ function AdminCreate() {
               setShowCheckboxOption(false)
  
              setShowDiv(false)
-              notify("Question added!","light","top-center","success")
+             
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -1297,7 +1332,6 @@ function AdminCreate() {
 
               <div>
                 <h3 style={{color:'white'}}>Website</h3>
-             
               
                  <input
           type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
@@ -1306,14 +1340,17 @@ function AdminCreate() {
           placeholder="Write a new question"
           className="flex-grow p-2 border rounded"
         />
-      <br></br>
+      
+      <br></br> <br></br> 
 
-        <button style={{width:'10.5em',height:'2em',border:'1px solid red',backgroundColor:'white',color:'red'}} onClick={()=>{
+      <div style={{display:'flex',gap:'15px',justifyContent:'center'}}>
+            
+        <Button variant="outlined" style={{width:'9em',height:'2em',border:'1px solid red',color:'red'}} onClick={()=>{
           setShowWebsiteOption(false)
           setNewQuestion("")
-        }}>Cancel</button>
+        }}>Cancel</Button>
      
-        <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
+        <Button variant="contained" style={{width:'9em',height:'2em'}}
           onClick={()=>{
 
               handleAddQuestion("type=website")
@@ -1321,13 +1358,15 @@ function AdminCreate() {
               setShowWebsiteOption(false)
  
              setShowDiv(false)
-              notify("Question added!","light","top-center","success")
+             
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
           Add
-        </button>
+        </Button>
+
+        </div>
 
 
               </div>
@@ -1368,15 +1407,16 @@ function AdminCreate() {
              
      
              
+        <div style={{display:'flex',justifyContent:'center',gap:'15px'}}>
 
-        <button style={{width:'10.5em',height:'2em',border:'1px solid red',backgroundColor:'white',color:'red'}} onClick={()=>{
+        <Button variant="outlined" style={{width:'9em',height:'2em',border:'1px solid red',color:'red'}} onClick={()=>{
 
             setNewQuestion('')
           setShowSocialsOption(false)
 
-        }}>Cancel</button>
+        }}>Cancel</Button>
      
-        <button style={{width:'10.5em',height:'2em',border:'1px solid #1876d1',backgroundColor:'#1876d1',color:'white'}}
+        <Button variant="contained" style={{width:'9em',height:'2em'}}
           onClick={()=>{
 
            
@@ -1387,14 +1427,15 @@ function AdminCreate() {
              setShowDiv(false)
 
              
-             notify("Question added!","light","top-center","success")
              
 
           }}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
           Add
-        </button>
+        </Button>
+
+        </div>
 
 
               </div>

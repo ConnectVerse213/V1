@@ -178,12 +178,26 @@ const Chat = () => {
 
       <div style={{display:'flex',gap:'3px',flexWrap:'wrap',justifyContent:'center'}}>
 
-      <Button variant="outlined" onClick={()=>{
+      <Button variant="outlined" onClick={(e)=>{
+
+        e.stopPropagation()
 
         window.location.href=`/testing3/${x.id}`
       }}><OpenInNewIcon/></Button>
 
-      <Button variant="outlined"><ShareIcon/></Button>
+      <Button variant="outlined" onClick={(e)=>{
+
+        e.stopPropagation()
+
+        navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/testing3/${x.id}`)
+      .then(() => {
+       notifyCustom("Community link copied","success");
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+
+      }}><ShareIcon/></Button>
 
       <Button variant="outlined" style={{border:'0.08px solid red',color:'red'}}><LogoutIcon/></Button>
 
@@ -241,12 +255,24 @@ const Chat = () => {
 
       <div style={{display:'flex',gap:'3px',flexWrap:'wrap',justifyContent:'center'}}>
 
-      <Button variant="outlined" onClick={()=>{
+      <Button variant="outlined" onClick={(e)=>{
+
+        e.stopPropagation()
 
         window.location.href=`/testing3/${x.id}`
         }}><OpenInNewIcon/></Button>
 
-      <Button variant="outlined"><ShareIcon/></Button>
+      <Button variant="outlined" onClick={(e)=>{
+         e.stopPropagation()
+
+         navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/testing3/${x.id}`)
+       .then(() => {
+        notifyCustom("Community link copied","success");
+       })
+       .catch(err => {
+         console.error('Failed to copy: ', err);
+       });
+      }}><ShareIcon/></Button>
 
       <Button variant="outlined" style={{border:'0.08px solid red',color:'red'}}><LogoutIcon/></Button>
 
@@ -455,7 +481,7 @@ const Chat = () => {
   <AddIcon />
 </Fab>
 
-<ToastContainer/>
+<ToastContainer style={{zIndex:'99999999999'}}/>
 
 
 
