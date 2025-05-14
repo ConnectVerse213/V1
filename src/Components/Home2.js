@@ -312,7 +312,10 @@ function Home2() {
 
           const DrawerList = (
             <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+
+             
               <List>
+              
                 {['DeFi', 'GameFi',"SocialFi", 'AI Agents', 'Layer 1',"Layer 2","Layer 3","LLM","Other Technologies","Non Tech"].map((text, index) => (
                   <ListItem key={text} disablePadding onClick={()=>{
                     setCategory(text)
@@ -1244,7 +1247,10 @@ function Home2() {
   </Fab>}
  
 </Box>
-<Drawer open={open} onClose={toggleDrawer(false)}>
+<Drawer open={open} onClose={toggleDrawer(false)} >
+
+  <br></br><br></br><br></br><br></br><br></br>
+
         {DrawerList}
       </Drawer>
 
