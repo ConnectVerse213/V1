@@ -561,6 +561,7 @@ function AdminCreate() {
 
 
   { selectedAddress.length!=0 && type!="online" && <div class="location" onClick={()=>{
+    toast.dismiss()
     handleClickOpen()
   }} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
@@ -627,7 +628,7 @@ function AdminCreate() {
       <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
    <br></br> 
   <div  onClick={()=>{
-    
+    toast.dismiss()
     setDescription(true)
 
   }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"..."}<EditIcon style={{color:'#1876d1'}} fontSize='small'/>
@@ -666,7 +667,7 @@ function AdminCreate() {
 
           
         <div  style={{display:'flex',alignItems:'center',justifyContent:'space-between'}} onClick={()=>{
-            
+            toast.dismiss()
             setShowCapacity(true)
        
         
@@ -739,6 +740,7 @@ function AdminCreate() {
 </div>
 {
     questions.length>2 && <Button variant="outlined" style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}} onClick={()=>{
+        toast.dismiss()
         handleClickOpenQuestions()
     }} >View All questions</Button>
 }
@@ -747,6 +749,8 @@ function AdminCreate() {
 
 < a href="#up">
 <Button variant="outlined" onClick={()=>{
+
+    toast.dismiss()
     setShowDiv(true)
 }} style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}}>Add new question</Button>
 </a>
@@ -757,6 +761,8 @@ function AdminCreate() {
       
       <br></br>
         <button  className='button-85' style={{height:'2em',width:'100%'}} onClick={()=>{
+
+            toast.dismiss()
              updateEvent()
         }}>Update</button></div></div>
 
@@ -846,7 +852,9 @@ function AdminCreate() {
           {suggestions.map((place, index) => (
             <li 
               key={index}
-              onClick={() => handleSelect(place)}
+              onClick={() => {
+                toast.dismiss()
+                handleSelect(place)}}
               style={{ padding: "8px", cursor: "pointer" }}
             >
               {place.display_name}
@@ -962,13 +970,13 @@ function AdminCreate() {
                 <center>
             <div style={{backgroundColor:'black',width:'20em',display:'flex',justifyContent:'center',paddinng:'2em',height:'4em',alignItems:'center', border: '1px solid #1876d1' , borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}}>
           <Button variant="outlined" style={{border:'1px solid red',color:'red',height:'2em'}} onClick={()=>{
-            
+            toast.dismiss()
             setDescription(false)
            
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  &nbsp;
           <Button variant="contained" style={{height:'2em'}} onClick={()=>{
-            
+            toast.dismiss()
             setText(editor.getHTML())
             setDescription(false)
             console.log(editor.getHTML())
@@ -1029,14 +1037,14 @@ function AdminCreate() {
      <br></br><br></br>
           <center>
           <Button variant="outlined" style={{color:'red',border:'0.5px solid red'}} onClick={()=>{
-            
+            toast.dismiss()
             setCapacity(50)
             setShowCapacity(false)
            
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  
           <Button variant="contained"  onClick={()=>{
-            
+            toast.dismiss()
             setShowCapacity(false)
            
           }}>Save</Button>
@@ -1082,7 +1090,7 @@ function AdminCreate() {
             <div style={{backgroundColor:'black',padding:'2em',width:'18em',paddingBottom:'3em', border: '1px solid #1876d1',borderRadius:'10px'}}>
             
             <CancelIcon style={{marginTop:'2px',marginLeft:'90%',color:'white'}} onClick={()=>{
-
+                toast.dismiss()
             setShowDiv(false)
             }} />
                         
@@ -1607,6 +1615,7 @@ function AdminCreate() {
                     </div>
 
                     <Button variant='contained' onClick={()=>{
+                        toast.dismiss()
                         handleDeleteQuestion(index)
                     }}>Delete</Button>
                     
@@ -1631,6 +1640,7 @@ function AdminCreate() {
                       <l style={{color:'green'}}>Text</l>
                     </div>
                     <Button variant='contained' onClick={()=>{
+                        toast.dismiss()
                         handleDeleteQuestion(index)
                     }}>Delete</Button>
                   </div>

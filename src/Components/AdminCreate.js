@@ -119,9 +119,13 @@ function AdminCreate() {
   
 
   const [imageUrl, setImageUrl] = useState("");
- const notify = (text,theme,position,type) => toast(text,{
+ const notify = (text,theme,position,type) => {
+  
+
+  
+  toast(text,{
       position: position,
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -131,6 +135,11 @@ function AdminCreate() {
       type:type
      
       });
+
+
+   
+
+    }
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -388,7 +397,10 @@ function AdminCreate() {
 
    </div>
    </div>
-  {!isOnline && <div class="location" onClick={handleClickOpen} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+  {!isOnline && <div class="location" onClick={()=>{
+    
+    toast.dismiss()
+    handleClickOpen()}} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
 
 <div class="location2"><l style={{fontSize:'20px'}}>
@@ -399,6 +411,7 @@ function AdminCreate() {
   </l>
 <l style={{fontSize:'15px'}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Offline Location <l style={{color:'#1876d1'}} onClick={(event)=>{
   event.stopPropagation(); 
+  toast.dismiss()
   setIsOnline(true)
 }}>&nbsp;<i>or Online Event</i></l></l>
 
@@ -430,6 +443,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
   }}></input>
 
 <l style={{color:'#1876d1'}} onClick={()=>{
+  toast.dismiss()
   setIsOnline(false)
 }}><i>or <br></br> Offline Event </i></l>
 
@@ -471,6 +485,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
    <br></br> 
   <div  onClick={()=>{
     
+    toast.dismiss()
     setDescription(true)
 
   }}> {text.length==0 ? <l style={{fontSize:'20px'}}>&nbsp;&nbsp;<DescriptionIcon fontSize='small'/>&nbsp;Add Description</l>:<div style={{fontSize:'20px'}} >&nbsp;&nbsp;{text.replace(/<h[1-6][^>]*>|<\/h[1-6][^>]*>|<b>|<\/b>|<i>|<\/i>|<ul>|<\/ul>|<ol>|<\/ol>|<li>|<\/li>/g, '').replace(/<[^>]+>/g, '').slice(0,20)+"....."} &nbsp; <l style={{color:'#1876d1'}}>Edit</l></div>}</div></a>
@@ -499,7 +514,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
 
           <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-            
+            toast.dismiss()
             setShowCategory(true)
        
         
@@ -512,7 +527,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           
           
                     <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-            
+            toast.dismiss()
             setShowCapacity(true)
        
         
@@ -538,6 +553,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         </div>
       <br></br><br></br>
         <button  className='button-85' style={{height:'2em',width:'100%'}} onClick={()=>{
+          toast.dismiss()
             createUser()
         }}>Create</button>
        
@@ -561,7 +577,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
     
        
-<ToastContainer style={{zIndex:'999999999999999999'}} />
+
 
 <Dialog style={{ backgroundImage:`url(${eventpageBackground})`,
           backgroundSize: 'cover', 
@@ -623,7 +639,10 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           {suggestions.map((place, index) => (
             <li 
               key={index}
-              onClick={() => handleSelect(place)}
+              onClick={() =>{ 
+                
+                toast.dismiss()
+                handleSelect(place)}}
               style={{ padding: "8px", cursor: "pointer" }}
             >
               {place.display_name}
@@ -739,7 +758,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
                 <center>
             <div style={{backgroundColor:'black',width:'20em',display:'flex',justifyContent:'center',paddinng:'2em',height:'4em',alignItems:'center', border: '1px solid #1876d1' , borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}}>
           <Button variant="outlined" style={{border:'1px solid red',color:'red',height:'2em'}} onClick={()=>{
-            
+            toast.dismiss()
             setDescription(false)
            
           }}>Cancel</Button>
@@ -812,7 +831,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  
           <Button variant="contained"  onClick={()=>{
-            
+            toast.dismiss()
             setShowCapacity(false)
            
           }}>Save</Button>
@@ -1042,7 +1061,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           }}>Cancel</Button>
           &nbsp;  &nbsp;   &nbsp;  
           <Button variant="contained"  onClick={()=>{
-            
+            toast.dismiss()
             setShowCategory(false)
 
            
@@ -1053,7 +1072,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           </center>
         </div>}
  
-
+        <ToastContainer style={{zIndex:'999999999999999999'}} />
     </div>
   )
 }

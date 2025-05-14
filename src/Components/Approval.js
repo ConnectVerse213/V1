@@ -60,6 +60,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import 'react-circular-progressbar/dist/styles.css';
+import { SocialIcon } from 'react-social-icons'
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -123,6 +124,7 @@ function EventManage() {
                 setUsers(filteredArray)
                
   }
+
 
   // Handle input change
   const handleChange = (index, value) => {
@@ -475,7 +477,7 @@ setSearch(e.target.value)
 <br></br>
 
 
-{events.length!=0 && search.length!=0 && <div> <div style={{width:'100%',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(5px)'}}>
+{events.length!=0 && search.length!=0 && <div> <div style={{width:'100%',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(5px)',borderRadius:'10px'}}>
         {events[0].Registrations
           .filter(person => {
 
@@ -494,11 +496,25 @@ setSearch(e.target.value)
               handleClickOpen()
             }}
             
-            ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+            >
+              
+              <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+            <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
+            
+            {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+              
+              
+              <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+
+              </div>
+              
+              
+              <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
             
           {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
           
-          { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+          { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
           
           e.stopPropagation();
             updateUser(x)
@@ -512,18 +528,28 @@ setSearch(e.target.value)
         
               setUserDialog(x)
               handleClickOpen()
-            }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+            }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
             
-            {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+            <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
             
-            { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+            {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+              
+              
+              <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+
+              </div>
+              
+              
+              <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
             
-            e.stopPropagation();
-              updateUser(x)
-            }} >Approve</Button>}
-            
-            
-            
+          {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+          <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+          
+          e.stopPropagation();
+            updateUser(x)
+          }} >Approve</Button>}
+          
+          
             </div>
             )
         
@@ -532,16 +558,29 @@ setSearch(e.target.value)
         
                 setUserDialog(x)
                 handleClickOpen()
-              }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+              }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
             
-              {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+              <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
               
-              { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+              {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+                
+                
+                <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+  
+                </div>
+                
+                
+                <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
               
-              e.stopPropagation();
-                updateUser(x)
-              }} >Approve</Button>}
-              
+            {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+            
+            { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+            
+            e.stopPropagation();
+              updateUser(x)
+            }} >Approve</Button>}
+            
+            
               </div>
               )
         
@@ -580,11 +619,23 @@ setSearch(e.target.value)
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'10px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
+  > <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+  <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
+  
+  {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+    
+    
+    <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+
+    </div>
+    
+    
+    <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red',}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -599,17 +650,29 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
+    }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+    <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
     
-    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+    {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+      
+      
+      <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red',}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+      </div>
+      
+      
+      <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
     
-    
+  {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+  
+  { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+  
+  e.stopPropagation();
+    updateUser(x)
+  }} >Approve</Button>}
+  
+  
     </div>
     )
 
@@ -618,17 +681,29 @@ updateUser(x)
 
         setUserDialog(x)
         handleClickOpen()
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
+      }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+      <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
       
-      
-      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+      {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+        
+        
+        <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+        </div>
+        
+        
+        <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
       
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+    
+    { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+    
+    e.stopPropagation();
+      updateUser(x)
+    }} >Approve</Button>}
+    
+    
       </div>
       )
 
@@ -662,11 +737,23 @@ updateUser(x)
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+  > <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+  <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
+  
+  {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+    
+    
+    <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+
+    </div>
+    
+    
+    <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -681,17 +768,29 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+    }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+    <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
     
-    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+    {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+      
+      
+      <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+      </div>
+      
+      
+      <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
     
-    
+  {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+  
+  { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+  
+  e.stopPropagation();
+    updateUser(x)
+  }} >Approve</Button>}
+  
+  
     </div>
     )
 
@@ -700,17 +799,29 @@ updateUser(x)
 
         setUserDialog(x)
         handleClickOpen()
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+      }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+      <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
       
-      
-      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+      {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+        
+        
+        <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+        </div>
+        
+        
+        <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
       
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+    
+    { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+    
+    e.stopPropagation();
+      updateUser(x)
+    }} >Approve</Button>}
+    
+    
       </div>
       )
 
@@ -738,11 +849,23 @@ updateUser(x)
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+  > <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+  <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
+  
+  {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+    
+    
+    <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
+
+    </div>
+    
+    
+    <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -757,17 +880,29 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+    }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+    <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
     
-    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+    {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+      
+      
+      <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+      </div>
+      
+      
+      <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
     
-    
+  {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+  
+  { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+  
+  e.stopPropagation();
+    updateUser(x)
+  }} >Approve</Button>}
+  
+  
     </div>
     )
 
@@ -776,17 +911,29 @@ updateUser(x)
 
         setUserDialog(x)
         setOpen(true)
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+      }}> <div style={{display:'flex',flexWrap:'wrap',gap:'3px',alignItems:'center'}}> 
+            
+      <div style={{display:'flex',alignItems:'center',gap:'10px'}}> 
       
-      
-      {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
+      {users.filter(obj=>obj.ProfileImage && obj.Email==x.Email).length!=0 && <img style={{width:'2em', height:'2em', borderRadius:'50%',objectFit:'cover'}} src={users.filter(obj=>obj.ProfileImage && obj.Email==x.Email)[0].ProfileImage}></img>}
+        
+        
+        <l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l>
 
-{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
-
-e.stopPropagation();
-updateUser(x)
-}}>Approve</Button>}
+        </div>
+        
+        
+        <l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
       
+    {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+    
+    { !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}}  onClick={(e)=>{
+    
+    e.stopPropagation();
+      updateUser(x)
+    }} >Approve</Button>}
+    
+    
       </div>
       )
 
@@ -838,7 +985,7 @@ updateUser(x)
         style={{
           backgroundColor: 'black',
           padding: '1em',
-          maxWidth: '40em',
+          maxWidth: '20em',
           border: '1px solid #1876d1',
           borderRadius: '10px',
         }}
@@ -859,15 +1006,49 @@ updateUser(x)
             </tr>
           </thead>
           <tbody>
-            {Object.entries(userDialog).map(([key, value]) => {
-              if (key !== 'delete') {
+            {Object.entries(Object.fromEntries([
+  ...["Name", "Email"].filter(k => k in userDialog).map(k => [k, userDialog[k]]),
+  ...Object.entries(userDialog).filter(([k]) => k !== "Name" && k !== "Email" && !k.startsWith("type=socials{}")),
+  ...Object.entries(userDialog).filter(([k]) => k.startsWith("type=socials{}"))
+])).map(([key, value]) => {
+              if (key !== 'delete' && (key=="Email" || key=="Name")) {
                 return (
                   <tr key={key}>
+                    
                     <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{key}</td>
-                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{value}</td>
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}><div style={{whiteSpace: 'normal',
+  wordBreak: 'break-word'}}>{value}</div></td>
                   </tr>
                 );
+                
               }
+
+              else if (key !== 'delete' && key.startsWith("type=socials{}")) {
+                return (
+                  <tr key={key}>
+                    
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}><SocialIcon url={value}/></td>
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}><div style={{whiteSpace: 'normal',
+  wordBreak: 'break-word'}}><a href={value} style={{textDecoration:'none',color:'#1876d1'}} >{value}</a></div></td>
+                  </tr>
+                );
+                
+              }
+
+            
+
+              else if (key !== 'delete' && key.startsWith("type=options{")) {
+                return (
+                  <tr key={key}>
+                    
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{key.slice(key.indexOf('}')+1)}</td>
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}><div style={{whiteSpace: 'normal',
+  wordBreak: 'break-word'}}>{value}</div></td>
+                  </tr>
+                );
+                
+              }
+
               return null;
             })}
           </tbody>

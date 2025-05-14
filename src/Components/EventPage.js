@@ -69,9 +69,12 @@ function EventPage() {
     setAnswers(updatedAnswers);
   };
 
- const notify = (text,type) => toast(text,{
+ const notify = (text,type) => {
+  
+
+  toast(text,{
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -80,7 +83,12 @@ function EventPage() {
       theme: "light",
       type:type
      
-      });
+      })
+
+  }
+  
+    
+
 
 
   // Handle submit
