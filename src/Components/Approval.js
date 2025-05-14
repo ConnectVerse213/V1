@@ -391,7 +391,7 @@ function EventManage() {
   <div style={{width:'100%',display:'flex',gap:'50px',justifyContent:'center'}}>
 
 
-  <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around'}}><Button variant="outlined" style={{color:'red',border:'1px solid red', height:'3em',width:'7em'}}><b>Cap </b> &nbsp;{events.length!=0 && events[0].Capacity}</Button></div>
+  <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around'}}><Button  style={{color:'yellow',height:'3em',width:'7em'}}><l style={{fontSize:'28px',color:'rgb(62,152,199'}}>Cap  &nbsp;{events.length!=0 && events[0].Capacity}</l></Button></div>
 
   <div style={{width:'7em'}}>
 
@@ -424,7 +424,13 @@ function EventManage() {
 
     <div style={{width:'100%'}}>
 
-    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',border:'0.08px solid white',borderTopLeftRadius:'0.5em',borderBottomLeftRadius:'0.5em',borderRight:'none'}} placeholder='&nbsp;&nbsp;🔍 Search guests' onChange={(e) => setSearch(e.target.value)}/> 
+    <div style={{display:'flex'}}><input style={{width:'100%',fontSize:'28px',backgroundColor:'black',color:'white',borderTop:'none',border:'0.08px solid white',borderTopLeftRadius:'0.5em',borderBottomLeftRadius:'0.5em',borderRight:'none'}} placeholder='&nbsp;&nbsp;🔍 Search guests' onChange={(e) => {
+
+console.log(e.target.value.toLowerCase())
+setSearch(e.target.value)
+
+
+        }    }/> 
     <div >
 
     <select style={{fontSize:'16px',height:'3em',backgroundColor:'black',border:'0.08px solid white',borderTopRightRadius:'0.7em',borderBottomRightRadius:'0.7em',color:'white',width:'7em',textAlign:'center'}}
@@ -469,10 +475,13 @@ function EventManage() {
 <br></br>
 
 
-{events.length!=0 && search.length!=0 && <div> <div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+{events.length!=0 && search.length!=0 && <div> <div style={{width:'100%',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(5px)'}}>
         {events[0].Registrations
           .filter(person => {
+
+            
             const query = search.toLowerCase().replace(/\s/g, '');
+            console.log("query",search)
             const name = person.Name.toLowerCase().replace(/\s/g, '');
             const email = person.Email.toLowerCase().replace(/\s/g, '');
             return name.includes(query) || email.includes(query);
@@ -485,7 +494,7 @@ function EventManage() {
               handleClickOpen()
             }}
             
-            ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+            ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
             
           {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
           
@@ -503,15 +512,16 @@ function EventManage() {
         
               setUserDialog(x)
               handleClickOpen()
-            }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+            }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
             
-            {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
-        
-        { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
-        
-        e.stopPropagation();
-        updateUser(x)
-        }}>Approve</Button>}
+            {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
+            
+            { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+            
+            e.stopPropagation();
+              updateUser(x)
+            }} >Approve</Button>}
+            
             
             
             </div>
@@ -522,16 +532,15 @@ function EventManage() {
         
                 setUserDialog(x)
                 handleClickOpen()
-              }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+              }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
+            
+              {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
               
+              { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
               
-              {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
-        
-        { !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
-        
-        e.stopPropagation();
-        updateUser(x)
-        }}>Approve</Button>}
+              e.stopPropagation();
+                updateUser(x)
+              }} >Approve</Button>}
               
               </div>
               )
@@ -559,7 +568,7 @@ function EventManage() {
    
 
 
-<div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+<div style={{width:'100%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -571,11 +580,11 @@ function EventManage() {
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'10px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red',}} onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -590,11 +599,11 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
     
     {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red',}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
@@ -609,12 +618,12 @@ updateUser(x)
 
         setUserDialog(x)
         handleClickOpen()
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205, 201, 201)'}}>{x.Email}</l></div>
       
       
       {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
@@ -641,7 +650,7 @@ updateUser(x)
 
 
 
-{filterOption.length!=0 && filterOption=="Unapproved" && search.length==0 &&  <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+{filterOption.length!=0 && filterOption=="Unapproved" && search.length==0 &&  <div><div style={{width:'100%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)'}}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -653,11 +662,11 @@ updateUser(x)
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -672,11 +681,11 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
     
     {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
@@ -691,12 +700,12 @@ updateUser(x)
 
         setUserDialog(x)
         handleClickOpen()
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
       
       
       {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
@@ -717,7 +726,7 @@ updateUser(x)
 {/* filterOption=Approved */}
 
 
-{filterOption.length!=0 && filterOption=="Approved" && search.length==0 && <div><div style={{width:'100%',background: 'rgba(255,255,255,1)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)', border: '1px solid rgba(255,255,255,0)' }}>
+{filterOption.length!=0 && filterOption=="Approved" && search.length==0 && <div><div style={{width:'100%', background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '16px', boxShadow: '0 4px 30px rgba(0,0,0,0.1)', backdropFilter: 'blur(5px)', WebkitBackdropFilter: 'blur(5px)' }}>
 
 {events.length!=0 && events[0].Registrations.map((x,index)=>{
 
@@ -729,11 +738,11 @@ updateUser(x)
     handleClickOpen()
   }}
   
-  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+  ><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
   
 {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}} >Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
   updateUser(x)
@@ -748,11 +757,11 @@ e.stopPropagation();
 
       setUserDialog(x)
       handleClickOpen()
-    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+    }}><div style={{display:'flex',flexWrap:'wrap',gap:'3px'}} ><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
     
     {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
@@ -767,12 +776,12 @@ updateUser(x)
 
         setUserDialog(x)
         setOpen(true)
-      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
+      }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px',color:'white'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'rgb(205,201,201)'}}>{x.Email}</l></div>
       
       
       {approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid green',color:'white',backgroundColor:'green'}}>Going</Button>}
 
-{ !approvedUsers.includes(x.Email) && <Button variant="contained" style={{height:'2em',border:'1px solid red',color:'white',backgroundColor:'red'}} onClick={(e)=>{
+{ !approvedUsers.includes(x.Email) && <Button variant="outlined" style={{height:'2em',border:'1px solid red',color:'red'}} onClick={(e)=>{
 
 e.stopPropagation();
 updateUser(x)
