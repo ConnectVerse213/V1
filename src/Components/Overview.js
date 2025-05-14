@@ -714,11 +714,11 @@ function AdminCreate() {
 
   if(x==="Name" || x==="Email") return (
      
-        <div style={{display:'flex',justifyContent:'center',flexWrap:'wrap',gap:'12em'}}>
+        <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
 
         <div style={{color:'white'}}>&nbsp; &nbsp;{index+1}.&nbsp; &nbsp;{x}</div>
 
-        <l style={{color:'green'}}>Text</l>
+        <div style={{color:'green'}}>Text</div>
 
 
         </div>
@@ -1174,15 +1174,15 @@ function AdminCreate() {
         
         <br></br>
 
-        <div style={{display:'flex',justifyContent:'center', width:'100%',gap:'15px'}}>
+        <div style={{display:'flex',justifyContent:'center',gap:'15px'}}>
 
-        <Button variant="outlined" style={{width:'9.6em',height:'2em',border:'1px solid red',color:'red'}} onClick={()=>{
+        <Button variant="outlined" style={{width:'9em',height:'2em',border:'1px solid red',color:'red'}} onClick={()=>{
 
           setNewQuestion("")  
           setShowTextOption(false)
         }}>Cancel</Button>
      
-        <Button variant="contained" style={{width:'9.6em',height:'2em'}}
+        <Button variant="contained" style={{width:'9em',height:'2em'}}
           onClick={()=>{
             
 
@@ -1478,8 +1478,8 @@ function AdminCreate() {
             <ListItemButton key={index}>
               <ListItemText
                 primary={
-                  <div style={{ display: 'flex',flexDirection:'column', justifyContent: 'flex-startr', padding: '1em',gap:'3px' }}>
-                    <div style={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
+                  <div style={{ display: 'flex',flexDirection:'column', justifyContent: 'flex-start', padding: '1em',gap:'3px' }}>
+                    <div style={{display:'flex',justifyContent:'space-between'}}>
                       <l style={{fontSize:'28px'}}><b>{x}</b></l>
                       <l style={{color:'green'}}>Text</l>
                     </div>
