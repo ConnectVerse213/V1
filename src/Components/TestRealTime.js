@@ -263,102 +263,84 @@ const handleContextMenu = (event) => {
       style={{zIndex:'99999999999999999'}}
     />
 }
-     <br></br>{messages && messages.length!=0 && 
-            <div style={{display:'flex',alignItems:'center',gap:'5px', position:'sticky',width:'100%',justifyContent:'space-between',paddingLeft:'2em',borderBottom:'0.1px solid #1876d1',flexWrap:'wrap',backgroundColor:'black',padding:'1em',paddingRight:'3em',height:'2em',zIndex:'999999'}}>
+     
+
+        
+         {messages && messages.length!=0 && (
+       <div style={{
+        width: '100%',
+        position: 'fixed',
+        top: '0px',
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        overflowY: 'hidden',
+        zIndex: 1000000000,
+        backgroundColor: 'black',
+        height: '100vh' // Full height of viewport
+      }}>
+        <div style={{
+          width: '100%',
+          height: '100vh',
+         
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+
+           
+       {/* Header */}
+       <div  style={{padding:'20px',display:'flex',justifyContent:'space-between',alignItems:'center',borderBottom:'0.3px solid #1876d1'}} >
+
+       
 
 
-                <div style={{display:'flex',flexWrap:'wrap',alignItems:'center',gap:'5px'}}>
 
-                <div>
 
-                <Button style={{color:'white'}} onClick={()=>{
-                    window.location.href="/community"
-                }}><ArrowBackIosIcon fontSize="small"/></Button>
+<div style={{display:'flex',alignItems:'center',justifyContent:'flex-start'}}>
 
-                </div>
+<Button style={{color:'white'}} onClick={()=>{
+    window.location.href="/community"
+}}><ArrowBackIosIcon fontSize="small"/></Button>
 
-                <img src={messages.ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
+<img src={messages.ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
 
 
                 <l style={{ color: 'white' , fontSize:'16px'}}><b>{messages.Name} &nbsp;&nbsp;&nbsp;&nbsp;</b></l>
 
-                </div>
+</div>
 
-                <div style={{display:'flex',alignItems:'center',flexWrap:'wrap',paddingRight:'2em',gap:'13px'}}> 
 
-              
-
-              {!showChatDiv && <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
+{!showChatDiv && <MoreHorizIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
                 setShowChatDiv(true)
               }} fontSize="small"/>}
 
             {showChatDiv && <MoreVertIcon style={{backgroundColor:'#1876d1',borderRadius:'50%',color:'white'}} onClick={()=>{
                 setShowChatDiv(false)
               }} fontSize="small"/>}
-
-                    
-               
-                
-             
-
-                </div>
-
-              
-                   
-                 
-                   
-                    
-                   
-                   
-                    </div>
-}
         
-         {messages && messages.length!=0 && (
-        <div style={{
-            width: '100%',
-            position: 'fixed',
-            top:'0px',
-            textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            overflowY: 'hidden', // outer div doesn't scroll
-            zIndex: 100000,
-        }}>
-          <div style={{
-             width: '100%',
-             height: '90vh', // panel height for scrolling content
-             backgroundColor: 'black',
-             
-             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-             overflow: 'hidden', // important to clip the content inside
-             display: 'flex',
-             flexDirection: 'column',
-             justifyContent: 'space-between',
-          }}>
-            <br></br>
-            
-<br></br><br></br><br></br>
-<br></br><br></br><br></br>
-           
-      
-          
+</div>
 
         
       
             {/* Scrollable Comment Section */}
             <div ref={scrollRef}  style={{
-              flex: 1, // fill available space
-              overflowY: 'auto',
-              padding: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '25px',
+               flex: 1,
+        
+               maxHeight:'85%',
+               overflowY: 'auto',
+               overflowX:'hidden',
+               padding: '10px',
+              
+               display: 'flex',
+               flexDirection: 'column',
+               gap: '25px',
 
              
             }}  >
               { messages.Chats.map((x, index) => (
 
-                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end' }} >
+                <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end'}} >
                   <div>
                     <img
                       src={x.ProfileImage}
@@ -372,6 +354,7 @@ const handleContextMenu = (event) => {
                     />
                   </div>
 
+                
               
           
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}}  onContextMenu={handleContextMenu}
@@ -545,6 +528,9 @@ const handleContextMenu = (event) => {
         </div>
       )}
 
+              
+          
+
 
 {showChatDiv &&  <div style={{
           width: '150px', 
@@ -559,9 +545,11 @@ const handleContextMenu = (event) => {
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
           position: 'absolute', 
           top: '5%', 
-          right: '-40px', 
+
+          right:'-40px',
+        
           transform: 'translateX(-50%)',
-          zIndex: 999999999,
+          zIndex: 9999999990000000000,
           animation: 'popupAnimation 0.5s ease',
            
         }}>

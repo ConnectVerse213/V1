@@ -600,7 +600,7 @@ function EventPage() {
                 
                 <select
                   
-                  value={selectedOption}
+                  
                   style={{fontSize:'16px',height:'2.5em',width:'20.5em',borderRadius:'10px',backgroundColor:'rgb(46,47,48)',color:'white',border:'none'}}
                   onChange={(event)=>{
                     
