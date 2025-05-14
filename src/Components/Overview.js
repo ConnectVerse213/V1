@@ -916,13 +916,17 @@ function AdminCreate() {
           backgroundRepeat: 'no-repeat',
         }}>
 
-            <br></br><br></br><br></br><br></br>
-          <h2>Description</h2>
+            <br></br><br></br><br></br><br></br><br></br>
+      
           <div style={{borderRadius:'10px'}} >
+
             <center>
                 {/* Toolbar with buttons */}
                 <div style={{borderRadius:'10px'}}>
-                  <div class="editorIcons" style={{backgroundColor:'#1876d1',width:'20em', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px'}}>
+                <div style={{color:'white',backgroundColor:'black', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px',width:'20em'}}>
+                <h3 >Description</h3>
+                </div>
+                  <div class="editorIcons" style={{backgroundColor:'#1876d1',width:'20em', border: '1px solid #1876d1',}}>
                   <Button variant="outlined" style={{width:'3em',height:'2.5em',fontSize:'20px',width:'2em', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} ><b>H</b></Button>
                   <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleBold().run()}><FormatBoldIcon/></Button>
                   <Button variant="outlined" style={{borderRadius:'0', border: '1px solid #1876d1',color:'white'}} onClick={() => editor.chain().focus().toggleItalic().run()}><FormatItalicIcon/></Button>
@@ -936,7 +940,7 @@ function AdminCreate() {
                 <center>
                 <div
                   style={{
-                    height: '60vh',
+                    height: '50vh',
                     overflowY: 'auto',
                     border: '1px solid #1876d1', // Optional: Add a border to the editor
                     backgroundColor:'black',width:'20em',
@@ -1017,14 +1021,14 @@ function AdminCreate() {
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
         }}>
-            <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+            <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> 
             <center>
-            <div style={{backgroundColor:'black',padding:'2em',width:'20em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
+            <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
           <center>
-          <input style={{fontSize:'28px',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}onChange={(e)=>{
+          <input style={{fontSize:'20px',width:'10em',backgroundColor:'black',borderTop:'none',borderLeft:'none',borderRight:'none',color:'white'}}onChange={(e)=>{
             setCapacity(parseInt(e.target.value))
           }} placeholder='Enter Capacity'></input>
           </center>
@@ -1083,7 +1087,7 @@ function AdminCreate() {
            backgroundPosition: 'center center',
            backgroundRepeat: 'no-repeat',
         }}>
-            <br></br> <br></br>   <br></br>  <br></br> <br></br> <br></br><br></br>  <br></br> <br></br> <br></br>
+            <br></br> <br></br>   <br></br>  <br></br> <br></br> <br></br><br></br>  
 
             <center>
 
