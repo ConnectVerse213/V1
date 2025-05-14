@@ -72,6 +72,7 @@ import { useParams } from 'react-router-dom';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -1448,14 +1449,113 @@ function AdminCreate() {
           </center>
           
         </div>}
-        <Dialog
+
+
+
+
+        {openQuestions && (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      padding: '20px',
+      position: 'fixed',
+      top: '0px',
+      left: '50%',
+      color: 'white',
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      borderRadius: '10px',
+      textAlign: 'center',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      transform: 'translateX(-50%)',
+      zIndex: 99999999,
+      animation: 'popupAnimation 0.5s ease',
+      backgroundImage: `url(${eventpageBackground})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      overflowY: 'auto',
+    }}
+  >
+  <br></br><br></br>
+
+
+
+    <div style={{ paddingTop: '10vh', display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          backgroundColor: 'black',
+          padding: '1em',
+          maxWidth: '40em',
+          border: '1px solid #1876d1',
+          borderRadius: '10px',
+        }}
+      >
+        <div style={{width:'100%',textAlign:'right'}} onClick={()=>{
+            setOpenQuestions(false)
+        }}><CancelIcon/></div>
+
+        <h2 style={{ color: 'white', marginBottom: '1em' }}>Questions</h2>
+
+        <table style={{ width: '100%', borderCollapse: 'collapse', color: 'white' }}>
+          <thead>
+            <tr style={{ borderBottom: '2px solid #1876d1' }}>
+              <th style={{ padding: '10px', textAlign: 'left' }}>Question</th>
+              <th style={{ padding: '10px', textAlign: 'left' }}>Type</th>
+              <th style={{ padding: '10px' }}>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {questions.map((x, index) => {
+              let questionText = x;
+              let type = 'Text';
+
+              if (x.slice(0, 4) === 'type') {
+                type = x.slice(x.indexOf('=') + 1, x.indexOf('{'));
+                questionText = x.slice(x.indexOf('}') + 1);
+              }
+
+              return (
+                <tr
+                  key={index}
+                  style={{
+                    borderBottom: index === questions.length - 1 ? 'none' : '1px solid #1876d1', // No border on last row
+                  }}
+                >
+                  <td style={{ padding: '10px', paddingRight: '2px', wordWrap: 'break-word', textAlign: 'left' }}>
+                    {questionText}
+                  </td>
+                  <td style={{ padding: '10px', color: 'lightgreen' }}>{type}</td>
+                  <td style={{ padding: '10px' }}>
+                    {/* If the question is Name or Email, show "Required" in red */}
+                    {(questionText === 'Name' || questionText === 'Email') ? (
+                      <span style={{ color: 'red' }}>Required</span>
+                    ) : (
+
+                        <DeleteIcon  style={{ color: 'red', cursor: 'pointer'}}  onClick={() => handleDeleteQuestion(index)}/>
+                        
+                    
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+)}
+
+
+        <Dialog 
   fullScreen
-  open={openQuestions}
-  onClose={handleClose}
+
   TransitionComponent={Transition}
 >
     <br></br> <br></br> <br></br> <br></br> 
-  <AppBar sx={{ position: 'relative' }}>
+  <AppBar sx={{ position: 'relative'}} style={{ backgroundColor: 'black' }}>
     <Toolbar style={{ backgroundColor: 'black' }}>
       <IconButton
         edge="start"
@@ -1471,7 +1571,7 @@ function AdminCreate() {
     </Toolbar>
   </AppBar>
   <h3>&nbsp;&nbsp;&nbsp; Questions</h3>
-  <List>
+  <List >
     {questions.map((x, index) => {
       if (x === "Email" || x === "Name") {
         return (
