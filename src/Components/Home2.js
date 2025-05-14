@@ -65,6 +65,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
+import backgroundVideo from '../assets/images/eventBackgroundVideo.mp4'
 
 dayjs.extend(relativeTime);
 // import { signInWithGoogle } from "../firebase-config";
@@ -600,6 +601,7 @@ function Home2() {
            <ResponsiveAppBar homeButtonStyle="contained" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined" />
            <br></br><br></br><br></br>
     
+   
 
 {showConfetti && <Confetti 
       width={"1500px"}
@@ -1504,7 +1506,7 @@ function Home2() {
 
      <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
 
-        
+   
 
     </div>
   )

@@ -55,6 +55,8 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import eventpageBackground from '../assets/images/coinBackground2.gif'
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
+import backgroundVideo from '../assets/images/eventBackgroundVideo.mp4'
+
 
 
 
@@ -262,6 +264,10 @@ function AdminCreate() {
       <br></br> 
       <div id="up"></div>
        <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="contained" dashboardButtonStyle="outlined"/>
+
+       
+       
+       <div style={{ position: "relative", zIndex: 1 }}>
       
        <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
               
@@ -298,7 +304,8 @@ function AdminCreate() {
     fontSize: "18px",
     fontWeight: "bold",
     textShadow: "1px 1px 2px black",
-    border:"5px solid #1876d1"
+    border:"5px solid #1876d1",
+    zIndex:1
   }}
 >
 
@@ -332,7 +339,7 @@ function AdminCreate() {
       <div class="form__group field">
 <div class="eventName">
     
-    <input type="input" style={{fontSize:'40px',background: "transparent", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "none", width:'100%',color:'white'}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
+    <input type="input" style={{fontSize:'40px',background: "transparent", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(0px)", border: "none", width:'100%',color:'white'}} placeholder="Event Name" required="" value={eventName} onChange={(e)=>setEventName(e.target.value)} />
     </div>
    
 </div>
@@ -348,7 +355,7 @@ function AdminCreate() {
     
   
     </div>
-    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
 
 <div class="datetime1">
   <div class="datetime1a"><CircleIcon fontSize="small"/><MoreVertIcon/><RadioButtonUncheckedIcon fontSize="small"/></div>
@@ -400,7 +407,7 @@ function AdminCreate() {
   {!isOnline && <div class="location" onClick={()=>{
     
     toast.dismiss()
-    handleClickOpen()}} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+    handleClickOpen()}} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
  
 
 <div class="location2"><l style={{fontSize:'20px'}}>
@@ -424,7 +431,7 @@ function AdminCreate() {
 
 {
 
-isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%',height:'10em' }}>
+isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%',height:'10em' }}>
  
 
 
@@ -481,7 +488,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         </div>
       )}
 
-      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
+      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(15px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
    <br></br> 
   <div  onClick={()=>{
     
@@ -494,7 +501,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
        
        
         <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em'}}>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em'}}>
 
 
 
@@ -1080,6 +1087,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         </div>}
  
         <ToastContainer style={{zIndex:'999999999999999999'}} />
+    </div>
     </div>
   )
 }

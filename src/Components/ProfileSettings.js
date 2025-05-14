@@ -18,6 +18,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { ToastContainer, toast } from 'react-toastify';
+import backgroundVideo from '../assets/images/eventBackgroundVideo.mp4'
 
 function ProfileSettings() {
 
@@ -142,100 +143,184 @@ function ProfileSettings() {
       },[])
 
   return (
-    <div>
-        <br></br>
-        <ResponsiveAppBar homeButtonStyle="outlined" earnButtonStyle="outlined" createButtonStyle="outlined" dashboardButtonStyle="outlined"/>
+    <div style={{ position: "relative" }}>
+
+<ResponsiveAppBar
+      homeButtonStyle="outlined"
+      earnButtonStyle="outlined"
+      createButtonStyle="outlined"
+      dashboardButtonStyle="outlined"
+    />
+  {/* Background Video */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100vh",
+      objectFit: "cover",
+      zIndex: 0,
+    }}
+    src={backgroundVideo}
+  />
+
+<center>
+  {/* Foreground Content */}
+
+
+<br></br><br></br><br></br>
+<br></br><br></br><br></br>
+\
+  <div style={{ position: "relative", zIndex: 1,background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)',width:'20em' }}>
     
-        <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
-        <div style={{color:'white', display:'flex',alignItems:'center',gap:'3px',justifyContent:'center'}}><SettingsIcon fontSize="large"/> &nbsp;<l style={{fontSize:'28px'}}> Profile Settings </l></div>
 
-        <br></br> 
-        <center>
+    <br />
+    <br />
+    
 
-       
-        <br></br>
-
-
-         <input
-                type="file"
-                accept="image/*"
-                id="fileInput"
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-              />
-         
-         {imageUrl.length==0 &&        <center>
-          
-         
-              <label
-          htmlFor="fileInput"
-          style={{
-            width: "200px",
-            height: "200px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundImage: `url(${accountImg})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            color: "white",
-            borderRadius: "10px",
-            cursor: "pointer",
-            fontSize: "18px",
-            fontWeight: "bold",
-            textShadow: "1px 1px 2px black",
-            
-          }}
-        >
+    <div
+      style={{
+        color: "white",
+        display: "flex",
+        alignItems: "center",
+        gap: "3px",
+        justifyContent: "center",
         
-        </label>
-        <br></br>
-        <l style={{color:'#1876d1',textAlign:'left'}}>Set Profile Picture</l>
-        </center>}
-        {imageUrl && (
-                <div style={{ marginTop: "10px" }}>
-                  <img src={imageUrl} alt="Uploaded" style={{ width: "200px",height:'200px',borderRadius:'50%',objectFit: 'cover' }} />
-                
-                </div>
-              )}
-              <br></br>
-        {imageUrl.length!=0 &&  <center>
-              <label
-                htmlFor="fileInput"
-                style={{
-                  padding: "10px 20px",
-                  
-                  color: "#1876d1",
-                  
-                  cursor: "pointer",
-                }}
-              >
-                Change Photo
-              </label>
-              </center>}
-        
-        <br></br>  <br></br>
-
-       <input  style={{color:'black',fontSize:'16px',width:'11em',height:'2em'}} value={userName} onChange={(e)=>{
-        setUserName(e.target.value)
-       }}></input>
-       
-        <br></br>  <br></br>
-        <Button variant="contained" style={{width:'13em'}} onClick={()=>{
-            updateUser()
-        }}>Save</Button>
-        <br></br>
-        <br></br>
-        <Button variant="outlined" style={{width:'13em',border:'1px solid red',color:'red'}} onClick={()=>{
-            localStorage.clear();
-            window.location.href="/oktologin"
-        }}>Logout</Button>
-
-        </center>
-<br></br>
-
-      <ToastContainer style={{zIndex:'99999999999'}}/>
+      }}
+    >
+      <SettingsIcon fontSize="large" /> &nbsp;
+      <l style={{ fontSize: "28px" }}> Profile Settings </l>
     </div>
+
+    <br />
+    <center>
+      <br />
+
+      <input
+        type="file"
+        accept="image/*"
+        id="fileInput"
+        onChange={handleImageUpload}
+        style={{ display: "none" }}
+      />
+
+      {imageUrl.length == 0 && (
+        <center>
+          <label
+            htmlFor="fileInput"
+            style={{
+              width: "200px",
+              height: "200px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundImage: `url(${accountImg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              color: "white",
+              borderRadius: "10px",
+              cursor: "pointer",
+              fontSize: "18px",
+              fontWeight: "bold",
+              textShadow: "1px 1px 2px black",
+            }}
+          ></label>
+          <br />
+          <l style={{ color: "#1876d1", textAlign: "left" }}>
+            Set Profile Picture
+          </l>
+        </center>
+      )}
+
+      {imageUrl && (
+        <div style={{ marginTop: "10px" }}>
+          <img
+            src={imageUrl}
+            alt="Uploaded"
+            style={{
+              width: "200px",
+              height: "200px",
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
+      )}
+
+      <br />
+
+      {imageUrl.length != 0 && (
+        <center>
+          <label
+            htmlFor="fileInput"
+            style={{
+              padding: "10px 20px",
+              color: "#1876d1",
+              cursor: "pointer",
+            }}
+          >
+            Change Photo
+          </label>
+        </center>
+      )}
+
+      <br />
+      <br />
+
+      <input
+        style={{
+          color: "black",
+          fontSize: "16px",
+          width: "11em",
+          height: "2em",
+        }}
+        value={userName}
+        onChange={(e) => {
+          setUserName(e.target.value);
+        }}
+      ></input>
+
+      <br />
+      <br />
+
+      <Button
+        variant="contained"
+        style={{ width: "13em" }}
+        onClick={() => {
+          updateUser();
+        }}
+      >
+        Save
+      </Button>
+
+      <br />
+      <br />
+
+      <Button
+        variant="outlined"
+        style={{ width: "13em", border: "1px solid red", color: "red" }}
+        onClick={() => {
+          localStorage.clear();
+          window.location.href = "/oktologin";
+        }}
+      >
+        Logout
+      </Button>
+    </center>
+
+    <br />
+
+    <ToastContainer style={{ zIndex: "99999999999" }} />
+  </div>
+  </center>
+</div>
+
+        
   )
 }
 
