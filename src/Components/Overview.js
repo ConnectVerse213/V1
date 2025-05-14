@@ -1156,7 +1156,7 @@ function AdminCreate() {
               <div>
                 <h3 style={{color:'white'}}>Text</h3>
              
-                <div style={{width:'100%',textAlign:'center'}}>
+                <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                  <input
           type="text" style={{fontSize:'18px',width:'100%',height:'2em',borderRadius:'2px',border:'none'}}
           value={newQuestion}
@@ -1169,7 +1169,7 @@ function AdminCreate() {
     
       
 
-    </div>
+ 
      
         
         <br></br>
@@ -1205,6 +1205,7 @@ function AdminCreate() {
       >
           Add
         </Button>
+</div>
 </div>
           
               </div>
