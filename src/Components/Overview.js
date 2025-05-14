@@ -1159,7 +1159,7 @@ function AdminCreate() {
              
                 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                  <input
-          type="text"   style={{fontSize:'18px',width:'15em',height:'2em'}}
+          type="text"   style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Write a new question"
@@ -1228,13 +1228,13 @@ function AdminCreate() {
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Add a new question"
           className="flex-grow p-2 border rounded"
-          style={{fontSize:'18px',width:'15em',height:'2em'}}
+          style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}
         />
       <br></br>
     
       <br></br>
 
-        <input placeholder="option1,option2"  style={{fontSize:'18px',width:'15em',height:'2em'}} value={optionsInOptionOption} onChange={(e)=>{
+        <input placeholder="option1,option2"  style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}} value={optionsInOptionOption} onChange={(e)=>{
 
             setOptionsInOptionOption(e.target.value)
 
@@ -1292,7 +1292,7 @@ function AdminCreate() {
              
               
                  <input
-          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
+          type="text" style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Write a new question"
@@ -1336,8 +1336,8 @@ function AdminCreate() {
                 <h3 style={{color:'white'}}>Website</h3>
               
                  <input
-          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
-          value={newQuestion}
+          type="text" style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}
+          value="Enter Website Link"
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Write a new question"
           className="flex-grow p-2 border rounded"
@@ -1386,7 +1386,7 @@ function AdminCreate() {
                 <h3 style={{color:'white'}}>Social Profile</h3>
              
                 <input
-          type="text" style={{fontSize:'18px',width:'15em',height:'2em'}}
+          type="text" style={{fontSize:'18px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}
           value={`What is your ${newQuestion} handle ?`}
           
           placeholder="Write a new question"
@@ -1397,7 +1397,7 @@ function AdminCreate() {
         <select id="dropdown"  onChange={(e)=>{
             setNewQuestion(e.target.value)
            
-        }} style={{width:'17.5em',fontSize:'16px',height:'2.5em'}}>
+        }} style={{fontSize:'17.5px',width:'15em',height:'2em',backgroundColor:'rgb(46,47,48)',color:'white',border:'none',borderRadius:'7px'}}>
             <option value="Twitter">Twitter</option>
             <option value="Linkedin">Linkedin</option>
             <option value="Instagram">Instagram</option>
