@@ -1158,13 +1158,13 @@ function AdminCreate() {
              
                 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                  <input
-          type="text" style={{fontSize:'18px',width:'100%',height:'2em',borderRadius:'2px',border:'none'}}
+          type="text"   style={{fontSize:'18px',width:'15em',height:'2em'}}
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           placeholder="Write a new question"
           className="flex-grow p-2 border rounded"
         />
-      <br></br>
+
 
     
       
