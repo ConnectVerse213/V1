@@ -302,7 +302,7 @@ function EventManage() {
 
 </center>
       
-      <br></br>  <br></br>  <br></br>
+      <br></br>  
   
         <div className="item" >
 
@@ -310,9 +310,14 @@ function EventManage() {
 
 <div class="item1a">
 
-   
+
+
+
 
 <img class="poster" style={{border:'1px solid white'}} src={events.length!=0 && events[0].Image}></img>
+<h2 style={{color:'white',textAlign:'center'}}>{events.length!=0 && events[0].Name}</h2>
+
+
 
 </div>
 
@@ -333,7 +338,8 @@ function EventManage() {
     borderRadius: '10px',
     border: '1px solid rgba(255, 255, 255, 0.18)',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    width:'90%',
   }}
 >
 
@@ -343,7 +349,7 @@ function EventManage() {
   
 
   <div
-    className="item1c"
+    className="item1c" style={{width:'100%'}}
     
   >
     <span style={{ color: 'white' }}>
@@ -382,10 +388,10 @@ function EventManage() {
     }}>
 
         
-  <div style={{width:'100%',display:'flex',justifyContent:'space-evenly'}}>
+  <div style={{width:'100%',display:'flex',gap:'50px',justifyContent:'center'}}>
 
 
-  <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around'}}><h1 style={{color:'white'}}>{events.length!=0 && events[0].Name}</h1><Button variant="contained" style={{backgroundColor:'white',color:'black'}}>Cap {events.length!=0 && events[0].Capacity}</Button></div>
+  <div style={{display:'flex',flexDirection:'column',justifyContent:'space-around'}}><Button variant="outlined" style={{color:'red',border:'1px solid red', height:'3em',width:'7em'}}><b>Cap </b> &nbsp;{events.length!=0 && events[0].Capacity}</Button></div>
 
   <div style={{width:'7em'}}>
 
@@ -760,7 +766,7 @@ updateUser(x)
       <div class="registrationsDiv" onClick={()=>{
 
         setUserDialog(x)
-        handleClickOpen()
+        setOpen(true)
       }}><div style={{display:'flex',flexWrap:'wrap',gap:'10px',alignItems:'center'}}><l style={{fontSize:'16px'}}><b>{x.Name}</b></l><l style={{fontSize:'16px',color:'grey'}}>{x.Email}</l></div>
       
       
@@ -792,65 +798,100 @@ updateUser(x)
        </div>
 
        
-     <Dialog
-             fullScreen
-             open={open}
-             onClose={handleClose}
-             TransitionComponent={Transition}
-           >
+       {open && (
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      padding: '20px',
+      position: 'fixed',
+      top: '0px',
+      left: '50%',
+      color: 'white',
+      backgroundColor: 'black',
+      border: '2px solid #1876d1',
+      borderRadius: '10px',
+      textAlign: 'center',
+      boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+      transform: 'translateX(-50%)',
+      zIndex: 99999999,
+      animation: 'popupAnimation 0.5s ease',
+      backgroundImage: `url(${eventpageBackground})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+      backgroundRepeat: 'no-repeat',
+      overflowY: 'auto',
+    }}
+  >
+    <br /><br />
+    <div style={{ paddingTop: '10vh', display: 'flex', justifyContent: 'center' }}>
+      <div
+        style={{
+          backgroundColor: 'black',
+          padding: '1em',
+          maxWidth: '40em',
+          border: '1px solid #1876d1',
+          borderRadius: '10px',
+        }}
+      >
+        <div style={{ width: '100%', textAlign: 'right' }} onClick={() => setOpen(false)}>
+          <CloseIcon />
+        </div>
 
-            <br></br> <br></br> <br></br> <br></br>
-             <AppBar sx={{ position: 'relative' }}>
-               <Toolbar style={{backgroundColor:'black'}}>
-                 <IconButton
-                   edge="start"
-                   color="inherit"
-                   onClick={handleClose}
-                   aria-label="close"
-                 >
-                   <CloseIcon />
-                 </IconButton>
-                 <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                   {userDialog.Name}
-                 </Typography>
-     
-                 {approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
-     
-                   userDialog.delete="delete"
-                   updateUser(userDialog)
-     
-     
-                 }}>
-                   Unapprove
-                 </Button>}
-     
-                 {!approvedUsers.includes(userDialog.Email) && <Button variant='contained' style={{border:'1px solid red',backgroundColor:'red'}} onClick={()=>{
-     
-                   console.log("updateUser",userDialog)
-                   updateUser(userDialog)
-                   
-                 }}>
-                   Approve
-                 </Button>}
-     
-                 
-               </Toolbar>
-             </AppBar>
-             <h3>&nbsp;&nbsp;&nbsp;Registration Questions</h3>
-             <List>
-               {Object.entries(userDialog).map(([key, value])=>{ if(key!="delete")
-                 return(<>
-                   <ListItemButton>
-                 <ListItemText primary={key} secondary={value} />
-               </ListItemButton>
-               <Divider />
-                 </>
-               )})}
-               
-              
-               
-             </List>
-           </Dialog>
+        <table style={{ width: '100%', border: '1px solid black', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>
+                <strong>Question</strong>
+              </th>
+              <th style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>
+                <strong>Answer</strong>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(userDialog).map(([key, value]) => {
+              if (key !== 'delete') {
+                return (
+                  <tr key={key}>
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{key}</td>
+                    <td style={{ border: '1px solid black', padding: '8px', textAlign: 'left' }}>{value}</td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
+          </tbody>
+        </table>
+
+        {approvedUsers.includes(userDialog.Email) ? (
+          <Button
+            variant="contained"
+            style={{ border: '1px solid red', backgroundColor: 'red', marginTop: '1em' , height:'2em' }}
+            onClick={() => {
+              userDialog.delete = 'delete';
+              updateUser(userDialog);
+            }}
+          >
+            Unapprove
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            style={{ border: '1px solid red', backgroundColor: 'red', marginTop: '1em' , height:'2em' }}
+            onClick={() => {
+              console.log('updateUser', userDialog);
+              updateUser(userDialog);
+            }}
+          >
+            Approve
+          </Button>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
         <br></br> 
         
        

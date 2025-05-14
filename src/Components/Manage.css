@@ -142,7 +142,7 @@
         flex-direction: column;
         
         color:'white';
-        gap:3em
+        gap:30px
        
       }
       .poster{
@@ -218,6 +218,8 @@
       }
 
       .registrationsDiv{
+
+   
 
         border: 0.07px solid black;
         display: flex;
