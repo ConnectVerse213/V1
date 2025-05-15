@@ -72,11 +72,15 @@ function Chat() {
                                 id: doc.id,
                               }));
                           
-                              const currentUser = localStorage.getItem("userName");
+                              const currentUser = localStorage.getItem("email");
                           
                               const filteredArray = chats.filter(
                                 (obj) => obj.People.includes(currentUser) && obj.People.includes(userName)
                               );
+
+                              console.log("userName",userName)
+
+
                           
                               console.log("filteredArray", filteredArray);
                           
@@ -117,7 +121,7 @@ function Chat() {
                                             
                         let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
             
-                        let filteredArray=chats.filter(obj=>obj.People.includes(localStorage.getItem('userName')) && obj.People.includes(userName))
+                        let filteredArray=chats.filter(obj=>obj.People.includes(localStorage.getItem('email')) && obj.People.includes(userName))
                                           
                         console.log("fileteredArray",filteredArray)
             
@@ -128,7 +132,7 @@ function Chat() {
                            
                             const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
                          
-                            await addDoc(usersCollectionRef4, { People: [localStorage.getItem('userName'), userName], Chats: [{ Sender: localStorage.getItem('userName'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('userName')]: localStorage.getItem('profileImg'), [userName]: profileImage } });
+                            await addDoc(usersCollectionRef4, { People: [localStorage.getItem('email'), userName], Chats: [{ Sender: localStorage.getItem('email'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('email')]: localStorage.getItem('profileImg'), [userName]: profileImage } });
 
                             setMakeComment("")
 
@@ -145,7 +149,7 @@ function Chat() {
                             
                             const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-                            const newFields1 = { People: [localStorage.getItem('userName'), userName], Chats: [...filteredArray[0].Chats,{ Sender: localStorage.getItem('userName'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('userName')]: localStorage.getItem('profileImg'), [userName]: profileImage } }
+                            const newFields1 = { People: [localStorage.getItem('email'), userName], Chats: [...filteredArray[0].Chats,{ Sender: localStorage.getItem('email'), SentTo: userName, Message: makeComment, Timestamp: now }], Timestamp: now, ProfileImage: { [localStorage.getItem('email')]: localStorage.getItem('profileImg'), [userName]: profileImage } }
                                                 
                                                         
                                                 
@@ -171,7 +175,7 @@ function Chat() {
                                          
             let chats=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
    
-            let filteredArray=chats.filter(obj=>obj.People.includes(localStorage.getItem('userName')) && obj.People.includes(userName))
+            let filteredArray=chats.filter(obj=>obj.People.includes(localStorage.getItem('email')) && obj.People.includes(userName))
                               
             console.log("fileteredArray",filteredArray)
    
@@ -389,11 +393,11 @@ function Chat() {
                                 
                                     }
                                
-                                setUserName(x.UserName)
+                                setUserName(x.Email)
                                 setProfileImage(x.ProfileImage)
                                 setUserData(x)
 
-                               getComments(x.UserName,x.ProfileImage)
+                               getComments(x.Email,x.ProfileImage)
                             }} >
 
                             <div>
@@ -524,10 +528,16 @@ function Chat() {
       }}>
 
 
+
         {showChat2Div.length !== 0 && showChat2Div[0] !== "not exist" && showChat2Div.Chats.map((x, index) => (
           <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end'}}>
+
+           
             <div>
-              {x.Sender === localStorage.getItem('userName') ? (
+
+           
+                
+              {x.Sender === localStorage.getItem('email') ? (
                 <img
                   src={localStorage.getItem('profileImg')}
                   alt="profile"
@@ -554,9 +564,9 @@ function Chat() {
 
            
 
-           {x.Sender==localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',backgroundColor:'#1876d1',padding:'1em',borderRadius:'5px',maxWidth:'70%' }}>
+           {x.Sender==localStorage.getItem('email') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',backgroundColor:'#1876d1',padding:'1em',borderRadius:'5px',maxWidth:'70%' }}>
               <div style={{ display: 'flex', gap: '7px' }}>
-                <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
+                <label style={{ color: 'white', fontSize: '14px' }}><b>{usersData.length!=0 && usersData.filter(obj=>obj.Email==x.Sender)[0].UserName}</b></label>
                 <div style={{ color: 'white', fontSize: '14px' }}>
                   {x.Timestamp && dayjs(x.Timestamp).fromNow()}
                 </div>
@@ -566,9 +576,9 @@ function Chat() {
                 }
 
 
-        {x.Sender!=localStorage.getItem('userName') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,backgroundColor:'rgb(65, 65, 65)',padding:'1em',borderRadius:'5px',maxWidth:'70%'}}>
+        {x.Sender!=localStorage.getItem('email') && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' ,backgroundColor:'rgb(65, 65, 65)',padding:'1em',borderRadius:'5px',maxWidth:'70%'}}>
               <div style={{ display: 'flex', gap: '7px' }}>
-                <label style={{ color: 'white', fontSize: '14px' }}><b>{x.Sender}</b></label>
+                <label style={{ color: 'white', fontSize: '14px' }}><b>{usersData.length!=0 && usersData.filter(obj=>obj.Email==x.Sender)[0].UserName}</b></label>
                 <div style={{ color: 'white', fontSize: '14px' }}>
                   {x.Timestamp && dayjs(x.Timestamp).fromNow()}
                 </div>

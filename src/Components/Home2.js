@@ -424,9 +424,12 @@ function Home2() {
 
         console.log("eventId",eventId)
 
-
-
-        
+      
+        let makeComment1=makeComment
+        if(makeComment.startsWith('(@'))
+        {
+          makeComment1="(@"+allUsersArray.filter(obj=>obj.UserName==makeComment.slice(2,makeComment.indexOf(')')))[0].Email+")"+makeComment.slice(makeComment.indexOf(")")+1)
+        }
 
            const data = await getDocs(usersCollectionRef3);
                                 
@@ -443,7 +446,7 @@ function Home2() {
                
                 const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
              
-                  await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]});
+                  await addDoc(usersCollectionRef3, { EventId:eventId,Chats:[{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment1,Timestamp: now}]});
 
                 
                  getComments(event_id)
@@ -460,13 +463,13 @@ function Home2() {
 
                             const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-                            console.log("makeComment slice",makeComment.slice(0,2),makeComment.slice(0,2).length)
+                            console.log("makeComment slice",makeComment1.slice(0,2),makeComment1.slice(0,2).length)
 
-                            if(makeComment.length>=2 && makeComment.slice(0,2)==="(@")
+                            if(makeComment1.length>=2 && makeComment1.slice(0,2)==="(@")
                              
                              {
             
-                              const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment.slice(2,makeComment.indexOf(')')),Message:makeComment.slice(1,makeComment.indexOf(')'))+makeComment.slice(makeComment.indexOf(')')+1),Timestamp: now}]};
+                              const newFields1={EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:makeComment1.slice(2,makeComment1.indexOf(')')),Message:makeComment1.slice(1,makeComment1.indexOf(')'))+makeComment1.slice(makeComment1.indexOf(')')+1),Timestamp: now}]};
 
                               await updateDoc(userDoc1, newFields1);
                             
@@ -476,7 +479,7 @@ function Home2() {
                              } 
                              else
                              {
-                             const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment,Timestamp: now}]};
+                             const newFields1 = { EventId:eventId,Chats:[...filteredArray[0].Chats,{Sender:localStorage.getItem('email'),SentTo:eventId,Message:makeComment1,Timestamp: now}]};
                      
                                // update
                      
@@ -1612,7 +1615,7 @@ function Home2() {
               </div>
               
 
-              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message}</div>
+              <div style={{ color: 'white', textAlign: 'left' }}>{x.Message.startsWith('@')?"@"+allUsersArray.filter(obj=>obj.Email==x.Message.slice(1,x.Message.indexOf(" ")))[0].UserName+" "+x.Message.slice(x.Message.indexOf(" ")+1):x.Message}</div>
               <div
                 style={{ color: 'grey', fontSize: '14px', cursor: 'pointer' }}
                 onClick={() => setMakeComment(`(@${x.UserName}) `)}

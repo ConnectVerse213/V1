@@ -35,21 +35,21 @@ function Channel() {
 
     const handleFollow = async () => {
         try {
-            const currentUserName = localStorage.getItem('userName');
+            const currentEmail= localStorage.getItem('email');
             const userDoc1 = doc(db, "user", users[0].id);
             const existingFollowers = users[0].Followers || [];
     
             // Avoid duplicate followers
-            const updatedFollowers = existingFollowers.includes(currentUserName)
+            const updatedFollowers = existingFollowers.includes(currentEmail)
                 ? existingFollowers
-                : [...existingFollowers, currentUserName];
+                : [...existingFollowers, currentEmail];
     
             await updateDoc(userDoc1, { Followers: updatedFollowers });
     
             // Fetch current user data
             const data = await getDocs(usersCollectionRef1);
             const usersTemp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            const filteredArray = usersTemp.filter(obj => obj.UserName === currentUserName);
+            const filteredArray = usersTemp.filter(obj => obj.Email === currentEmail);
     
             if (filteredArray.length === 0) {
                 notifyCustom("User not found", "error");
@@ -62,9 +62,9 @@ function Channel() {
             const existingFollowing = currentUser.Following || [];
     
             // Avoid duplicate following
-            const updatedFollowing = existingFollowing.includes(userName)
+            const updatedFollowing = existingFollowing.includes(users[0].Email)
                 ? existingFollowing
-                : [...existingFollowing, userName];
+                : [...existingFollowing, users[0].Email];
     
             await updateDoc(userDoc2, { Following: updatedFollowing });
     
@@ -81,18 +81,18 @@ function Channel() {
     
     const handleUnFollow = async () => {
         try {
-            const currentUserName = localStorage.getItem('userName');
+            const email = localStorage.getItem('email');
             const userDoc1 = doc(db, "user", users[0].id);
     
             const updatedFollowers = (users[0].Followers || []).filter(
-                item => item !== currentUserName
+                item => item !== email
             );
     
             await updateDoc(userDoc1, { Followers: updatedFollowers });
     
             const data = await getDocs(usersCollectionRef1);
             const usersTemp = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            const filteredArray = usersTemp.filter(obj => obj.UserName === currentUserName);
+            const filteredArray = usersTemp.filter(obj => obj.Email === email);
     
             if (filteredArray.length === 0) {
                 notifyCustom("User not found", "error");
@@ -103,7 +103,7 @@ function Channel() {
             const userDoc2 = doc(db, "user", currentUser.id);
     
             const updatedFollowing = (currentUser.Following || []).filter(
-                item => item !== userName
+                item => item !== users[0].Email
             );
     
             await updateDoc(userDoc2, { Following: updatedFollowing });
@@ -129,7 +129,13 @@ function Channel() {
                                            
           let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))                
                                            
-          let filteredArray=usersTemp.filter(obj => obj.UserName==userName)
+          let filteredArray=usersTemp.filter(obj => obj.UserName && obj.UserName.toLowerCase()==userName.toLowerCase())
+
+          console.log(userName)
+
+          console.log(usersTemp)
+          
+          console.log(filteredArray)
 
           setUsers(filteredArray)
 
@@ -144,7 +150,7 @@ function Channel() {
 
                 setEvents(filteredArrayEvents)
 
-                if(filteredArray[0].Followers && filteredArray[0].Followers.length!=0 && filteredArray[0].Followers.includes(localStorage.getItem('userName')))
+                if(filteredArray[0].Followers && filteredArray[0].Followers.length!=0 && filteredArray[0].Followers.includes(localStorage.getItem('email')))
                 {
                     setIsFollow(true)
                 }

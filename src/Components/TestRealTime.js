@@ -35,6 +35,8 @@ const Chat = () => {
   const [showConfetti,setShowConfetti]=useState(false)
   const [showDeleteDiv,setShowDeleteDiv]=useState(false)
   const [deleteIndex,setDeleteIndex] =useState(-10)
+  const [allUsers,setAllUsers]=useState([])
+ 
 
 
 const MENU_ID = "message-options";
@@ -59,6 +61,19 @@ const handleContextMenu = (event) => {
   };
 
   const scrollRef = useRef(null);
+
+  const getAllUsers=async()=>{
+
+
+    const data = await getDocs(collection(db, "user"));
+                                    
+   let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+    setAllUsers(usersTemp)
+
+
+
+  }
 
   useEffect(() => {
 
@@ -86,6 +101,8 @@ const handleContextMenu = (event) => {
 
     }
     const q = query(collection(db, "community"))
+
+    getAllUsers()
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const filteredArray = querySnapshot.docs
@@ -183,7 +200,7 @@ const handleContextMenu = (event) => {
         if(filteredArray[0].Participants.includes(localStorage.getItem('email')))
 
             {
-                const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants]}
+                const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants]}
 
                 await updateDoc(userDoc1, newFields1);
             }
@@ -191,7 +208,7 @@ const handleContextMenu = (event) => {
         else
         {
 
-            const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),SenderUserName:localStorage.getItem('userName'),ProfileImage:localStorage.getItem('profileImg'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants,localStorage.getItem('email')]}
+            const newFields1 = {Creator:filteredArray[0].Creator, Name:filteredArray[0].Name ,Description: filteredArray[0].Description,Chats:[...filteredArray[0].Chats,{SenderEmail:localStorage.getItem('email'),Message:newMessage,Timestamp:now,ChatId:filteredArray[0].Chats.length-1,isReply:isReply}],Timestamp: now,Participants:[...filteredArray[0].Participants,localStorage.getItem('email')]}
 
             await updateDoc(userDoc1, newFields1);
         }
@@ -251,6 +268,29 @@ const handleContextMenu = (event) => {
                 type:type
                
                 });
+
+
+        const getUserByEmail=async(email)=>{
+
+
+            // console.log(allUsers)
+
+            if(allUsers.length==0)
+            {
+                return []
+            }
+
+            
+
+           
+
+            let filteredArray=allUsers.filter(obj=>obj.Email==email)
+
+            console.log("filteredArray",filteredArray[0])
+
+           
+            return filteredArray[0]
+        }
 
   return (
     <div style={{overflowX:'hidden'}}>
@@ -343,7 +383,7 @@ const handleContextMenu = (event) => {
                 <div key={index} style={{ display: 'flex', gap: '10px', alignItems:'flex-end'}} >
                   <div>
                     <img
-                      src={x.ProfileImage}
+                      src={allUsers.length!=0 && allUsers.filter(obj=>obj.Email==x.SenderEmail)[0].ProfileImage}
                       alt="profile"
                       style={{
                         width: '1.5em',
@@ -357,11 +397,11 @@ const handleContextMenu = (event) => {
                 
               
           
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderUserName !== localStorage.getItem('userName') ? 'rgb(65, 65, 65)' : '#1876d1',padding:'1em',borderRadius:'5px', maxWidth:'70%'}}  onContextMenu={handleContextMenu}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start',gap:'5px', backgroundColor: x.SenderEmail==localStorage.getItem('email') ?' #1876d1' : 'rgb(65, 65, 65)' ,padding:'1em',borderRadius:'5px', maxWidth:'70%'}}  onContextMenu={handleContextMenu}
               >
                     <div style={{display:'flex',gap:'7px'}} id={`ChatId=${x.ChatId}`} >
 
-                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderUserName!=localStorage.getItem('userName')?x.SenderUserName : "You"}</b></label>
+                    <label style={{ color: 'white', fontSize: '14px' }}><b>{x.SenderEmail==localStorage.getItem('email') ? "You":allUsers.length!=0 && allUsers.filter(obj=>obj.Email==x.SenderEmail)[0].UserName}</b></label>
                    
             
                     
@@ -378,12 +418,14 @@ const handleContextMenu = (event) => {
                     x.isReply.indexOf('|') + 1,
                     x.isReply.indexOf('|', x.isReply.indexOf('|') + 1)
                   )
-                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor: x.isReply.slice(2,x.isReply.indexOf('|')) == x.SenderUserName  && x.SenderUserName ==localStorage.getItem('userName') ? '#82a7cd' : x.SenderUserName ==localStorage.getItem('userName') && x.SenderUserName!=x.isReply.slice(2,x.isReply.indexOf('|')) ?'#82a7cd':x.isReply.slice(2,x.isReply.indexOf('|'))==x.SenderUserName ? 'grey': 'grey' , alignItems:'flex-start',padding:'1em'}}>
+                  )}`}> <div style={{ display:'flex',flexDirection:'column',justifyContent:'space-between' ,gap:'10px',overflow: 'hidden',borderRadius:'5px',backgroundColor: x.isReply.slice(2,x.isReply.indexOf('|'))==localStorage.getItem('email') ? '#5a9ddb': 'rgb(100, 100, 100)' , alignItems:'flex-start',padding:'1em'}}>
 
                    
                     <label style={{ color:'white', cursor: 'pointer',fontSize:'14px'}} >
 
-                       <b>{x.isReply.slice(2,x.isReply.indexOf('|'))===localStorage.getItem('userName')?"You":x.isReply.slice(2,x.isReply.indexOf('|'))}</b> 
+                    
+
+                       <b>{x.isReply.slice(2,x.isReply.indexOf('|'))===localStorage.getItem('email')?"You":allUsers.length!=0 && allUsers.filter(obj=>obj.Email==x.isReply.slice(2,x.isReply.indexOf('|')))[0].UserName}</b> 
                    </label>
                 
                     <div style={{ color:'white', cursor: 'pointer',fontSize:'14px',textAlign:'left'}} >
@@ -409,7 +451,7 @@ const handleContextMenu = (event) => {
                         style={{ color: 'grey', cursor: 'pointer',display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'10px' }}
                         onClick={() => {
 
-                            setIsReply(`@(${x.SenderUserName}|${x.ChatId}|${x.Message})`)
+                            setIsReply(`@(${x.SenderEmail}|${x.ChatId}|${x.Message})`)
                            
 
                         }
@@ -432,7 +474,7 @@ const handleContextMenu = (event) => {
 
                      <label style={{color: 'white',fontSize: '14px'}}> Reply</label>
 
-                     {(messages.Creator==localStorage.getItem('email') || x.SenderUserName==localStorage.getItem('userName')) && <label style={{color: 'white',fontSize: '14px'}} onClick={(e)=>{
+                     {(messages.Creator==localStorage.getItem('email') || allUsers.length!=0 && allUsers.filter(obj=>obj.Email==x.SenderEmail)[0].UserName==localStorage.getItem('userName')) && <label style={{color: 'white',fontSize: '14px'}} onClick={(e)=>{
 
                         e.stopPropagation()
                         setDeleteIndex(index)
@@ -486,7 +528,9 @@ const handleContextMenu = (event) => {
                 
                     <label style={{ color: 'grey', cursor: 'pointer',fontSize:'16px'}} >
 
-                        Replying to {isReply.slice(2,isReply.indexOf('|'))}
+                        Replying to {allUsers.length!=0 && allUsers.filter(obj=>obj.Email==isReply.slice(2,isReply.indexOf('|')))[0].UserName}
+
+                       
                     </label>
 
                     <CancelIcon style={{color:'white'}} fontSize='small' onClick={()=>{
