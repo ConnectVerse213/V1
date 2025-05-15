@@ -26,19 +26,31 @@ function ProfileSettings() {
 
      const [imageUrl, setImageUrl] = useState("");
      const [userName,setUserName]=useState("")
+     const [bio,setBio]=useState("")
 
-      const notify = (text,type) => toast(text,{
-           position: "top-right",
-           autoClose: 5000,
-           hideProgressBar: false,
-           closeOnClick: false,
-           pauseOnHover: true,
-           draggable: true,
-           progress: undefined,
-           theme: "light",
-           type:type
-          
-           });
+      const notify = (text,type) => {
+
+
+        toast(text,{
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            type:type
+           
+            });
+        
+        setInterval(()=>{
+            window.location.reload()
+        },2000)
+        
+       
+
+        }
 
 
     const getUser=async ()=>{
@@ -63,12 +75,15 @@ function ProfileSettings() {
              {
                 localStorage.setItem('userName',filteredArray[0].UserName)
                 setUserName(filteredArray[0].UserName)
-             }
-             else
-             {
-                setUserName("Enter User Name")
-             }
 
+                
+             }
+             if(filteredArray[0].Bio)
+            {
+                  
+                    setBio(filteredArray[0].Bio)
+            }
+            
             
            
                            
@@ -85,20 +100,53 @@ function ProfileSettings() {
 
       const updateUser = async () => {
      
+      
              try{
      
               
-     
+              if((imageUrl.length==0 || userName.length==0 || bio.length==0))
+              {
+                notify("Fill all the fields","error")
+
+                return;
+              }
+
+
+              if(userName.length>15)
+                {
+                  notify("username cannot exceed 15 characters","error")
+  
+                  return;
+                }
+
+              if(bio.length>300)
+                {
+                  notify("Bio cannot be more than 300 characters","error")
+  
+                  return;
+                }
+
+
                const data = await getDocs(usersCollectionRef1);
                                           
                let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+               let isUserNameExist=usersTemp.filter(obj => obj.UserName && obj.UserName==userName && obj.Email!=localStorage.getItem('email'))
+
+               if(isUserNameExist.length!=0)
+               {
+
+                notify("Username already exists!","error")
+
+                return;
+               }
      
                let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
 
              console.log(filteredArray)
                            
             const userDoc1 = doc(db, "user", filteredArray[0].id);
-             const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:[...filteredArray[0].EventsApproved],EventsAttended:filteredArray[0].EventsAttended,ProfileImage:imageUrl,UserName:userName};
+             const newFields1 = { Email: filteredArray[0].Email, Coins:filteredArray[0].Coins, EventsCreated:filteredArray[0].EventsCreated,EventsRegistered:[...filteredArray[0].EventsRegistered], EventsApproved:[...filteredArray[0].EventsApproved],EventsAttended:filteredArray[0].EventsAttended,ProfileImage:imageUrl,UserName:userName,Bio:bio};
      
                // update
      
@@ -173,8 +221,8 @@ function ProfileSettings() {
   {/* Foreground Content */}
 
 
-<br></br><br></br><br></br>
-<br></br><br></br><br></br>
+<br></br><br></br><br></br><br></br>
+
 \
   <div style={{ position: "relative", zIndex: 1,background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)',width:'20em' }}>
     
@@ -194,17 +242,18 @@ function ProfileSettings() {
       }}
     >
       <SettingsIcon fontSize="large" /> &nbsp;
-      <l style={{ fontSize: "28px" }}> Profile Settings </l>
+      <l style={{ fontSize: "18px" }}> Profile Settings </l>
     </div>
 
-    <br />
+
     <center>
-      <br />
+  
 
       <input
         type="file"
         accept="image/*"
         id="fileInput"
+        
         onChange={handleImageUpload}
         style={{ display: "none" }}
       />
@@ -272,6 +321,7 @@ function ProfileSettings() {
       <br />
       <br />
 
+
       <input
         style={{
           color: "black",
@@ -279,7 +329,10 @@ function ProfileSettings() {
           width: "11em",
           height: "2em",
         }}
+
+       
         value={userName}
+       
         onChange={(e) => {
           setUserName(e.target.value);
         }}
@@ -288,10 +341,30 @@ function ProfileSettings() {
       <br />
       <br />
 
+      <textarea
+
+      rows="6"
+        style={{
+          color: "black",
+          fontSize: "16px",
+          width: "11em",
+          
+        }}
+        value={bio}
+        placeholder='Enter Bio'
+        onChange={(e) => {
+          setBio(e.target.value);
+        }}
+      ></textarea>
+      
+      <br></br> <br></br>
+
       <Button
         variant="contained"
         style={{ width: "13em" }}
         onClick={() => {
+
+           
           updateUser();
         }}
       >
@@ -315,9 +388,11 @@ function ProfileSettings() {
 
     <br />
 
-    <ToastContainer style={{ zIndex: "99999999999" }} />
+    
   </div>
   </center>
+
+  <ToastContainer style={{ zIndex: "99999999999" }} />
 </div>
 
         

@@ -26,6 +26,7 @@ import TestRealTime from './Components/TestRealTime'
 import Community from './Components/Community'
 import GroupInfo from './Components/GroupInfo'
 import Testing4 from './Components/Testing4';
+import Channel from './Components/Channel'
 function App() {
   const OKTO_CLIENT_API_KEY = "f144c56d-f768-426c-b123-f7ee71f8cee8";
   return (
@@ -114,6 +115,12 @@ function App() {
        <Testing4/>
     </OktoProvider>} />
       
+
+    <Route path="/channel" element={
+        
+        <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
+        <Channel/>
+    </OktoProvider>} />
    
     </Routes>
   </Router>

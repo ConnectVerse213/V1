@@ -9,6 +9,7 @@ import {
   updateDoc,
   deleteDoc,
   doc,
+  Timestamp,
 } from "firebase/firestore";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -56,6 +57,7 @@ import eventpageBackground from '../assets/images/coinBackground2.gif'
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
 import backgroundVideo from '../assets/images/eventBackgroundVideo.mp4'
+import dayjs from 'dayjs';
 
 
 
@@ -127,7 +129,7 @@ function AdminCreate() {
   
   toast(text,{
       position: position,
-      autoClose: 1000,
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: false,
       pauseOnHover: true,
@@ -171,10 +173,11 @@ function AdminCreate() {
 
     const createUser = async () => {
 
+      const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
       if(!isOnline)
       {
-        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category});
+        const result=await addDoc(usersCollectionRef, { Name: eventName, Image:imageUrl,Address:selectedAddress,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category,Timestamp:now});
 
         console.log(result.id)
 
@@ -185,7 +188,7 @@ function AdminCreate() {
       }
       else
       {
-        const result=await addDoc(usersCollectionRef, { Name: eventName,Type:"online", Image:imageUrl,Address:moderatorLink+"{}"+guestLink,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category});
+        const result=await addDoc(usersCollectionRef, { Name: eventName,Type:"online", Image:imageUrl,Address:moderatorLink+"{}"+guestLink,StartDateTime:startDateTime,EndDateTime:endDateTime,Capacity:capacity,Description: text, Creator:localStorage.getItem('email') ,Questions:questionsArray,Attendees:[],Registrations:[],AttendeesCount:0,RegistrationsCount:0,Category:category,Timestamp:now});
 
         console.log(result.id)
 
@@ -355,7 +358,7 @@ function AdminCreate() {
     
   
     </div>
-    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,borderRadius:'8px'}}>
 
 <div class="datetime1">
   <div class="datetime1a"><CircleIcon fontSize="small"/><MoreVertIcon/><RadioButtonUncheckedIcon fontSize="small"/></div>
@@ -371,7 +374,7 @@ function AdminCreate() {
          
             backgroundColor: '#8193FE'
          ,color:'white',
-           borderRadius:'10px',
+           borderRadius:'8px',
            border:'none',
         
         }} name="datetime"
@@ -395,7 +398,7 @@ function AdminCreate() {
           backgroundColor: '#8193FE',
           color:'white', border:"none",
           border:'none',
-          borderRadius:'10px'
+          borderRadius:'8px'
         }}
         onChange={(e)=>{
           setEndDateTime(e.target.value)
@@ -407,7 +410,7 @@ function AdminCreate() {
   {!isOnline && <div class="location" onClick={()=>{
     
     toast.dismiss()
-    handleClickOpen()}} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+    handleClickOpen()}} style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",borderRadius:'8px' }}>
  
 
 <div class="location2"><l style={{fontSize:'20px'}}>
@@ -431,7 +434,7 @@ function AdminCreate() {
 
 {
 
-isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%',height:'10em' }}>
+isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",width:'100%',height:'10em' ,borderRadius:'8px'}}>
  
 
 
@@ -475,7 +478,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
 
       {mapUrl && (
-        <div >
+        <div  >
           <iframe
             title="Google Map"
             src={mapUrl}
@@ -488,7 +491,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         </div>
       )}
 
-      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(15px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
+      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(15px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em',borderRadius:'8px'}}>
    <br></br> 
   <div  onClick={()=>{
     
@@ -501,7 +504,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
        
        
         <l style={{color:'#1876d1'}}>Event Options</l>
-        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em'}}>
+        <div class="eventOptions" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',paddingBottom:'1em', paddingTop:'1em',paddingRight:'1em',borderRadius:'8px'}}>
 
 
 
@@ -562,6 +565,8 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         <button  className='button-85' style={{height:'2em',width:'100%'}} onClick={()=>{
           toast.dismiss()
             createUser()
+
+        
         }}>Create</button>
        
      
@@ -697,7 +702,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
          color:'white',
           backgroundColor: 'black', 
           border: '2px solid #1876d1',
-          borderRadius:'10px',
+          borderRadius:'8px',
           
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -709,17 +714,18 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           backgroundSize: 'cover', 
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
+
         }}>
 
 <br></br><br></br><br></br><br></br><br></br>
 
          
-          <div style={{borderRadius:'10px'}} >
+          <div style={{borderRadius:'8px'}} >
             <center>
             
            
                 {/* Toolbar with buttons */}
-                <div style={{borderRadius:'10px'}}>
+                <div style={{borderRadius:'8px'}}>
 
                   <div style={{color:'white',backgroundColor:'black', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px',width:'20em'}}>
                 <h3 >Description</h3>
@@ -805,7 +811,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
            color:'white',
             backgroundColor: 'black', 
             border: '2px solid #1876d1',
-            borderRadius:'10px',
+            borderRadius:'8px',
             
             textAlign: 'center', 
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -820,7 +826,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         }}>
             <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
             <center>
-            <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
+            <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'8px'}}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
@@ -871,7 +877,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
            color:'white',
             backgroundColor: 'black', 
             border: '2px solid #1876d1',
-            borderRadius:'10px',
+            borderRadius:'8px',
             
             textAlign: 'center', 
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -886,7 +892,7 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
         }}>
           <br></br>  <br></br> <br></br> <br></br> 
 <center>
-          <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
+          <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'8px'}}>
           <h2 style={{color:'white'}}>Category</h2>
          
           <br></br>
@@ -1086,8 +1092,9 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
           </center>
         </div>}
  
-        <ToastContainer style={{zIndex:'999999999999999999'}} />
+        
     </div>
+    <ToastContainer style={{zIndex:'99999999999999999'}} />
     </div>
   )
 }

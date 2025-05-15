@@ -219,6 +219,8 @@ function Home2() {
     const [comments,setComments]=useState([])
     const [event_id,setEvent_id]=useState('')
 
+    const [allUsersArray,setAllUsersArray]=useState([])
+
 
     const  getLeaderboard=async ()=>{
 
@@ -509,6 +511,8 @@ function Home2() {
         let data = await getDocs(usersCollectionRef1);
                                    
                     let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+                    setAllUsersArray(usersTemp)
                   
                                    
                     let filteredArray=usersTemp.filter(obj => obj.Email === localStorage.getItem('email'))
@@ -545,6 +549,8 @@ function Home2() {
                    
 
       }
+
+     
    
       useEffect(()=>{
 
@@ -799,54 +805,78 @@ function Home2() {
           window.location.href=`/event/${x.id}`
         }}></img>
        
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-        <LocationPinIcon fontSize='small'/>
-        <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l>
-        </Typography>
-        </Typography>
+       <CardContent>
 
-        
+       
+<Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-        {/* const countryName = 'united arab emirates'; // 🔥 Manually set this
-    const code = getCode(countryName);
-    const emoji = code ? getEmojiFlag(code) : '🏳️' */}
-          <br></br>
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  
+  <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
+    
+    <l style={{fontSize:'18px'}}>{x.Name}</l>
 
-          <Button variant="outlined" onClick={(e)=>{
+    <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+<CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+{!x.Type && <> <LocationPinIcon fontSize='small'/>
+   <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
-            e.stopPropagation()
-            window.location.href=`/event/${x.id}`
-          }}><LaunchIcon/>  </Button>
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-             setEvent_id(x.id)
+    {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+      <l>Online</l> </>}
+</Typography>
 
-             getComments(x.id)
-          }}><CommentIcon/>  </Button>
+    <l>
+      
+      {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}   </l></Typography>  : <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>Anonymous User </l></Typography>}
+    
+    </l>
+   
+    
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
-            notifyClipboard()
-          }}><ShareIcon/>  </Button>
+<Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{x.RegistrationsCount} Registrations   {x.Timestamp && dayjs(x.Timestamp).fromNow() }</l></Typography>
 
-          {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
-          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manage/${x.id}`
-          }}><EditIcon/>  </Button>
-          }
-         
-            
-         
-        
-        </CardContent>
+    
+    </div>
+    
+    </div>
+
+</Typography>
+
+
+
+<br></br>
+
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  window.location.href=`/event/${x.id}`
+}}><LaunchIcon/>  </Button>
+
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+
+   setEvent_id(x.id)
+
+   getComments(x.id)
+
+   
+
+  
+}}><CommentIcon/>  </Button>
+
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
+  notifyClipboard()
+}}><ShareIcon/>  </Button>
+
+{localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
+<Button variant="outlined" style={{color:'green'}} onClick={()=>{
+  window.location.href=`/manage/${x.id}`
+}}><EditIcon/>  </Button>
+}
+
+</CardContent>
       </CardActionArea>
     </Card>
    
@@ -871,54 +901,78 @@ function Home2() {
           window.location.href=`/event/${x.id}`
         }}></img>
        
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
+       <CardContent>
+
+       
+<Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  
+  <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
+    
+    <l style={{fontSize:'18px'}}>{x.Name}</l>
+
+    <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+<CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+{!x.Type && <> <LocationPinIcon fontSize='small'/>
+    <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
 
-          
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+    {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+      <l>Online</l> </>}
+</Typography>
+
+    <l>
+      
+      {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}   </l></Typography>  : <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>Anonymous User </l></Typography>}
+    
+    </l>
+   
+    
+
+<Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{x.RegistrationsCount} Registrations   {x.Timestamp && dayjs(x.Timestamp).fromNow() }</l></Typography>
+
+    
+    </div>
+    
+    </div>
+
+</Typography>
 
 
-          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
 
-            {!x.Type && <> <LocationPinIcon fontSize='small'/>
-              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+<br></br>
 
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  window.location.href=`/event/${x.id}`
+}}><LaunchIcon/>  </Button>
 
-              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
-                <l>Online</l> </>}
-        
-        </Typography>
-        </Typography>
-        
-          <br></br>
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            window.location.href=`/event/${x.id}`
-          }}><LaunchIcon/>  </Button>
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-             setEvent_id(x.id)
+   setEvent_id(x.id)
 
-             getComments(x.id)
-          }}><CommentIcon/>  </Button>
+   getComments(x.id)
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
-            notifyClipboard()
-          }}><ShareIcon/>  </Button>
+   
 
-          {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
-          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manage/${x.id}`
-          }}><EditIcon/>  </Button>
-        }
-        </CardContent>
+  
+}}><CommentIcon/>  </Button>
+
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
+  notifyClipboard()
+}}><ShareIcon/>  </Button>
+
+{localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
+<Button variant="outlined" style={{color:'green'}} onClick={()=>{
+  window.location.href=`/manage/${x.id}`
+}}><EditIcon/>  </Button>
+}
+
+</CardContent>
       </CardActionArea>
     </Card>
    
@@ -942,56 +996,78 @@ function Home2() {
           window.location.href=`/event/${x.id}`
         }}></img>
        
-        <CardContent>
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
+       <CardContent>
+
+       
+<Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
+
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  
+  <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
+    
+    <l style={{fontSize:'18px'}}>{x.Name}</l>
+
+    <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+<CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+{!x.Type && <> <LocationPinIcon fontSize='small'/>
+   <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
 
-          
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+    {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+      <l>Online</l> </>}
+</Typography>
+
+    <l>
+      
+      {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}   </l></Typography>  : <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>Anonymous User </l></Typography>}
+    
+    </l>
+   
+    
+
+<Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{x.RegistrationsCount} Registrations   {x.Timestamp && dayjs(x.Timestamp).fromNow() }</l></Typography>
+
+    
+    </div>
+    
+    </div>
+
+</Typography>
 
 
-          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
 
-            {!x.Type && <> <LocationPinIcon fontSize='small'/>
-              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+<br></br>
 
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  window.location.href=`/event/${x.id}`
+}}><LaunchIcon/>  </Button>
 
-              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
-                <l>Online</l> </>}
-        
-        </Typography>
-        </Typography>
-        
-          <br></br>
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            window.location.href=`/event/${x.id}`
-          }}><LaunchIcon/>  </Button>
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            
+   setEvent_id(x.id)
 
-             setEvent_id(x.id)
+   getComments(x.id)
 
-             getComments(x.id)
-          }}><CommentIcon/>  </Button>
+   
 
-          <Button variant="outlined" onClick={(e)=>{
-             e.stopPropagation()
-            navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
-            notifyClipboard()
-          }}><ShareIcon/>  </Button>
+  
+}}><CommentIcon/>  </Button>
 
-          {localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
-          <Button variant="outlined" style={{color:'green'}} onClick={()=>{
-            window.location.href=`/manage/${x.id}`
-          }}><EditIcon/>  </Button>
-        }
-        </CardContent>
+<Button variant="outlined" onClick={(e)=>{
+   e.stopPropagation()
+  navigator.clipboard.writeText(`https://v1-six-liart.vercel.app/event/${x.id}`)
+  notifyClipboard()
+}}><ShareIcon/>  </Button>
+
+{localStorage.getItem('email') && x.Creator==localStorage.getItem('email') && 
+<Button variant="outlined" style={{color:'green'}} onClick={()=>{
+  window.location.href=`/manage/${x.id}`
+}}><EditIcon/>  </Button>
+}
+
+</CardContent>
       </CardActionArea>
     </Card>
    
@@ -1019,18 +1095,41 @@ function Home2() {
 
        
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
 
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+            <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+            
+            <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
+              
+              <l style={{fontSize:'18px'}}>{x.Name}</l>
+
+              <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           {!x.Type && <> <LocationPinIcon fontSize='small'/>
-              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+             <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
 
               {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
                 <l>Online</l> </>}
         </Typography>
+
+              <l>
+                
+                {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}   </l></Typography>  : <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>Anonymous User </l></Typography>}
+              
+              </l>
+             
+              
+
+        <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{x.RegistrationsCount} Registrations   {x.Timestamp && dayjs(x.Timestamp).fromNow() }</l></Typography>
+
+              
+              </div>
+              
+              </div>
+       
+          </Typography>
+
+          
 
           <br></br>
 
@@ -1095,7 +1194,7 @@ function Home2() {
           <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
           <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
           {!x.Type && <> <LocationPinIcon fontSize='small'/>
-              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+             <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
 
               {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
@@ -1156,25 +1255,65 @@ function Home2() {
         <CardContent>
 
 
-          <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
-          {x.Name}
-          </Typography>
+        <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-          <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
-          <CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
-          {!x.Type && <> <LocationPinIcon fontSize='small'/>
-              <l>{x.Address && x.Address.slice(x.Address.lastIndexOf(",") + 1)}</l> </>}
+<div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+
+<div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
+  
+  <l style={{fontSize:'18px'}}>{x.Name}</l>
+
+  <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}>
+<CalendarMonthIcon fontSize='small'/><l>{x.StartDateTime && formatDate(x.StartDateTime.substring(0,10))}</l>
+{!x.Type && <> <LocationPinIcon fontSize='small'/>
+  <l>{ x.Address.slice(x.Address.lastIndexOf(",") + 1).length>7 ? x.Address.slice(x.Address.lastIndexOf(",") + 1).slice(0,9)+"..." :x.Address.slice(x.Address.lastIndexOf(",") + 1) } </l> </>}
 
 
-              {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
-                <l>Online</l> </>}
-        </Typography>
+  {x.Type=="online" && <> <VideoCallIcon fontSize='small'/>
+    <l>Online</l> </>}
+</Typography>
+
+  <l>
+    
+    {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}   </l></Typography>  : <Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>Anonymous User </l></Typography>}
+  
+  </l>
+ 
+  
+
+<Typography gutterBottom sx={{  fontSize: 14 }} style={{color:'white', textAlign: 'center',display:'flex',alignItems:'center',justifyContent:'center',gap:'3px'}}><l style={{fontSize:'15px',color:'rgb(200,200,200'}}>{x.RegistrationsCount} Registrations   {x.Timestamp && dayjs(x.Timestamp).fromNow() }</l></Typography>
+
+  
+  </div>
+  
+  </div>
+
+</Typography>
+
+
+
+<br></br>
 
         
 
           <br></br>
+
+        
+
           {userApprovedArray.includes(x.id) ? <div>
           <div> 
+
+          <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
+
+             setEvent_id(x.id)
+
+             getComments(x.id)
+
+             
+
+            
+          }}><CommentIcon/>  </Button>
             
            {!x.Type && <Button variant='outlined' color="success"
         onClick={()=>{
@@ -1212,7 +1351,21 @@ function Home2() {
           }}><ShareIcon/>  </Button></div> }
 
             
-            </div>:<div><Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={()=>{
+            </div>:<div>
+              
+            <Button variant="outlined" onClick={(e)=>{
+             e.stopPropagation()
+
+             setEvent_id(x.id)
+
+             getComments(x.id)
+
+             
+
+            
+          }}><CommentIcon/>  </Button>
+              
+              <Button variant="outlined">Approval Pending</Button><Button variant="outlined" onClick={()=>{
             navigator.clipboard.writeText(`http://localhost:3000/event/${x.id}`)
             notifyClipboard()
           }}><ShareIcon/>  </Button></div>}

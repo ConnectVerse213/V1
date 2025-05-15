@@ -509,7 +509,7 @@ function AdminCreate() {
     
   
     </div>
-    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+    <div class="datetime" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",borderRadius:'8px' }}>
 
 <div class="datetime1">
   <div class="datetime1a"><CircleIcon fontSize="small"/><MoreVertIcon/><RadioButtonUncheckedIcon fontSize="small"/></div>
@@ -525,7 +525,7 @@ function AdminCreate() {
          
             backgroundColor: '#8193FE'
          ,color:'white',
-           borderRadius:'10px',
+           borderRadius:'8px',
            border:'none',
         
         }} name="datetime"
@@ -549,7 +549,7 @@ function AdminCreate() {
           backgroundColor: '#8193FE',
           color:'white', border:"none",
           border:'none',
-          borderRadius:'10px'
+          borderRadius:'8px'
         }}
         onChange={(e)=>{
           setEndDateTime(e.target.value)
@@ -563,7 +563,7 @@ function AdminCreate() {
   { selectedAddress.length!=0 && type!="online" && <div class="location" onClick={()=>{
     toast.dismiss()
     handleClickOpen()
-  }} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+  }} style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",borderRadius:'8px' }}>
  
 
 <div class="location2"><l style={{fontSize:'20px',gap:'2px'}}>
@@ -580,7 +580,7 @@ function AdminCreate() {
   </div>}
 
 
-  { selectedAddress.length!=0 && type=="online" && <div class="location" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" }}>
+  { selectedAddress.length!=0 && type=="online" && <div class="location" style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)",borderRadius:'8px' }}>
  
 
 <div class="location2">
@@ -625,7 +625,7 @@ function AdminCreate() {
         </div>
       )}
 
-      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em'}}>
+      <a href="#up"  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,color:'white',textDecoration:"none",width:'100%',textAlign:'left', height:'4em',borderRadius:'8px'}}>
    <br></br> 
   <div  onClick={()=>{
     toast.dismiss()
@@ -639,7 +639,7 @@ function AdminCreate() {
 
    
   <l style={{color:'#1876d1'}}>Event Options</l>
-        <div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',padding:'0.5em',width:'19.5em'}}>
+        <div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center',padding:'0.5em',width:'19.5em',borderRadius:'8px'}}>
 
 
 
@@ -709,7 +709,7 @@ function AdminCreate() {
 
         <l style={{color:'#1876d1'}}>Event Questions</l>
 
-<div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center', width:'100%',textAlign:'left', display:'flex',flexDirection:'column', padding:'10px',width:'19em', alignItems:'flex-start'}}>
+<div  style={{ background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)", border: "1px solid rgba(255, 255, 255, 0.18)" ,justifyContent:'center', width:'100%',textAlign:'left', display:'flex',flexDirection:'column', padding:'10px',width:'19em', alignItems:'flex-start',borderRadius:'8px'}}>
 
 
 {questions.map((x,index)=>{
@@ -739,7 +739,7 @@ function AdminCreate() {
   
 </div>
 {
-    questions.length>2 && <Button variant="outlined" style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}} onClick={()=>{
+    questions.length>2 && <Button variant="outlined" style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em',borderRadius:'8px'}} onClick={()=>{
         toast.dismiss()
         handleClickOpenQuestions()
     }} >View All questions</Button>
@@ -752,7 +752,7 @@ function AdminCreate() {
 
     toast.dismiss()
     setShowDiv(true)
-}} style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em'}}>Add new question</Button>
+}} style={{background: "rgba(255, 255, 255, 0.15)", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", backdropFilter: "blur(0px)", WebkitBackdropFilter: "blur(0px)",width:'23.5em',borderRadius:'8px'}}>Add new question</Button>
 </a>
       
       
@@ -902,7 +902,7 @@ function AdminCreate() {
          color:'white',
           backgroundColor: 'black', 
           border: '2px solid #1876d1',
-          borderRadius:'10px',
+          borderRadius:'8px',
           
           textAlign: 'center', 
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -918,11 +918,11 @@ function AdminCreate() {
 
             <br></br><br></br><br></br><br></br><br></br>
       
-          <div style={{borderRadius:'10px'}} >
+          <div style={{borderRadius:'8px'}} >
 
             <center>
                 {/* Toolbar with buttons */}
-                <div style={{borderRadius:'10px'}}>
+                <div style={{borderRadius:'8px'}}>
                 <div style={{color:'white',backgroundColor:'black', border: '1px solid #1876d1',borderTopLeftRadius:'10px',borderTopRightRadius:'10px',width:'20em'}}>
                 <h3 >Description</h3>
                 </div>
@@ -1008,7 +1008,7 @@ function AdminCreate() {
            color:'white',
             backgroundColor: 'black', 
             border: '2px solid #1876d1',
-            borderRadius:'10px',
+            borderRadius:'8px',
             
             textAlign: 'center', 
             boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -1023,7 +1023,7 @@ function AdminCreate() {
         }}>
             <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> 
             <center>
-            <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'10px'}}>
+            <div style={{backgroundColor:'black',padding:'2em',width:'18em', border: '1px solid #1876d1' ,borderRadius:'8px'}}>
           <h2 style={{color:'white'}}>Tickets</h2>
          
           <br></br>
@@ -1074,7 +1074,7 @@ function AdminCreate() {
           color:'white',
            backgroundColor: 'black', 
            border: '2px solid #1876d1',
-           borderRadius:'10px',
+           borderRadius:'8px',
            blur:'50px', 
            textAlign: 'center', 
            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
@@ -1091,7 +1091,7 @@ function AdminCreate() {
 
             <center>
 
-            <div style={{backgroundColor:'black',padding:'2em',width:'18em',paddingBottom:'3em', border: '1px solid #1876d1',borderRadius:'10px'}}>
+            <div style={{backgroundColor:'black',padding:'2em',width:'18em',paddingBottom:'3em', border: '1px solid #1876d1',borderRadius:'8px'}}>
             
             <CancelIcon style={{marginTop:'2px',marginLeft:'90%',color:'white'}} onClick={()=>{
                 toast.dismiss()

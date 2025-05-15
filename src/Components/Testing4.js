@@ -8,7 +8,8 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  serverTimestamp
+  serverTimestamp,
+  Timestamp
 } from "firebase/firestore";
 import { QRCodeCanvas } from 'qrcode.react';
 import Card from '@mui/material/Card';
@@ -66,6 +67,8 @@ import SendIcon from '@mui/icons-material/Send';
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+
+
 function Testing4() {
 
 
@@ -95,6 +98,37 @@ function Testing4() {
     }
 
 
+    const addRandomDateTimetoEvents=async()=>{
+
+        const data = await getDocs(collection(db,"events"));
+
+         
+                                           
+        let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+        
+
+        for(let i=0;i<eventsTemp.length;i++)
+        {
+
+            const randomTime = dayjs(Date.now() - Math.random() * 15 * 24 * 60 * 60 * 1000).format("YYYY-MM-DD HH:mm:ss")
+
+            const userDoc = doc(db, "events",eventsTemp[i].id);
+               
+                           
+            const newFields = {Timestamp:randomTime};
+    
+            await updateDoc(userDoc, newFields);
+
+        }
+
+
+        
+       
+
+   }
+
+
   return (
     <div>
       
@@ -102,7 +136,12 @@ function Testing4() {
 
       <button onClick={()=>{
         addUser()
-      }}>Add User</button>
+      }}>Add Random User</button>
+      <br></br>
+
+      <button onClick={()=>{
+       addRandomDateTimetoEvents()
+      }}>Set Ramdom Timestamp to all events</button>
     </div>
   )
 }
