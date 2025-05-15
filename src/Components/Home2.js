@@ -1383,7 +1383,7 @@ function Home2() {
 </div>
 <br></br><br></br><br></br><br></br><br></br>
 
-<ToastContainer style={{zIndex:'99999999999'}}/>
+
 <Box
   sx={{
     position: 'fixed',   // Fixes it relative to the viewport
@@ -1659,7 +1659,7 @@ function Home2() {
 
      <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
 
-   
+     <ToastContainer style={{zIndex:'99999999999'}}/>
 
     </div>
   )

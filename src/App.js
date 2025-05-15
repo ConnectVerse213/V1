@@ -116,7 +116,7 @@ function App() {
     </OktoProvider>} />
       
 
-    <Route path="/channel" element={
+    <Route path="/channel/:userName" element={
         
         <OktoProvider apiKey={OKTO_CLIENT_API_KEY} buildType={BuildType.SANDBOX}>
         <Channel/>
