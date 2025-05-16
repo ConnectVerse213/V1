@@ -518,7 +518,7 @@ function Channel() {
 
 </div>
 
-<div style={{width:'100%',textAlign:'left',display:'flex',justifyContent:'space-between'}}>
+{users.length!=0 && localStorage.getItem('email') != users[0].Email && <div style={{width:'100%',textAlign:'left',display:'flex',justifyContent:'space-between'}}>
 
 <Button variant="contained" style={{height:'2em',backgroundColor:isFollow?'grey':'red'}} onClick={()=>{
 
@@ -548,6 +548,7 @@ notifyCustom("Subscribe to Premium for Pay option","error")
 }}>Pay</Button>
 
 </div>
+}
 
 
 

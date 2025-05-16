@@ -131,7 +131,7 @@ function ProfileSettings() {
                                           
                let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
-               let isUserNameExist=usersTemp.filter(obj => obj.UserName && obj.UserName==userName && obj.Email!=localStorage.getItem('email'))
+               let isUserNameExist=usersTemp.filter(obj => obj.UserName && obj.UserName.toLowerCase()==userName.toLowerCase() && obj.Email!=localStorage.getItem('email'))
 
                if(isUserNameExist.length!=0)
                {

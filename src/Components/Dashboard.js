@@ -46,6 +46,7 @@ import VideoCallIcon from '@mui/icons-material/VideoCall';
 import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
 import dayjs from "dayjs";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 // import { signInWithGoogle } from "../firebase-config";
 const usersCollectionRef1 = collection(db, "user");
@@ -444,8 +445,21 @@ function Home2() {
      window.location.href = '/creator';
 }}>Create Event &nbsp;<AddCircleIcon/></Button>
 <Button variant="outlined" onClick={()=>{
-     window.location.href = '/manage';
-}}>Manage Event &nbsp;<EditCalendarIcon/></Button>
+
+    if(localStorage.getItem('userName'))
+    {
+      window.location.href = `/channel/${!localStorage.getItem('userName')?localStorage.getItem('email'):localStorage.getItem('userName')}`;
+    }
+
+    else{
+      notifyCustom("Set up your profile to continue","error")
+
+      setTimeout(()=>{
+        window.location.href="/profilesettings"
+      },3000)
+    }
+     
+}}>My Channel&nbsp;<DashboardIcon/></Button>
     
 <br></br><br></br>
 {createdEvents.length==0 && <h2 style={{color:'white'}}>Created(0)</h2>}
