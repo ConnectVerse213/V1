@@ -1422,31 +1422,7 @@ function Home2() {
         {DrawerList}
       </Drawer>
 
-      <div style={{position:'fixed',bottom:'0',width:'100%'}}>
      
-
-      <div className="full-width-bar" style={{height:'3em',borderTop:'1px solid white'}} >
-                
-                  
-           
-                   <div style={{color:'white'}} >
-           
-                   
-                   <Button variant="contained" style={{borderRadius:'0'}}><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}}><EventIcon fontSize='small'/> <l>Events</l></div></Button>
-                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}} onClick={()=>{
-                    notifyCustom("Coming Soon!","default")
-                   }}><LocalMoviesIcon fontSize='small'/> <l>Movies</l></div></Button>
-                   <Button><div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',gap:'3px'}} onClick={()=>{
-                    notifyCustom("Coming Soon!","default")
-                   }}><CelebrationIcon fontSize='small'/> <l>Concerts</l></div></Button>
-                
-           
-           
-                   </div>
-                 
-                    
-                     </div>
-      </div>
 
       {showLeaderboarddDiv &&  <div style={{
           width: '250px', 

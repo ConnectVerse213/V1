@@ -27,6 +27,8 @@ import './ResponsiveAppBar.css'
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { ToastContainer, toast } from 'react-toastify';
+import GroupIcon from '@mui/icons-material/Group';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -186,9 +188,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
 
           <Button style={{cursor:'pointer'}}><NotificationsIcon/></Button>
 
-          <Button style={{cursor:'pointer'}} variant={chatButtonStyle} onClick={()=>{
-            setShowChatDiv(true)
-          }} ><ChatIcon/></Button>
+         
 
 
           <Button style={{cursor:'pointer'}} onClick={()=>{
@@ -199,9 +199,61 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
             setShowDashboardDiv(true)
           }}> <Avatar src="/broken-image.jpg" /></Button>}
 
+
         {localStorage.getItem('email') && localStorage.getItem('profileImg') && <Button  onClick={()=>{
             setShowDashboardDiv(true)
           }}> <img style={{width:'3em',height:'3em',borderRadius:'50%',objectFit: 'cover'}} src={localStorage.getItem('profileImg')}/></Button>}
+
+{showDashboardDiv &&  <div style={{
+          width: '150px', 
+          height: '250px',
+          padding: '20px', 
+          backgroundColor: 'black', 
+          border: '2px solid #1876d1',
+          blur:'50px', 
+          textAlign: 'center', 
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
+          position: 'absolute', 
+          top: '5%', 
+          right: '-90px', 
+          transform: 'translateX(-50%)',
+          zIndex: 9999,
+          animation: 'popupAnimation 0.5s ease',
+           
+        }}>
+          <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
+            setShowDashboardDiv(false)
+          }}>
+          <CancelIcon style={{left:'2px'}}/>
+          </div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/dashboard"
+          }}><DashboardIcon/> <l>Dashboard</l></div>
+          <br></br>
+          
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/chat"
+          }}><ChatIcon/>Chats</div>
+          <br></br>
+
+        
+          
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/community"
+          }}><GroupIcon/>Communities</div>
+          <br></br>
+
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
+            window.location.href="/profilesettings"
+          }}><SettingsIcon/> Profile Settings</div>
+          <br></br>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer',color:'red'}} class="dashboardDivMenu" onClick={()=>{
+            localStorage.clear();
+            window.location.href="/oktologin"
+        }}><LogoutIcon/> Logout</div>
+      
+        </div>}
 
       {!localStorage.getItem('email') && !localStorage.getItem('profileImg') && <Button  onClick={()=>{
             window.location.href="/oktologin"
@@ -219,43 +271,7 @@ function ResponsiveAppBar({homeButtonStyle,earnButtonStyle,createButtonStyle,das
       </Container>
 
 
-      {showDashboardDiv &&  <div style={{
-          width: '150px', 
-          height: '200px',
-          padding: '20px', 
-          backgroundColor: 'black', 
-          border: '2px solid #1876d1',
-          blur:'50px', 
-          textAlign: 'center', 
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', 
-          position: 'absolute', 
-          top: '5%', 
-          right: '5px', 
-          transform: 'translateX(-50%)',
-          zIndex: 9999,
-          animation: 'popupAnimation 0.5s ease',
-           
-        }}>
-          <div style={{width:'100%',textAlign:'left',cursor:'pointer'}} onClick={()=>{
-            setShowDashboardDiv(false)
-          }}>
-          <CancelIcon style={{left:'2px'}}/>
-          </div>
-          <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/dashboard"
-          }}><DashboardIcon/> <l>Dashboard</l></div>
-          <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            window.location.href="/profilesettings"
-          }}><SettingsIcon/> Profile Setting</div>
-          <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-            localStorage.clear();
-            window.location.href="/oktologin"
-        }}><SettingsIcon/> Logout</div>
       
-        </div>}
 
         {showChatDiv &&  <div style={{
           width: '150px', 
