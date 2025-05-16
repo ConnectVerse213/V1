@@ -507,7 +507,7 @@ function EventPage() {
 
 
    <center >
-  <div style={{width:'40vh',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' ,padding:'2em',border:'2px solid grey',borderRadius:'10px'}}>
+  <div style={{width:'35vh',background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' ,padding:'2em',border:'2px solid grey',borderRadius:'10px'}}>
 
   <div style={{textAlign:'right'}}>
      <CancelIcon style={{color:'white'}} onClick={()=>{
