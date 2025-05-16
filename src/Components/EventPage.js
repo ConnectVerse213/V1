@@ -311,7 +311,9 @@ function EventPage() {
 
     <div style={{display:'flex',alignItems:'center',gap:'5px',color:'white'}}>
   
-    {creator.length!=0 && <img style={{width:'2em', height:'2em',borderRadius:'50%',objectFit:'cover'}} src={events.length!=0 && creator.length!=0 && creator[0].ProfileImage!=null ? creator[0].ProfileImage : 'https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'} ></img>
+    {creator.length!=0 && <img style={{width:'2em', height:'2em',borderRadius:'50%',objectFit:'cover'}} src={events.length!=0 && creator.length!=0 && creator[0].ProfileImage!=null ? creator[0].ProfileImage : 'https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'} onClick={()=>{
+      window.location.href=`/channel/${creator[0].UserName}`
+    }}></img>
 }
     
       {events.length!=0 && creator.length!=0 && creator[0].UserName!=null && creator[0].UserName }

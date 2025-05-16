@@ -544,6 +544,7 @@ localStorage.setItem('getChat',JSON.stringify(users[0]))
 
 <Button variant="outlined" style={{height:'2em',width:'4em',border:'0.1px solid yellow',color:'yellow'}} onClick={()=>{
 
+notifyCustom("Subscribe to Premium for Pay option","error")
 }}>Pay</Button>
 
 </div>
