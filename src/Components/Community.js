@@ -36,6 +36,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import uploadImg from '../assets/images/uploadImg.png'
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import backgroundVideo from '../assets/images/eventBackgroundVideo.mp4'
 
 const Chat = () => {
  
@@ -76,7 +77,16 @@ const Chat = () => {
   const createCommunity=async()=>{
 
     
-                   
+                   toast.dismiss()
+
+                   if((description.length==0 || imageUrl.length==0 || name.length==0) )
+                   {
+                    toast.dismiss()
+
+                    notifyCustom("Fill the the fields","error")
+                    return;
+
+                   }
                    
                     const now = dayjs().format("YYYY-MM-DD HH:mm:ss");
                  
@@ -84,9 +94,11 @@ const Chat = () => {
 
                       notifyCustom("Community Created!","success")
 
-                      setImageUrl("")
+                      setTimeout(()=>{
+                        window.location.reload()
+                      },1000)
 
-                      setShowCreateDiv(false)
+                     
     
   }
 
@@ -300,7 +312,6 @@ const Chat = () => {
       top: '0px',
       left: '50%',
       transform: 'translateX(-50%)',
-      color: 'white',
       backgroundColor: 'black',
       border: '2px solid #1876d1',
       borderRadius: '10px',
@@ -312,153 +323,184 @@ const Chat = () => {
       backdropFilter: 'blur(10px)'
     }}
   >
-     <br></br> <br></br>  <br></br> <br></br>  <br></br> <br></br>
-    <div
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
       style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
-        textAlign: 'left',
-        cursor: 'pointer'
+        height: '100%',
+        objectFit: 'cover',
+        zIndex: 0
       }}
-      onClick={() => {
-        setShowCreateDiv(false);
-      }}
-    >
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <CancelIcon style={{ left: '2px' }} fontSize="small" />
-    </div>
+      src={backgroundVideo}
+    />
 
-    <br />
+<center>
 
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '2em'
-      }}
-    >
-      <div>
-        <input
-          type="file"
-          accept="image/*"
-          id="fileInput"
-          onChange={handleImageUpload}
-          style={{ display: 'none' }}
-        />
+<br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    {/* All content here is above the video */}
+    <div style={{ position: 'relative', zIndex: 1, color: 'white',width:'18em' ,background: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)', backdropFilter: 'blur(17.5px)', WebkitBackdropFilter: 'blur(17.5px)', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.18)' }}>
+    
+      <br />
+     
 
-        {imageUrl.length === 0 && (
-          <center>
-            <label
-              htmlFor="fileInput"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundImage: `url(${uploadImg})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                color: 'white',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                textShadow: '1px 1px 2px black',
-                border: '0.5px solid #1876d1',
-                width: '250px',
-                height: '250px',
-                objectFit: 'cover'
-              }}
-            ></label>
-            <br />
-            <l style={{ color: '#1876d1', textAlign: 'left' }}>
-              Choose an image for Profile
-            </l>
-          </center>
-        )}
-
-        {imageUrl && (
-          <div style={{ marginTop: '10px' }}>
-            <img
-              src={imageUrl}
-              alt="Uploaded"
-              style={{
-                width: '300px',
-                height: '300px',
-                borderRadius: '50%',
-                objectFit: 'cover'
-              }}
-            />
-          </div>
-        )}
-
-        <br />
-        <br />
-
-        {imageUrl.length !== 0 && (
-          <center>
-            <label
-              htmlFor="fileInput"
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#4A90E2',
-                color: 'white',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
-              Change Picture
-            </label>
-          </center>
-        )}
-      </div>
-
-      <input
+      <div
         style={{
-          fontSize: '16px',
-          width: '15em',
-          backgroundColor: 'black',
-          color: 'white',
-          height: '2em',
-          borderRadius: '6px',
-          border: '0.5px solid #1876d1'
+          width: '100%',
+          textAlign: 'left',
+          cursor: 'pointer'
         }}
-        placeholder="Name of the community"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-
-      <textarea
-        placeholder="Enter Description"
-        rows="10"
-        cols="10"
-        style={{
-          fontSize: '16px',
-          width: '15em',
-          backgroundColor: 'black',
-          color: 'white',
-          borderRadius: '6px',
-          border: '0.5px solid #1876d1'
-        }}
-        onChange={(e) => setDescription(e.target.value)}
-      ></textarea>
-
-      <Button
-        variant="contained"
-        style={{ width: '18em' }}
         onClick={() => {
-          createCommunity();
+          setShowCreateDiv(false);
         }}
       >
-        Create Community
-      </Button>
-    </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <CancelIcon style={{ left: '0px' }} fontSize="small" />
+      </div>
 
+      <br />
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '2em'
+        }}
+      >
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            id="fileInput"
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+          />
+
+          {imageUrl.length === 0 && (
+            <center>
+              <label
+                htmlFor="fileInput"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundImage: `url(${uploadImg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  color: 'white',
+                  borderRadius: '50%',
+                  cursor: 'pointer',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textShadow: '1px 1px 2px black',
+                  border: '0.5px solid #1876d1',
+                  width: '200px',
+                  height: '200px',
+                  objectFit: 'cover',
+                  color:'#4A90E2'
+                }}
+              ></label>
+              <br />
+              <label htmlFor="fileInput" style={{ color: '#1876d1' }}>Choose an image for Profile</label>
+            </center>
+          )}
+
+          {imageUrl && (
+            <div style={{ marginTop: '10px' }}>
+              <img
+                src={imageUrl}
+                alt="Uploaded"
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  borderRadius: '50%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
+          )}
+
+          
+
+          {imageUrl.length !== 0 && (
+            <center>
+              <label
+                htmlFor="fileInput"
+                style={{
+                  padding: '10px 20px',
+                  color: '#4A90E2',
+                 
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                Change Picture
+              </label>
+            </center>
+          )}
+        </div>
+
+        <input
+          style={{
+            fontSize: '16px',
+            width: '15em',
+            backgroundColor: 'black',
+            color: 'white',
+            height: '2em',
+            borderRadius: '6px',
+            border: '0.5px solid #1876d1'
+          }}
+          placeholder="Name of the community"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+
+        <textarea
+          placeholder="Enter Description"
+          rows="10"
+          cols="10"
+          style={{
+            fontSize: '16px',
+            width: '15em',
+            backgroundColor: 'black',
+            color: 'white',
+            borderRadius: '6px',
+            border: '0.5px solid #1876d1'
+          }}
+          onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+
+        <Button
+          variant="contained"
+          style={{ width: '18em' }}
+          onClick={() => {
+            createCommunity();
+          }}
+        >
+          Create Community
+        </Button>
+      </div>
+
+      <br></br>
+    </div>
+    </center>
     <br />
-    <br />
-    <br />
-    <br />
+      <br />
+      <br />
+      <br />
   </div>
 )}
 
