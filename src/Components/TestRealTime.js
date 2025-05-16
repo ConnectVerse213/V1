@@ -337,14 +337,14 @@ const handleContextMenu = (event) => {
 
 
 
-<div style={{display:'flex',alignItems:'center',justifyContent:'flex-start',gap:'10px'}}>
+<div style={{display:'flex',alignItems:'center',justifyContent:'flex-start'}}>
 
 <Button style={{color:'white'}} onClick={()=>{
     window.location.href="/community"
 }}><ArrowBackIosIcon fontSize="small"/></Button>
 
 <img src={messages.ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit: 'cover'}}></img>
-
+&nbsp;&nbsp;
 
                 <l style={{ color: 'white' , fontSize:'16px'}}><b>{messages.Name} &nbsp;&nbsp;&nbsp;&nbsp;</b></l>
 
