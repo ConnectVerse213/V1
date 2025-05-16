@@ -564,7 +564,7 @@ localStorage.setItem('getChat',JSON.stringify(users[0]))
 
     <h3 style={{color:'white'}}>Created Events {events.length!=0 && `(${events.length})`}</h3>
 
-<div style={{display:'flex',flexWrap:'wrap',justifyContent:'center'}}>
+<div style={{display:'flex',flexWrap:'wrap',justifyContent:'center',gap:'20px'}}>
 
 {
 

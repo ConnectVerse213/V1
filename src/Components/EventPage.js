@@ -62,6 +62,8 @@ function EventPage() {
   const [answers, setAnswers] = useState([]);
   const [selectedOption, setSelectedOption] = useState('');
 
+  const [creator,setcreator]=useState([])
+
   // Handle input change
   const handleChange = (index, value) => {
     const updatedAnswers = [...answers];
@@ -149,7 +151,7 @@ function EventPage() {
   }
 
     const getEvents = async () => {
-        const data = await getDocs(usersCollectionRef);
+       let data = await getDocs(usersCollectionRef);
        
         let eventsTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
        
@@ -171,6 +173,15 @@ function EventPage() {
               }
 
         })
+
+        data = await getDocs(usersCollectionRef1);
+       
+        let usersTemp=await data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+       filteredArray=usersTemp.filter(obj=>obj.EventsCreated.includes(event_id))
+
+        setcreator(filteredArray)
+        console.log("filteredArrayof users", filteredArray)
 
         
        
@@ -297,7 +308,24 @@ function EventPage() {
     margin: 0,
     textAlign:'left'
   }}>
-    Hosted by {events.length!=0 && events[0].Creator}
+
+    <div style={{display:'flex',alignItems:'center',gap:'5px',color:'white'}}>
+  
+    {creator.length!=0 && <img style={{width:'2em', height:'2em',borderRadius:'50%',objectFit:'cover'}} src={events.length!=0 && creator.length!=0 && creator[0].ProfileImage!=null ? creator[0].ProfileImage : 'https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'} ></img>
+}
+    
+      {events.length!=0 && creator.length!=0 && creator[0].UserName!=null && creator[0].UserName }
+
+    {events.length!=0 && creator.length==0 && events[0].Creator }
+
+    <button variant='contained' style={{backgroundColor:'green', width:'5em',height:'2em',fontSize:'12px',padding:'0',border:'none',borderRadius:'10px',color:'white'}}>Creator</button>
+
+    </div>
+    
+    
+ 
+
+    {/* {events.length!=0 && events[0].Creator} */}
   </p>
 
   <div

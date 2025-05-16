@@ -813,7 +813,9 @@ function Home2() {
        
 <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img onClick={()=>{
+    window.location.href=`/channel/${allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}`
+  }} src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
   
   <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
     
@@ -909,7 +911,9 @@ function Home2() {
        
 <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img onClick={()=>{
+    window.location.href=`/channel/${allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}`
+  }} src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
   
   <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
     
@@ -1004,7 +1008,9 @@ function Home2() {
        
 <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+  <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img onClick={()=>{
+    window.location.href=`/channel/${allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}`
+  }} src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
   
   <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
     
@@ -1099,7 +1105,9 @@ function Home2() {
        
           <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-            <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+            <div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img onClick={()=>{
+    window.location.href=`/channel/${allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}`
+  }} src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
             
             <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
               
@@ -1260,7 +1268,9 @@ function Home2() {
 
         <Typography gutterBottom variant="h6" component="div" style={{ color: 'white', textAlign: 'center' }}>
 
-<div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
+<div style={{display:'flex',alignItems:'flex-start',gap:'10px'}}> {allUsersArray.length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage).length!=0 && allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage ? <img onClick={()=>{
+    window.location.href=`/channel/${allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].UserName}`
+  }} src={allUsersArray.filter(obj=>obj.EventsCreated.includes(x.id) && obj.UserName && obj.ProfileImage)[0].ProfileImage} style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}}></img> :<img style={{width:'2.5em',height:'2.5em',borderRadius:'50%',objectFit:'cover'}} src='https://i.pinimg.com/564x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg'></img> }  
 
 <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',gap:'0px'}}>
   
