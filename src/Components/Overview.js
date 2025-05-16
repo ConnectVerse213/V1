@@ -645,9 +645,15 @@ function AdminCreate() {
 
          
           
-          <div  style={{display:'flex',alignItems:'center',justifyContent:'space-between'}} onClick={()=>{
-              notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}>
+          <div  style={{display:'flex',alignItems:'center',justifyContent:'space-between'}} onClick={(e)=>{
+
+            e.stopPropagation()
+            notify("Subscribe to Premium for paid events","dark","top-right","error")
+
+            setTimeout(()=>{
+                window.location.href="/pricing"
+            },3000)
+            }}>
 
             <div style={{display:'flex',gap:'10px'}}>
             <div  style={{display:'flex',alignItems:'center'}} ><ConfirmationNumberIcon fontSize='small'/>

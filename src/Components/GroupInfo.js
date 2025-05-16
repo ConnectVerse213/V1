@@ -196,10 +196,14 @@ const Chat = () => {
 
           <div style={{display:'flex',gap:'10px',alignItems:'flex-start'}}>
             
-            <Button variant="outlined" onClick={()=>{
+            <Button variant="outlined" onClick={(e)=>{
 
-                notifyCustom("Coming Soon!","default")
+            e.stopPropagation()
+            notifyCustom("Subscribe to Premium to Continue","error")
 
+            setTimeout(()=>{
+                window.location.href="/pricing"
+            },3000)
             }}><PaidIcon/></Button>
           
           

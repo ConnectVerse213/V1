@@ -22,6 +22,8 @@ import './Chat.css'
 import SendIcon from '@mui/icons-material/Send';
 import dayjs from "dayjs";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ChatIcon from '@mui/icons-material/Chat';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 
 
@@ -402,13 +404,31 @@ function Chat() {
 
                             <div>
 
-                            <img src={x.ProfileImage} style={{width:'3em',height:'3em',borderRadius:'50%',objectFit: 'cover'}}></img>
+                            <img src={x.ProfileImage} style={{width:'3em',height:'3em',borderRadius:'50%',objectFit: 'cover'}} onClick={(e)=>{
+                                e.stopPropagation()
+                                window.location.href=`/channel/${x.UserName}`
+                            }}></img>
 
                             </div>
 
-                            <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
+                            <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',width:'100%'}}>
                                 
-                                <div> {x.UserName}</div>
+                                <div style={{width:'100%',display:'flex',justifyContent:'space-between'}}> {x.UserName}  <div style={{display:'flex',flexWrap:'wrap',gap:'10px'}}> 
+                                    
+                                    <ChatIcon style={{color:'#1876d1'}}/> <MonetizationOnIcon style={{color:'#1876d1'}} onClick={(e)=>{
+
+                                        e.stopPropagation()
+                                        notifyCustom("Subscribe to Premium to Pay","error")
+
+                                        setTimeout(()=>{
+                                            window.location.href="/pricing"
+                                        },3000)
+                                    }}/>
+                                </div>
+                                
+                                </div>
+
+                              
 
                                 {
                                     x.conversation==="no" &&  <div style={{color:'grey'}}> Chat</div>

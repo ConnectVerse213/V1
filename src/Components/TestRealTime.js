@@ -607,9 +607,15 @@ const handleContextMenu = (event) => {
             window.location.href=`/groupinfo/${community_id}`
           }}><DescriptionIcon/> <l>Group Info</l></div>
           <br></br>
-          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{
-           notifyCustom("Coming Soon!","default")
-          }}><PaidIcon/>  Airdrop </div>
+          <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={(e)=>{
+
+            e.stopPropagation()
+            notifyCustom("Subscribe to Premium to continue","error")
+
+            setTimeout(()=>{
+                window.location.href="/pricing"
+            },3000)
+            }} ><PaidIcon/>  Airdrop </div>
           <br></br>
           
           <div style={{width:'100%',borderRadius:'0',textAlign:'left',display:'flex',alignItems:'center',gap:'4px',cursor:'pointer'}} class="dashboardDivMenu" onClick={()=>{

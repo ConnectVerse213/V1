@@ -510,9 +510,15 @@ isOnline && <div class="location"  style={{ cursor:'pointer',background: "rgba(2
 
          
           
-          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={()=>{
-              notify("Subscribe to premium for paid tickets","light","top-right","warning")
-          }}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><ConfirmationNumberIcon fontSize='small'/>
+          <div class="capacity" style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}} onClick={(e)=>{
+
+            e.stopPropagation()
+            notify("Subscribe to Premium for paid events","dark","top-right","error")
+
+            setTimeout(()=>{
+                window.location.href="/pricing"
+            },3000)
+}}><div  style={{display:'flex',alignItems:'center',width:'100%'}} ><ConfirmationNumberIcon fontSize='small'/>
         &nbsp;<l>Tickets</l></div>
         <div style={{display:'flex',alignItems:'right'}}> &nbsp;
         <l style={{color:'#1876d1'}}>Free</l></div>
