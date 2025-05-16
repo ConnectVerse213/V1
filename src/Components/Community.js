@@ -83,7 +83,7 @@ const Chat = () => {
                    {
                     toast.dismiss()
 
-                    notifyCustom("Fill the the fields","error")
+                    notifyCustom("Fill all the fields","error")
                     return;
 
                    }
