@@ -243,10 +243,10 @@ function Chat() {
 
                 {
                     let x=JSON.parse(localStorage.getItem('getChat'))
-                    setUserName(x.UserName)
+                    setUserName(x.Email)
                     setUserData(x)
                     setProfileImage(x.ProfileImage)
-                   getComments(x.UserName,x.ProfileImage)
+                   getComments(x.Email,x.ProfileImage)
 
                    localStorage.removeItem('getChat')
                 }

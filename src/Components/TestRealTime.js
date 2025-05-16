@@ -337,7 +337,7 @@ const handleContextMenu = (event) => {
 
 
 
-<div style={{display:'flex',alignItems:'center',justifyContent:'flex-start'}}>
+<div style={{display:'flex',alignItems:'center',justifyContent:'flex-start',gap:'10px'}}>
 
 <Button style={{color:'white'}} onClick={()=>{
     window.location.href="/community"
